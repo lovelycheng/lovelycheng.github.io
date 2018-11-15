@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html lang="" class="loading">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LoveCheng - enjoy life</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate">
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="a java developer&#39;s blog,–
+title：usercenter Spring-boot 改造###overview稳定为主；核心是重构，保证对外的业务逻辑适不变的；在此前提下使用最新的框架。为以后扩展奠定基础。jar包的方式,"> 
+    <meta name="author" content="程道玄"> 
+    <link rel="alternative" href="atom.xml" title="LoveCheng" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+</head>
+</html>
+<body class="loading">
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle"></h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+    <div class="section">
+        <div class="article">
+    <div class="main">
+        <h1 class="title"></h1>
+        <div class="stuff">
+            <span>十一月 08, 2018</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <p>–</p>
+<h2 id="title：usercenter-Spring-boot-改造"><a href="#title：usercenter-Spring-boot-改造" class="headerlink" title="title：usercenter Spring-boot 改造"></a>title：usercenter Spring-boot 改造</h2><p>###overview<br>稳定为主；核心是重构，保证对外的业务逻辑适不变的；在此前提下使用最新的框架。<br>为以后扩展奠定基础。jar包的方式也是期望已久。简化配置减少维护的难度。</p>
+<ol>
+<li>基于jetty的;</li>
+<li>数据库有加解密；</li>
+<li>前端的请求数据有加解密；</li>
+<li>需要有对多环境配置的切换支持；</li>
+<li>dubbo</li>
+<li>打包的问题；</li>
+<li>脚本</li>
+</ol>
+<p>###基于jetty容器的web项目<br>引入了springboot的依赖，1.5.1版本，再高就需要改代码了;除了核心的springboot以外，加入了如下依赖：</p>
+<blockquote>
+<pre><code>&lt;dependency&gt;
+      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;
+  &lt;/dependency&gt;
+  &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
+  &lt;/dependency&gt;
+  &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;
+  &lt;/dependency&gt;
+  &lt;dependency&gt;
+      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+      &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+  &lt;/dependency&gt;
+</code></pre></blockquote>
+<p>启动类放在子模块web中，入口层次结构是com.datatrees.usercenter.UserCenterApplication.class。<br>之前基于servlet的一些东西（filter），需要重新被扫描进容器：<br>在filter上加上Annotation:@WebFilter,在启动类上加上了ServletComponentScan(“path”);<br>启动类如下：</p>
+<blockquote>
+</blockquote>
+<p>@SpringBootApplication(exclude = org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration.class)<br>@ServletComponentScan(“com.datatrees.usercenter”)<br>@ImportResource({“classpath:./spring/user-center-spring.xml”,”classpath:./user-center-mvc.xml”})<br>@PropertySources({<br>//        @PropertySource(“classpath:./spring/diamond.properties”),<br>        @PropertySource(“classpath:./config/local_config.properties”),<br>        @PropertySource(“classpath:./i18n/user-center-resource.properties”),<br>        @PropertySource(“classpath:./i18n/user-center-resource_zh_CN.properties”),<br>        @PropertySource(“classpath:./security.properties”),<br>})<br>public class UserCenterApplication {</p>
+<pre><code>private static final Logger logger = LoggerFactory.getLogger(UserCenterApplication.class);
+
+public static void main(String[] args) {
+
+    new SpringApplicationBuilder(UserCenterApplication.class)
+            .run(args);
+
+    logger.info(&quot;用户中心启动完成&quot;);
+}
+</code></pre><p>}</p>
+<p>首先是去除不需要自动配置的校验器，如果不去掉的话会需要加入额外的对hibernate的依赖<br>，然后上述的对filter的扫描，再是对spring的主要配置文件的引入，这里可以是完全没有配置文件的，但是这些改造需要写额外的代码，对datasource等bean进行配置，没有这么干。<br>再是引入了配置文件，这里也是可以完全没有配置文件的引入的，在resources文件夹下定义application.properties文件，或者引入对yml文件的解析库，使用yml文件也可以。</p>
+<p>###数据库加解密的问题<br>在springboot化改造完成之后，无法访问数据库，经过排查之后，revert到了之前的处理方式，我的想法是可以充分发挥配置中心的不同环境配置功能，但是super-diamond的缺点是需要spring生命周期是BFPP(BeanFactoryPostProcessor)的时候去统一替换${}，对于需要再项目启动时就初始化的bean，无法等到那个时候。在此处，有另外一个问题，在加解密工具EncryptUtil中初始化方法如下：</p>
+<pre><code>private static void initial(String path) {
+try {
+  if (StringUtils.isEmpty(path)) {
+    path = &quot;/security.properties&quot;;
+  }
+  Properties properties = new Properties();
+  InputStream is = EncryptUtil.class.getResourceAsStream(path);
+  properties.load(is);
+  CryptConfig config = new CryptConfig();
+  config.setEnv(properties.getProperty(&quot;security.env&quot;));
+                config.setKeyServerAddr(properties.getProperty(
+                &quot;security.keyServerAddr&quot;));
+  config.setKeyServerPort(
+  Integer.parseInt(properties.
+  getProperty(&quot;security.keyServerPort&quot;)));
+  config.setServiceName(properties.
+  getProperty(&quot;security.serviceName&quot;));
+  cryptUtil = CryptUtil.getInstance(config);
+} catch (Throwable e) {
+  logger.error(&quot;Encrypt init error: {}&quot;, e.getMessage());
+}
+}
+</code></pre><p>这里的逻辑有待商榷，需要显式的去读取resources/security.properties 为了实现多环境的切换只能再maven打包的时候做占位符的替换。所以这里保留了三份不同环境的文件</p>
+<ul>
+<li>filter-dev.properties</li>
+<li>filter-test.properties</li>
+<li>filter-product.properties</li>
+</ul>
+<p>这里因为是<strong>直接读取文件</strong>，文件中内容是key-value的键值对，value是’${}’包裹的key，所以除非是手动的显式的替换./security.properties中的内容，是无法获取正确的配置的。 此处maven替换${}的数据，一般在使用<em>spring-boot-maven-plugin</em>打包时，需要一些额外的处理，但是此处：spring文件在bussiness模块，运行包在 web模块。<br>maven的动态替换：<br>在pom文件中，在根节点下加入：</p>
+<blockquote>
+</blockquote>
+<pre><code>&lt;profiles&gt;
+    &lt;profile&gt;
+        &lt;id&gt;dev&lt;/id&gt;
+        &lt;properties&gt;
+            &lt;manage.env&gt;dev&lt;/manage.env&gt;
+        &lt;/properties&gt;
+    &lt;/profile&gt;
+    &lt;profile&gt;
+        &lt;id&gt;test&lt;/id&gt;
+        &lt;properties&gt;
+            &lt;manage.env&gt;test&lt;/manage.env&gt;
+        &lt;/properties&gt;
+    &lt;/profile&gt;
+    &lt;profile&gt;
+        &lt;id&gt;product&lt;/id&gt;
+        &lt;properties&gt;
+            &lt;manage.env&gt;product&lt;/manage.env&gt;
+        &lt;/properties&gt;
+    &lt;/profile&gt;
+&lt;/profiles&gt;
+</code></pre><p>build节点下加入</p>
+<blockquote>
+</blockquote>
+<pre><code>&lt;filters&gt;   
+    &lt;filter&gt;src/main/filters/filter-{manage.env}.properties&lt;/filter&gt;
+   &lt;/filters&gt;
+</code></pre><p>###前端的加解密<br>前端通过content-type:application/x-www-form-urlencoded向后台传输数据，数据加密的，在后台需要对传输的数据解密，然后构造成普通的符合spring controller的规范的请求，一般是json的对象。<br>在user-center中是写在filter中，不过此处代码年代久远，不可妄动。</p>
+<p>逻辑分析如下：</p>
+<p>实现一个<em>OncePerRequestFilter</em>，重写initFiltBean方法，在初始化方法中加载自己实现的一个请求解析器：通过配置在web.xml中的intParam，和servletContext获取到SDKLicenseManager对象，构造出解析器。在后续的filter的doFilterInternal中解析请求。具体解析逻辑是委托给了 <em>SDKLicenseServiceImpl</em>，包括从redis中获取非对称加密的私钥，解密等等，最后构造成一个<em>DTHttpServletRequest</em>，本质是一个HttpServletRequestWrapper包装类。</p>
+<p>###多环境的配置支持</p>
+<p>如果只是 ip、端口等等不同，解决方案还是很多的，但是这里有很多不同。。。</p>
+<p>目前 environment = [dev|test|product]。这个配置在pom文件中。这个项目中不同环境不同需求的配置有一下几个方面：</p>
+<ul>
+<li>数据库加解密的配置</li>
+<li>日志的配置</li>
+<li>配置中心</li>
+</ul>
+<p>配置中心的不同在于：开发环境的projectcode是user-center，其他环境是usercenter，已经找运维修改解决；</p>
+<p>日志的配置可以使用spring boot的profile解决，但是需要再java jar的启动命令中加入</p>
+<pre><code>--spring.profiles.active=[env]
+</code></pre><p>日志最不同的还是在生产环境上有日志收集的一套东西。其他环境没有。</p>
+<p>对数据库加解密的实现方式的妥协，还是在打包命令中加入了 -P [environment] 。</p>
+<p>###dubbo</p>
+<p>这次改造加入了spring-boot-dubbo的依赖，升级了dubbo的版本，2.5.3–&gt;2.6.0,这个版本支持了REST，合并了dubbox。理论上是可以使用更优雅的方式(注解)来配置哪些服务是暴露的（@Service），使用了哪些服务（@Reference），这次没改这么多。</p>
+<p>###打包命令</p>
+<p>mvn clean package -Dmaven.test.skip=true -P test</p>
+<p>通过jenkins上传到测试服务器，<a href="http://192.168.5.104:8085/" target="_blank" rel="noopener">http://192.168.5.104:8085/</a> admin/123456</p>
+<p>###脚本</p>
+<p>172.16.1.41 /dashu/application/gfdusercenter/start.sh</p>
+<p>172.16.2.16 /dashu/application/jars/start.sh(暂不可用)</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title="0" data-url="http://link.hhtjim.com/163/5146554.mp3"></li>
+                    
+                        <li title="1" data-url="http://link.hhtjim.com/qq/001faIUs4M2zna.mp3"></li>
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link" data-ae="false" data-ci="" data-cs="" data-r="" data-o="" data-a="" data-d="false">查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
