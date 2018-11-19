@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html lang="" class="loading">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LoveCheng - enjoy life</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate">
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="a java developer&#39;s blog,
+title:机器学习第三课
+tag:machine learning,andrew Ng
+
+机器学习第三课逻辑回归(logic regression)分类:对于给定一堆数据，比方说是tumor的图,"> 
+    <meta name="author" content="程道玄"> 
+    <link rel="alternative" href="atom.xml" title="LoveCheng" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="/css/diaspora.css">
+</head>
+</html>
+<body class="loading">
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle"></h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+    <div class="section">
+        <div class="article">
+    <div class="main">
+        <h1 class="title"></h1>
+        <div class="stuff">
+            <span>十一月 18, 2018</span>
+            
+
+        </div>
+        <div class="content markdown">
+            <hr>
+<p>title:机器学习第三课</p>
+<p>tag:machine learning,andrew Ng</p>
+<hr>
+<h2 id="机器学习第三课"><a href="#机器学习第三课" class="headerlink" title="机器学习第三课"></a>机器学习第三课</h2><h3 id="逻辑回归-logic-regression"><a href="#逻辑回归-logic-regression" class="headerlink" title="逻辑回归(logic regression)"></a>逻辑回归(logic regression)</h3><h4 id="分类"><a href="#分类" class="headerlink" title="分类:"></a>分类:</h4><p>对于给定一堆数据，比方说是tumor的图片，通过机器学习的方法训练，能够准确的识别是否是malignant（恶性的）还是良性的。这种训练，给出的结果是二分的，是或者不是，在之前学习的线性回归中，并不适用，即：对m个样本，$x^i,i\in(1….m),有x^i\in(0,1)$ 。</p>
+<h3 id="假设函数"><a href="#假设函数" class="headerlink" title="假设函数"></a>假设函数</h3><p>hypothesis function , $H_\theta(X)$，表示的是一个对于给定数据集的假设，或者是一个模型，在之前的学习中，假设函数也可以表示成：</p>
+<blockquote>
+<p>$$ H(X) = \theta^TX$$</p>
+</blockquote>
+<p>在逻辑回归中，$H(X)$ 满足 条件 $0 \leq H(x) \leq 1$ ,以上的表达式不足以满足，所以将$\theta^TX$ 放入 <a href="https://en.wikipedia.org/wiki/Logistic_function" target="_blank" rel="noopener">Logistic Function</a> 中，即：</p>
+<blockquote>
+<p>$$H(X) = g(\theta^{T}X) $$ </p>
+<p>$$z = \theta^{T}x$$</p>
+<p>$$g(z) = \frac{1}{1+e^{-z}} $$   <em>逻辑函数</em></p>
+</blockquote>
+<p>整个函数在坐标系中展示如下：</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Logistic-curve.svg" alt=""></p>
+<p>对此，有</p>
+<blockquote>
+<p>$$<br>y =<br>\begin{cases}<br>1, &amp; \text{x $\to$ +$\infty$} \<br>0, &amp; \text{x $\to$ -$\infty$}<br>\end{cases}<br>$$</p>
+</blockquote>
+<blockquote>
+<p>$$<br>X = H(X) = \theta^{T}X<br>$$</p>
+<p>$$<br>g(z) = \frac{1}{1+e^{-z}} = \frac{1}{1+e^{-\theta^{T}X}}<br>$$</p>
+</blockquote>
+<p>这样的逻辑函数在给定的X下，将会给出一个等于结果=1的概率(<em>probability</em>)。</p>
+<h4 id="决定边界"><a href="#决定边界" class="headerlink" title="决定边界"></a>决定边界</h4><p>The <strong>decision boundary</strong> is the line that separates the area where y = 0 and where y = 1. It is created by our hypothesis function.</p>
+<p>我的理解是，在<strong>任何</strong>的假设函数下，总有一条或者是一圈之类的线，能把数据分开、数学上表示是，在逻辑函数取值=0的时候，在图形上的表示。</p>
+<blockquote>
+<p>$$<br>给定的一个函数：\theta =<br>\begin{bmatrix}<br> \theta_1 \<br> \theta_2 \<br> \theta_3 \<br>\end{bmatrix}。<br>令 \theta_1x_1+\theta_2x_2+\theta_3x_3 = 0<br>$$</p>
+<p>关于上述方程的解的集合就是这个假设函数的决定边界，无所谓最终分类算法好不好。</p>
+</blockquote>
+<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p><em>Cost Function</em> :</p>
+<p>在之前的学习中损失函数是一个<em>bow-shaped function</em>，存在全局的最低点，但是对这个分类算法不太友好，。这里其实之前的</p>
+<blockquote>
+<p>$$ J(\theta) = \frac{1}{2m} \sum_{i=1}^{m}(\theta^{T}X_i - y_i)^2$$</p>
+</blockquote>
+<p>可以改写成</p>
+<blockquote>
+<p>$$ J(\theta) = \frac{1}{m} \sum_{i=1}^{m}Cost(h_\theta(x^{(i)},y^{i}) $$</p>
+</blockquote>
+<p>证明过程：</p>
+<blockquote>
+<p>这个$Cost(H_\theta(x^{(i)}),y^i)$ 指的是一份数据的偏差，是假设函数的值减这份数据对应的真实值。</p>
+</blockquote>
+<p>结论：</p>
+<blockquote>
+<p>$$<br>\begin{cases}<br>Cost(h_\theta(x),y) = - \log(h_\theta(x)) , &amp;  \text{if y = 1}  \<br>Cost(h_\theta(x),y) = - \log(1-h_\theta(x)),&amp; \text{if y = 0 }\</p>
+<p>\end{cases}<br>$$</p>
+</blockquote>
+<p>简化损失函数：</p>
+<blockquote>
+<p>$Cost(H_\theta(x^{(i)}),y^i) = -y^{i}\log(h_\theta(x)) + (1-y)(- \log(1-h_\theta(x)))， y \in (1|0) $ ;<br>$$<br>J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \log(1-h_\theta(x^{i})))]<br>$$</p>
+</blockquote>
+<p>根据之前的多元线性回归分析的损失函数有：</p>
+<p>Repeat:</p>
+<blockquote>
+<p>$$<br>\theta_j := \theta_j - \frac{\alpha\partial}{\partial\theta_j}J(\theta) , \text{同时更新所有的$\theta$}<br>$$</p>
+</blockquote>
+<p>结果：</p>
+<blockquote>
+<p>$$<br>\theta_j := \theta_j - \frac{\alpha}{m}\sum_{(i=1)}^{(m)}(h_\theta(x^{i})-y^{i})x_j^i<br>$$</p>
+</blockquote>
+<p>这个和之前的线性回归里面的其实一样的，$x_j^i$表示的第i份数据，其中第j维的数据的列；</p>
+<h4 id="进阶优化"><a href="#进阶优化" class="headerlink" title="进阶优化"></a>进阶优化</h4><p>有更多的其他算法，而不是梯度下降；相对而言是更快，也不需要学习速率；只是更加复杂。</p>
+<p>这些算法不需要自己实现。直接调用程序提供的库就行，后期去看看python的实现。</p>
+<p>octave的fminunc()</p>
+<h3 id="y不是二分的情况"><a href="#y不是二分的情况" class="headerlink" title="y不是二分的情况"></a>y不是二分的情况</h3><h4 id="One-vs-all"><a href="#One-vs-all" class="headerlink" title="One-vs-all"></a>One-vs-all</h4><p>思路就是先挑一种出来，对于一个分类器（假设函数）来说，如果有$m$种分类 $y\in (1,2,3,4…)$ ,对于每一次输入$\theta^{T}X$ 输出值有$m$种取值，分类器的做法是找出置信度最高的值。</p>
+<h3 id="overfitting-and-underfit"><a href="#overfitting-and-underfit" class="headerlink" title="overfitting and underfit"></a>overfitting and underfit</h3><p>Overfitting: If we have too many features, the learned hypothesis may fit the training set very well ( ), but fail to generalize to new examples (predict prices on new examples).</p>
+<p>如果说函数有太多的特征（加入了一些不必要的特征，这些特征可能是底作用的，也可能是完全无效的），所以说是这个分类器完美的适应了样本的数据，但是对于一般性的输入 有可能预测的一般。</p>
+<p>ps：联想泰勒展开的公式，模拟函数越多的多项式越能够模拟原函数的走向（图形表现）。</p>
+<p>解决：</p>
+<ul>
+<li>减少数据维度<ul>
+<li>可以手动</li>
+<li>Model selection algorithm</li>
+</ul>
+</li>
+<li>Regularization 正则化<ul>
+<li>保持所有的维度。增加一个多项式，作为惩罚某些维度参数的手段，减少这个维度在函数中的权重。</li>
+<li>也有可能每一个维度都提供一定的预测权重，并且函数运转的很好。</li>
+</ul>
+</li>
+</ul>
+<p>正则化：</p>
+<p>​    $\theta_1,\theta_2,\theta_3,…..$这些参数都很小，减少过拟合的倾向。</p>
+<p>在<br>$$<br>J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \log(1-h_\theta(x^{i}))) + \lambda\sum_{j=1}^{n}\theta_{j}^2 ] , \text{$\lambda$是正则化参数} \<br>$$<br>后面这个是惩罚项。默认不会去优化$\theta_0$的。</p>
+<p>将上述的正则化方法带入到我们之前的梯度下降算法：<br>$$<br>\theta_{j} := \theta_{j}(1-\alpha\frac{\lambda}{m}) - \frac{\alpha}{m}\sum_{(i=1)}^{(m)}(h_\theta(x^{i})-y^{i})x_j^i<br>$$<br>只是去压缩了一下$\theta_j$ </p>
+<p>Normal Equation:<br>$$<br>\theta = (X^{T}X)^{-1}X^{T}Y<br>$$<br>应用正则化：<br>$$<br>\theta = (X^{T}X+\lambda\begin{bmatrix}0&amp;0&amp;\cdots&amp;0\0&amp;1&amp;\cdots&amp;0\\vdots&amp;\vdots&amp;\ddots&amp;0\0&amp;0&amp;\cdots&amp;1\end{bmatrix})^{-1}X^{T}Y<br>$$<br>matrix是 n+1*n+1；在$\lambda \gt 0$ 的时候，括号里面这堆东西绝壁是可逆的。</p>
+<p>Regularized logistic regression:</p>
+<p>梯度下降：在写法上其实是和线性回归一样的，只是这里的假设函数不一样。</p>
+<p>advanced Optimize: 在调用这种高级库的时候，cost function $J(\theta)$ 这个东西不一样。这个应该是个入参。</p>
+<p>总结：</p>
+<p>这里提出了新的代价函数；以及过拟合的解决方法、但是过犹不及，太多的正则项会导致underfitting</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        <li title="0" data-url="http://link.hhtjim.com/163/5146554.mp3"></li>
+                    
+                        <li title="1" data-url="http://link.hhtjim.com/qq/001faIUs4M2zna.mp3"></li>
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link" data-ae="false" data-ci="" data-cs="" data-r="" data-o="" data-a="" data-d="false">查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/diaspora.js"></script>
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+</html>
