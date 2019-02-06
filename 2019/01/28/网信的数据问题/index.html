@@ -16,7 +16,7 @@
 
 <html class="theme-next muse use-motion" lang="">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
@@ -111,14 +111,14 @@
   <meta name="description" content="网信的数据问题网信、一、部分数据是已经通过2019-01-21上线的 【实时结转逻辑处理】 修正了，所以数据中要剔除表qs_error_transfer_record 的数据; 二、在网信的贷款数据中，有部分数据是被出售的，也需要剔除，找出被出售的还款计划数据sql如下： 123456789101112131415161718192021222324252627282930313233343536">
 <meta name="keywords" content="AI,人工智能,java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LoveCheng">
+<meta property="og:title" content="网信的数据问题">
 <meta property="og:url" content="http://lovelycheng.github.io/2019/01/28/网信的数据问题/index.html">
 <meta property="og:site_name" content="LoveCheng">
 <meta property="og:description" content="网信的数据问题网信、一、部分数据是已经通过2019-01-21上线的 【实时结转逻辑处理】 修正了，所以数据中要剔除表qs_error_transfer_record 的数据; 二、在网信的贷款数据中，有部分数据是被出售的，也需要剔除，找出被出售的还款计划数据sql如下： 123456789101112131415161718192021222324252627282930313233343536">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-30T02:49:48.416Z">
+<meta property="og:updated_time" content="2019-02-05T06:51:37.469Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LoveCheng">
+<meta name="twitter:title" content="网信的数据问题">
 <meta name="twitter:description" content="网信的数据问题网信、一、部分数据是已经通过2019-01-21上线的 【实时结转逻辑处理】 修正了，所以数据中要剔除表qs_error_transfer_record 的数据; 二、在网信的贷款数据中，有部分数据是被出售的，也需要剔除，找出被出售的还款计划数据sql如下： 123456789101112131415161718192021222324252627282930313233343536">
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title> | LoveCheng</title>
+  <title>网信的数据问题 | LoveCheng</title>
   
 
 
@@ -174,7 +174,7 @@
       .logo-line-after i { right: initial; }
     }
   </style>
-</noscript>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </head>
 
@@ -185,7 +185,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -322,7 +322,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
+          <h1 class="post-title" itemprop="name headline">网信的数据问题
               
             
           </h1>
@@ -364,7 +364,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-01-30 10:49:48" itemprop="dateModified" datetime="2019-01-30T10:49:48+08:00">2019-01-30</time>
+                <time title="Modified: 2019-02-05 14:51:37" itemprop="dateModified" datetime="2019-02-05T14:51:37+08:00">2019-02-05</time>
               
             
           </span>
@@ -414,7 +414,7 @@
 <p>由出金表关联 平台入金表  获取每期的实际入账金额</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">SELECT COUNT(1) as c, SUM(`Amount`) as a,t1.`schedule_id`   from `qs_capital_platform_credit` t1  JOIN </span><br><span class="line">(</span><br><span class="line">SELECT  schedule_id,id  from `qs_debtor_capital_platform_debit`</span><br><span class="line">where `schedule_id` in</span><br><span class="line">(</span><br><span class="line">     SELECT id</span><br><span class="line">  from `t_repayment_schedule`</span><br><span class="line"> WHERE `GlobalPlatformId`= 15</span><br><span class="line">   and `OverDue`&gt; 0</span><br><span class="line">   and `IsClear`= 1</span><br><span class="line">   and RepayAt&lt; curdate()</span><br><span class="line">   and RepaidAmount+ RepaidAmountCitic&gt; 0</span><br><span class="line">   and `Id` not IN(</span><br><span class="line">SELECT DISTINCT(`schedule_id`)</span><br><span class="line">  from `qs_error_transfer_record`</span><br><span class="line"> WHERE `global_platform_id`= 15)</span><br><span class="line">   and `Id` not in (2719201, 3828278)</span><br><span class="line">)</span><br><span class="line">) as temp on t1.`debtor_platform_debit_id`  = temp.id</span><br><span class="line">WHERE  `account_type` = 1 and `schedule_type` = 1</span><br><span class="line">GROUP BY t1.`schedule_id` </span><br><span class="line">HAVING  c&gt;1</span><br></pre></td></tr></table></figure>
-<p>– 由上述的资金方入金表关联 兑付计划表 获取 应还款金额</p>
+<p>— 由上述的资金方入金表关联 兑付计划表 获取 应还款金额</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">SELECT SUM(`capital`+`interest`) as sp,temp.a as actul, `ScheduleId`   from `t_thirdparty_schedule`   t1 join </span><br><span class="line">(</span><br><span class="line">SELECT SUM(`Amount`) as a,t1.`schedule_id`   from `qs_capital_platform_credit` t1  JOIN </span><br><span class="line">(</span><br><span class="line">SELECT  schedule_id,id  from `qs_debtor_capital_platform_debit`</span><br><span class="line">where `schedule_id` in</span><br><span class="line">(</span><br><span class="line">     SELECT id</span><br><span class="line">  from `t_repayment_schedule`</span><br><span class="line"> WHERE `GlobalPlatformId`= 15</span><br><span class="line">   and `OverDue`&gt; 0</span><br><span class="line">   and `IsClear`= 1</span><br><span class="line">   and RepayAt&lt; curdate()</span><br><span class="line">   and RepaidAmount+ RepaidAmountCitic&gt; 0</span><br><span class="line">   and `Id` not IN(</span><br><span class="line">SELECT DISTINCT(`schedule_id`)</span><br><span class="line">  from `qs_error_transfer_record`</span><br><span class="line"> WHERE `global_platform_id`= 15)</span><br><span class="line">   and `Id` not in (2719201, 3828278)</span><br><span class="line">)</span><br><span class="line">) as temp on t1.`debtor_platform_debit_id`  = temp.id</span><br><span class="line">WHERE  `account_type` = 1 and `schedule_type` = 1</span><br><span class="line">GROUP BY t1.`schedule_id`</span><br><span class="line">) as temp  on  t1.`ScheduleId`  = temp.schedule_id</span><br><span class="line">WHERE `GlobalPlatformId` = 15</span><br><span class="line">GROUP BY `ScheduleId` </span><br><span class="line">HAVING actul &gt; sp;</span><br></pre></td></tr></table></figure>
 <hr>
 <blockquote>
@@ -452,8 +452,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/19/叔本华暮年之思的读后感/" rel="next" title="">
-                <i class="fa fa-chevron-left"></i> 
+              <a href="/2019/01/19/叔本华暮年之思的读后感/" rel="next" title="叔本华暮年之思">
+                <i class="fa fa-chevron-left"></i> 叔本华暮年之思
               </a>
             
           </div>
@@ -726,7 +726,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 
@@ -760,6 +760,13 @@
   
 
   
+  
+
+  
+  
+
+  
+
 
   
   

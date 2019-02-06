@@ -15,8 +15,8 @@
 
 
 <html class="theme-next muse use-motion" lang="">
-<head>
-  <meta charset="UTF-8">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
@@ -125,7 +125,7 @@
 
 
 
-  <link rel="canonical" href="http://lovelycheng.github.io/"/>
+  <link rel="canonical" href="http://lovelycheng.github.io/">
 
 
 
@@ -173,22 +173,22 @@
       .logo-line-after i { right: initial; }
     }
   </style>
-</noscript>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
 
   
   
     
   
 
-  <div class="container sidebar-position-left 
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left 
   page-home">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -236,7 +236,7 @@
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
 
   </li>
         
@@ -253,7 +253,7 @@
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
 
   </li>
 
@@ -300,20 +300,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2019/01/28/网信的数据问题/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程道玄">
       <meta itemprop="description" content="a java developer's blog">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="LoveCheng">
     </span>
 
@@ -325,7 +325,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/01/28/网信的数据问题/" class="post-title-link" itemprop="http://lovelycheng.github.io/index.html">Untitled</a>
+                <a href="/2019/01/28/网信的数据问题/" class="post-title-link" itemprop="http://lovelycheng.github.io/index.html">网信的数据问题</a>
               
             
           </h1>
@@ -367,7 +367,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-01-30 10:49:48" itemprop="dateModified" datetime="2019-01-30T10:49:48+08:00">2019-01-30</time>
+                <time title="Modified: 2019-02-05 14:51:37" itemprop="dateModified" datetime="2019-02-05T14:51:37+08:00">2019-02-05</time>
               
             
           </span>
@@ -419,7 +419,7 @@
 <p>由出金表关联 平台入金表  获取每期的实际入账金额</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">SELECT COUNT(1) as c, SUM(`Amount`) as a,t1.`schedule_id`   from `qs_capital_platform_credit` t1  JOIN </span><br><span class="line">(</span><br><span class="line">SELECT  schedule_id,id  from `qs_debtor_capital_platform_debit`</span><br><span class="line">where `schedule_id` in</span><br><span class="line">(</span><br><span class="line">     SELECT id</span><br><span class="line">  from `t_repayment_schedule`</span><br><span class="line"> WHERE `GlobalPlatformId`= 15</span><br><span class="line">   and `OverDue`&gt; 0</span><br><span class="line">   and `IsClear`= 1</span><br><span class="line">   and RepayAt&lt; curdate()</span><br><span class="line">   and RepaidAmount+ RepaidAmountCitic&gt; 0</span><br><span class="line">   and `Id` not IN(</span><br><span class="line">SELECT DISTINCT(`schedule_id`)</span><br><span class="line">  from `qs_error_transfer_record`</span><br><span class="line"> WHERE `global_platform_id`= 15)</span><br><span class="line">   and `Id` not in (2719201, 3828278)</span><br><span class="line">)</span><br><span class="line">) as temp on t1.`debtor_platform_debit_id`  = temp.id</span><br><span class="line">WHERE  `account_type` = 1 and `schedule_type` = 1</span><br><span class="line">GROUP BY t1.`schedule_id` </span><br><span class="line">HAVING  c&gt;1</span><br></pre></td></tr></table></figure>
-<p>– 由上述的资金方入金表关联 兑付计划表 获取 应还款金额</p>
+<p>— 由上述的资金方入金表关联 兑付计划表 获取 应还款金额</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">SELECT SUM(`capital`+`interest`) as sp,temp.a as actul, `ScheduleId`   from `t_thirdparty_schedule`   t1 join </span><br><span class="line">(</span><br><span class="line">SELECT SUM(`Amount`) as a,t1.`schedule_id`   from `qs_capital_platform_credit` t1  JOIN </span><br><span class="line">(</span><br><span class="line">SELECT  schedule_id,id  from `qs_debtor_capital_platform_debit`</span><br><span class="line">where `schedule_id` in</span><br><span class="line">(</span><br><span class="line">     SELECT id</span><br><span class="line">  from `t_repayment_schedule`</span><br><span class="line"> WHERE `GlobalPlatformId`= 15</span><br><span class="line">   and `OverDue`&gt; 0</span><br><span class="line">   and `IsClear`= 1</span><br><span class="line">   and RepayAt&lt; curdate()</span><br><span class="line">   and RepaidAmount+ RepaidAmountCitic&gt; 0</span><br><span class="line">   and `Id` not IN(</span><br><span class="line">SELECT DISTINCT(`schedule_id`)</span><br><span class="line">  from `qs_error_transfer_record`</span><br><span class="line"> WHERE `global_platform_id`= 15)</span><br><span class="line">   and `Id` not in (2719201, 3828278)</span><br><span class="line">)</span><br><span class="line">) as temp on t1.`debtor_platform_debit_id`  = temp.id</span><br><span class="line">WHERE  `account_type` = 1 and `schedule_type` = 1</span><br><span class="line">GROUP BY t1.`schedule_id`</span><br><span class="line">) as temp  on  t1.`ScheduleId`  = temp.schedule_id</span><br><span class="line">WHERE `GlobalPlatformId` = 15</span><br><span class="line">GROUP BY `ScheduleId` </span><br><span class="line">HAVING actul &gt; sp;</span><br></pre></td></tr></table></figure>
 <hr>
 <blockquote>
@@ -478,20 +478,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2019/01/19/叔本华暮年之思的读后感/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程道玄">
       <meta itemprop="description" content="a java developer's blog">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="LoveCheng">
     </span>
 
@@ -503,7 +503,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/01/19/叔本华暮年之思的读后感/" class="post-title-link" itemprop="http://lovelycheng.github.io/index.html">Untitled</a>
+                <a href="/2019/01/19/叔本华暮年之思的读后感/" class="post-title-link" itemprop="http://lovelycheng.github.io/index.html">叔本华暮年之思</a>
               
             
           </h1>
@@ -528,12 +528,24 @@
                 
               
 
-              <time title="Created: 2019-01-19 12:19:44 / Modified: 12:19:45" itemprop="dateCreated datePublished" datetime="2019-01-19T12:19:44+08:00">2019-01-19</time>
+              <time title="Created: 2019-01-19 12:19:44" itemprop="dateCreated datePublished" datetime="2019-01-19T12:19:44+08:00">2019-01-19</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-05 15:16:59" itemprop="dateModified" datetime="2019-02-05T15:16:59+08:00">2019-02-05</time>
               
             
           </span>
@@ -568,8 +580,7 @@
       
         
           
-            <p>###暮年之思</p>
-<ol>
+            <h3 id="暮年之思"><a href="#暮年之思" class="headerlink" title="暮年之思"></a>暮年之思</h3><ol>
 <li>独处：</li>
 <li>灵魂：</li>
 <li>唯意志论</li>
@@ -627,20 +638,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2019/01/12/思维导图的读书记录/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程道玄">
       <meta itemprop="description" content="a java developer's blog">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="LoveCheng">
     </span>
 
@@ -652,7 +663,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/01/12/思维导图的读书记录/" class="post-title-link" itemprop="http://lovelycheng.github.io/index.html">Untitled</a>
+                <a href="/2019/01/12/思维导图的读书记录/" class="post-title-link" itemprop="http://lovelycheng.github.io/index.html">思维导图的设计</a>
               
             
           </h1>
@@ -677,12 +688,24 @@
                 
               
 
-              <time title="Created: 2019-01-12 15:55:55 / Modified: 15:55:57" itemprop="dateCreated datePublished" datetime="2019-01-12T15:55:55+08:00">2019-01-12</time>
+              <time title="Created: 2019-01-12 15:55:55" itemprop="dateCreated datePublished" datetime="2019-01-12T15:55:55+08:00">2019-01-12</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-05 14:51:48" itemprop="dateModified" datetime="2019-02-05T14:51:48+08:00">2019-02-05</time>
               
             
           </span>
@@ -783,20 +806,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2019/01/12/为什么精英都是时间控/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程道玄">
       <meta itemprop="description" content="a java developer's blog">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="LoveCheng">
     </span>
 
@@ -808,7 +831,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/01/12/为什么精英都是时间控/" class="post-title-link" itemprop="http://lovelycheng.github.io/index.html">Untitled</a>
+                <a href="/2019/01/12/为什么精英都是时间控/" class="post-title-link" itemprop="http://lovelycheng.github.io/index.html">为什么精英都是时间控</a>
               
             
           </h1>
@@ -833,12 +856,24 @@
                 
               
 
-              <time title="Created: 2019-01-12 11:46:45 / Modified: 12:19:56" itemprop="dateCreated datePublished" datetime="2019-01-12T11:46:45+08:00">2019-01-12</time>
+              <time title="Created: 2019-01-12 11:46:45" itemprop="dateCreated datePublished" datetime="2019-01-12T11:46:45+08:00">2019-01-12</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-05 14:51:29" itemprop="dateModified" datetime="2019-02-05T14:51:29+08:00">2019-02-05</time>
               
             
           </span>
@@ -874,13 +909,13 @@
         
           
             <h3 id="这是一篇笔记"><a href="#这是一篇笔记" class="headerlink" title="这是一篇笔记"></a>这是一篇笔记</h3><h3 id="关于娱乐"><a href="#关于娱乐" class="headerlink" title="关于娱乐"></a>关于娱乐</h3><p>基于本书所述的各种措施，每天理论上能多出2个小时的时间，（虽然我还没省出这么多时间来），这两个小时的时间很有可能都是在被动性娱乐中被消耗，先不谈被动性娱乐的概念，书中所述被动性娱乐大概就是电视之类，比之现在我的处境，大概就是斗鱼TV了吧，通过视觉输入，各种信息纷至沓来，注意力不断的被分散，无法集中，跟着情节或者剧情不断推进，欲罢不能直至睡觉时间到——这听上去其实不错——但是，这很被动，这里的被动的意思是，我们的意识或者是此一刻的享受我们是被动的，我们没有主动参与——听上去我们是不是该给主播刷点礼物或者带点节奏？——当然不是，我的理解是，这之所以被动，最根本的原因是没有目标，只是放松，这种放松的方式当然没有问题，但是需要控制时间。并且对提高专注力没有提高。</p>
-<p>####主动性的娱乐<br>相对应的有被动性的娱乐也有主动性的娱乐，看书，象棋，围棋这些，在繁忙的一天工作之后能够继续下象棋或者围棋，这个有点天方夜谭，但是在以往的经验中，在晚上9点到10点之间全神贯注并且状态十足的下3盘象棋是完全没问题的。看书的话，理论上不会去看一些十分消耗脑力的书籍，文学性的书籍maybe ok。当然提高一些工作技巧的书籍更好，比方说 《思维导图的使用》《思维导图的设计逻辑》，或者是我正在践行的时间管理的书籍。下象棋或者围棋我不知道能够有什么输出？或者只是单纯的锻炼脑力。如果是看书的话，最好能够有所输出，比方说这篇文章，在看完时间管理的书籍之后，能够对这本书的一些概念进行整理和输出。</p>
+<h4 id="主动性的娱乐"><a href="#主动性的娱乐" class="headerlink" title="主动性的娱乐"></a>主动性的娱乐</h4><p>相对应的有被动性的娱乐也有主动性的娱乐，看书，象棋，围棋这些，在繁忙的一天工作之后能够继续下象棋或者围棋，这个有点天方夜谭，但是在以往的经验中，在晚上9点到10点之间全神贯注并且状态十足的下3盘象棋是完全没问题的。看书的话，理论上不会去看一些十分消耗脑力的书籍，文学性的书籍maybe ok。当然提高一些工作技巧的书籍更好，比方说 《思维导图的使用》《思维导图的设计逻辑》，或者是我正在践行的时间管理的书籍。下象棋或者围棋我不知道能够有什么输出？或者只是单纯的锻炼脑力。如果是看书的话，最好能够有所输出，比方说这篇文章，在看完时间管理的书籍之后，能够对这本书的一些概念进行整理和输出。</p>
 <ol>
 <li>定制目标，比方说看书，读后感，针对当前的情况作出一些改变。这会比较难吧，我也正在学习。</li>
 <li>有所记录，很多时候灵光乍现，灵感转瞬即逝。需要一些东西记录。史航的读书方法也在践行中。</li>
 <li>有所输出，记录就是输出这种说法相当错误，学习就是不断的总结，归纳，反省。</li>
 </ol>
-<p>####如何减少被动性的娱乐<br>此处的标题更像是一个措施。书中给出的建议是，把想要看的电视录下来，回头看。这无疑是一个好方法，但是在现实生活中，无法和周围的朋友聊同一个昨天播出的节目的八卦，多么残酷的一件事，当然没有这种白痴朋友，麻烦瞬间就解决了。回到现实，比方说是美剧，现在的网络技术，可以一次性下载，找相对空闲的时候观看。这个措施真的不错。</p>
+<h4 id="如何减少被动性的娱乐"><a href="#如何减少被动性的娱乐" class="headerlink" title="如何减少被动性的娱乐"></a>如何减少被动性的娱乐</h4><p>此处的标题更像是一个措施。书中给出的建议是，把想要看的电视录下来，回头看。这无疑是一个好方法，但是在现实生活中，无法和周围的朋友聊同一个昨天播出的节目的八卦，多么残酷的一件事，当然没有这种白痴朋友，麻烦瞬间就解决了。回到现实，比方说是美剧，现在的网络技术，可以一次性下载，找相对空闲的时候观看。这个措施真的不错。</p>
 <h4 id="心流"><a href="#心流" class="headerlink" title="心流"></a>心流</h4><p>这这篇文章中有一个term: 心流 ，说实话这个中文单词真的很中二，这个文章的作者又是一个日本人，我联想到了 浪客剑心，一刀流，绯村拔刀斋等等。但是这的确是一个西方科学家提出的术语：flow或者是Zone——翻译的确信达雅——一个人进入忘我的状态，人与外界的挑战有110byte/s，此时没有任何其他的注意力来关注其他的事情。这种状态在东方有很多名字：禅（zen）、虚、化境、忘境。这里可以看一看打坐或者是冥想在这里的说法。</p>
 
           
@@ -933,20 +968,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2018/11/27/mathine learning 4/">
+    <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2019/01/09/时间管理的实践/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程道玄">
       <meta itemprop="description" content="a java developer's blog">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="LoveCheng">
     </span>
 
@@ -958,7 +993,184 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/11/27/mathine learning 4/" class="post-title-link" itemprop="http://lovelycheng.github.io/index.html">Untitled</a>
+                <a href="/2019/01/09/时间管理的实践/" class="post-title-link" itemprop="http://lovelycheng.github.io/index.html">时间管理的实践</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-01-09 00:00:00" itemprop="dateCreated datePublished" datetime="2019-01-09T00:00:00+08:00">2019-01-09</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-05 18:18:31" itemprop="dateModified" datetime="2019-02-05T18:18:31+08:00">2019-02-05</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="时间管理实践"><a href="#时间管理实践" class="headerlink" title="时间管理实践"></a>时间管理实践</h3><blockquote>
+<p>不要在早上让脑袋接收太多的信息，所以早上起床不要看邮件，不要玩手机，不要打开电脑。</p>
+</blockquote>
+<ol>
+<li>早上的运动缺乏规划；</li>
+<li>在床上浪费太多时间；从起床到出门需要一个小时，将近15分钟的时间是在床上看手机；</li>
+<li>每天穿什么衣服也花了挺多时间，这部分时间没有统计；</li>
+</ol>
+<blockquote>
+<p>晚上的入睡</p>
+</blockquote>
+<ol>
+<li>最好是在夜晚关灯;</li>
+<li>在晚上需要交流，协调激素水平</li>
+<li>减少视觉信息输入</li>
+<li>减少听相声次数，使用睡眠手环，检测睡眠质量。</li>
+<li>在22点上床；</li>
+</ol>
+<p>措施：</p>
+<ol>
+<li>减少手机和电脑的输入</li>
+<li>asmr</li>
+<li>中医调理</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2018/11/27/mathinelearning4/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程道玄">
+      <meta itemprop="description" content="a java developer's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LoveCheng">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/11/27/mathinelearning4/" class="post-title-link" itemprop="http://lovelycheng.github.io/index.html">Untitled</a>
               
             
           </h1>
@@ -1000,7 +1212,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-28 13:52:34" itemprop="dateModified" datetime="2018-11-28T13:52:34+08:00">2018-11-28</time>
+                <time title="Modified: 2019-02-05 18:49:20" itemprop="dateModified" datetime="2019-02-05T18:49:20+08:00">2019-02-05</time>
               
             
           </span>
@@ -1035,13 +1247,19 @@
       
         
           
-            <p>#机器学习第四章<br>神经网络</p>
+            <hr>
+<p>title: 机器学习第四章</p>
+<p>mathjax: true</p>
+<p>date: 2017/05/03</p>
+<p>tags: machine learning,andrew Ng</p>
+<hr>
+<h3 id="机器学习第四章"><a href="#机器学习第四章" class="headerlink" title="机器学习第四章"></a>机器学习第四章</h3><p>神经网络</p>
 <p>输入层 输出层；hide layer；</p>
 <p>$ h(x) = \theta^{T}X , sigmoid \ function:g(z) = \frac{1}{1+ e^{-z}},z = \theta^{T}X $</p>
 <p>$ 0 \leq  g(z) \leq 1 , z  \geq 0 \ g(z) = 1 , z \lt 0 \ g(z) = 0$</p>
-<p>for $ y \in (1,0) , 0 \leq h(x) \leq 1,  h(x) = g(z)$</p>
-<p>$$  Cost(H(x),y)= \begin{cases} -\log(1-h(x)), &amp;  \text{y = 0}\  -\log(h(x)) ,&amp;  \text{y=1} \end{cases}$$<br>so the cost function can be writen in a more cmpact way:</p>
-<p>$ J(\theta) = \frac{1}{m}\sum_{i=1}^{m}y^{(i)}\log h_{\theta}(x^{(i)}) + (1-y^{(i)})\log (1-h_{\theta}(x^{(i)}))  $</p>
+<p>for  $ y \in (1,0) , 0 \leq h(x) \leq 1,  h(x) = g(z)$</p>
+<script type="math/tex; mode=display">Cost(H(x),y)= \begin{cases} -\log(1-h(x)), &  \text{y = 0}\\  -\log(h(x)) ,&  \text{y=1} \end{cases}</script><p>so the cost function can be writen in a more cmpact way:</p>
+<p>$ J(\theta) = \frac{1}{m}\sum<em>{i=1}^{m}y^{(i)}\log h</em>{\theta}(x^{(i)}) + (1-y^{(i)})\log (1-h_{\theta}(x^{(i)}))  $</p>
 
           
         
@@ -1093,730 +1311,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2018/11/20/机器学习第三课/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="程道玄">
-      <meta itemprop="description" content="a java developer's blog">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LoveCheng">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/11/20/机器学习第三课/" class="post-title-link" itemprop="http://lovelycheng.github.io/index.html">Untitled</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-11-20 00:55:33" itemprop="dateCreated datePublished" datetime="2018-11-20T00:55:33+08:00">2018-11-20</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <!DOCTYPE html>
-<html>
-
-<head><meta name="generator" content="Hexo 3.8.0">
-
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>机器学习第三课</title>
-
-
-<style type="text/css">
-body {
-  font-family: Helvetica, arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.6;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  background-color: white;
-  padding: 30px; }
-
-body > *:first-child {
-  margin-top: 0 !important; }
-body > *:last-child {
-  margin-bottom: 0 !important; }
-
-a {
-  color: #4183C4; }
-a.absent {
-  color: #cc0000; }
-a.anchor {
-  display: block;
-  padding-left: 30px;
-  margin-left: -30px;
-  cursor: pointer;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0; }
-
-h1, h2, h3, h4, h5, h6 {
-  margin: 20px 0 10px;
-  padding: 0;
-  font-weight: bold;
-  -webkit-font-smoothing: antialiased;
-  cursor: text;
-  position: relative; }
-
-h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor {
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA09pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoMTMuMCAyMDEyMDMwNS5tLjQxNSAyMDEyLzAzLzA1OjIxOjAwOjAwKSAgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OUM2NjlDQjI4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OUM2NjlDQjM4ODBGMTFFMTg1ODlEODNERDJBRjUwQTQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QzY2OUNCMDg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5QzY2OUNCMTg4MEYxMUUxODU4OUQ4M0REMkFGNTBBNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsQhXeAAAABfSURBVHjaYvz//z8DJYCRUgMYQAbAMBQIAvEqkBQWXI6sHqwHiwG70TTBxGaiWwjCTGgOUgJiF1J8wMRAIUA34B4Q76HUBelAfJYSA0CuMIEaRP8wGIkGMA54bgQIMACAmkXJi0hKJQAAAABJRU5ErkJggg==) no-repeat 10px center;
-  text-decoration: none; }
-
-h1 tt, h1 code {
-  font-size: inherit; }
-
-h2 tt, h2 code {
-  font-size: inherit; }
-
-h3 tt, h3 code {
-  font-size: inherit; }
-
-h4 tt, h4 code {
-  font-size: inherit; }
-
-h5 tt, h5 code {
-  font-size: inherit; }
-
-h6 tt, h6 code {
-  font-size: inherit; }
-
-h1 {
-  font-size: 28px;
-  color: black; }
-
-h2 {
-  font-size: 24px;
-  border-bottom: 1px solid #cccccc;
-  color: black; }
-
-h3 {
-  font-size: 18px; }
-
-h4 {
-  font-size: 16px; }
-
-h5 {
-  font-size: 14px; }
-
-h6 {
-  color: #777777;
-  font-size: 14px; }
-
-p, blockquote, ul, ol, dl, li, table, pre {
-  margin: 15px 0; }
-
-hr {
-  background: transparent url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAECAYAAACtBE5DAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENDRjNBN0E2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENDRjNBN0I2NTZBMTFFMEI3QjRBODM4NzJDMjlGNDgiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4Q0NGM0E3ODY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4Q0NGM0E3OTY1NkExMUUwQjdCNEE4Mzg3MkMyOUY0OCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqqezsUAAAAfSURBVHjaYmRABcYwBiM2QSA4y4hNEKYDQxAEAAIMAHNGAzhkPOlYAAAAAElFTkSuQmCC) repeat-x 0 0;
-  border: 0 none;
-  color: #cccccc;
-  height: 4px;
-  padding: 0;
-}
-
-body > h2:first-child {
-  margin-top: 0;
-  padding-top: 0; }
-body > h1:first-child {
-  margin-top: 0;
-  padding-top: 0; }
-  body > h1:first-child + h2 {
-    margin-top: 0;
-    padding-top: 0; }
-body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child {
-  margin-top: 0;
-  padding-top: 0; }
-
-a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
-  margin-top: 0;
-  padding-top: 0; }
-
-h1 p, h2 p, h3 p, h4 p, h5 p, h6 p {
-  margin-top: 0; }
-
-li p.first {
-  display: inline-block; }
-li {
-  margin: 0; }
-ul, ol {
-  padding-left: 30px; }
-
-ul :first-child, ol :first-child {
-  margin-top: 0; }
-
-dl {
-  padding: 0; }
-  dl dt {
-    font-size: 14px;
-    font-weight: bold;
-    font-style: italic;
-    padding: 0;
-    margin: 15px 0 5px; }
-    dl dt:first-child {
-      padding: 0; }
-    dl dt > :first-child {
-      margin-top: 0; }
-    dl dt > :last-child {
-      margin-bottom: 0; }
-  dl dd {
-    margin: 0 0 15px;
-    padding: 0 15px; }
-    dl dd > :first-child {
-      margin-top: 0; }
-    dl dd > :last-child {
-      margin-bottom: 0; }
-
-blockquote {
-  border-left: 4px solid #dddddd;
-  padding: 0 15px;
-  color: #777777; }
-  blockquote > :first-child {
-    margin-top: 0; }
-  blockquote > :last-child {
-    margin-bottom: 0; }
-
-table {
-  padding: 0;border-collapse: collapse; }
-  table tr {
-    border-top: 1px solid #cccccc;
-    background-color: white;
-    margin: 0;
-    padding: 0; }
-    table tr:nth-child(2n) {
-      background-color: #f8f8f8; }
-    table tr th {
-      font-weight: bold;
-      border: 1px solid #cccccc;
-      margin: 0;
-      padding: 6px 13px; }
-    table tr td {
-      border: 1px solid #cccccc;
-      margin: 0;
-      padding: 6px 13px; }
-    table tr th :first-child, table tr td :first-child {
-      margin-top: 0; }
-    table tr th :last-child, table tr td :last-child {
-      margin-bottom: 0; }
-
-img {
-  max-width: 100%; }
-
-span.frame {
-  display: block;
-  overflow: hidden; }
-  span.frame > span {
-    border: 1px solid #dddddd;
-    display: block;
-    float: left;
-    overflow: hidden;
-    margin: 13px 0 0;
-    padding: 7px;
-    width: auto; }
-  span.frame span img {
-    display: block;
-    float: left; }
-  span.frame span span {
-    clear: both;
-    color: #333333;
-    display: block;
-    padding: 5px 0 0; }
-span.align-center {
-  display: block;
-  overflow: hidden;
-  clear: both; }
-  span.align-center > span {
-    display: block;
-    overflow: hidden;
-    margin: 13px auto 0;
-    text-align: center; }
-  span.align-center span img {
-    margin: 0 auto;
-    text-align: center; }
-span.align-right {
-  display: block;
-  overflow: hidden;
-  clear: both; }
-  span.align-right > span {
-    display: block;
-    overflow: hidden;
-    margin: 13px 0 0;
-    text-align: right; }
-  span.align-right span img {
-    margin: 0;
-    text-align: right; }
-span.float-left {
-  display: block;
-  margin-right: 13px;
-  overflow: hidden;
-  float: left; }
-  span.float-left span {
-    margin: 13px 0 0; }
-span.float-right {
-  display: block;
-  margin-left: 13px;
-  overflow: hidden;
-  float: right; }
-  span.float-right > span {
-    display: block;
-    overflow: hidden;
-    margin: 13px auto 0;
-    text-align: right; }
-
-code, tt {
-  margin: 0 2px;
-  padding: 0 5px;
-  white-space: nowrap;
-  border: 1px solid #eaeaea;
-  background-color: #f8f8f8;
-  border-radius: 3px; }
-
-pre code {
-  margin: 0;
-  padding: 0;
-  white-space: pre;
-  border: none;
-  background: transparent; }
-
-.highlight pre {
-  background-color: #f8f8f8;
-  border: 1px solid #cccccc;
-  font-size: 13px;
-  line-height: 19px;
-  overflow: auto;
-  padding: 6px 10px;
-  border-radius: 3px; }
-
-pre {
-  background-color: #f8f8f8;
-  border: 1px solid #cccccc;
-  font-size: 13px;
-  line-height: 19px;
-  overflow: auto;
-  padding: 6px 10px;
-  border-radius: 3px; }
-  pre code, pre tt {
-    background-color: transparent;
-    border: none; }
-
-sup {
-    font-size: 0.83em;
-    vertical-align: super;
-    line-height: 0;
-}
-
-kbd {
-  display: inline-block;
-  padding: 3px 5px;
-  font-size: 11px;
-  line-height: 10px;
-  color: #555;
-  vertical-align: middle;
-  background-color: #fcfcfc;
-  border: solid 1px #ccc;
-  border-bottom-color: #bbb;
-  border-radius: 3px;
-  box-shadow: inset 0 -1px 0 #bbb
-}
-
-* {
-	-webkit-print-color-adjust: exact;
-}
-@media screen and (min-width: 914px) {
-    body {
-        width: 854px;
-        margin:0 auto;
-    }
-}
-@media print {
-	table, pre {
-		page-break-inside: avoid;
-	}
-	pre {
-		word-wrap: break-word;
-	}
-}
-</style>
-
-
-</head>
-
-<body>
-
-<hr>
-
-<p>title: 机器学习第三课</p>
-
-<p>tags: machine learning,andrew Ng</p>
-
-<hr>
-
-<h2 id="toc_0">机器学习第三课</h2>
-
-<h3 id="toc_1">逻辑回归(logic regression)</h3>
-
-<h4 id="toc_2">分类:</h4>
-
-<p>对于给定一堆数据，比方说是tumor的图片，通过机器学习的方法训练，能够准确的识别是否是malignant（恶性的）还是良性的。这种训练，给出的结果是二分的，是或者不是，在之前学习的线性回归中，并不适用，即：对m个样本，\(x^i,i\in(1....m),有x^i\in(0,1)\) 。</p>
-
-<h3 id="toc_3">假设函数</h3>
-
-<p>hypothesis function , \(H_\theta(X)\)，表示的是一个对于给定数据集的假设，或者是一个模型，在之前的学习中，假设函数也可以表示成：</p>
-
-<blockquote>
-<p>\[ H(X) = \theta^TX\]</p>
-</blockquote>
-
-<p>在逻辑回归中，\(H(X)\) 满足 条件 \(0 \leq H(x) \leq 1\) ,以上的表达式不足以满足，所以将\(\theta^TX\) 放入 <a href="https://en.wikipedia.org/wiki/Logistic_function" target="_blank" rel="noopener">Logistic Function</a> 中，即：</p>
-
-<blockquote>
-<p>\[H(X) = g(\theta^{T}X) \] </p>
-
-<p>\[z = \theta^{T}x\]</p>
-
-<p>\[g(z) = \frac{1}{1+e^{-z}} \]   <em>逻辑函数</em></p>
-</blockquote>
-
-<p>整个函数在坐标系中展示如下：</p>
-
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Logistic-curve.svg" alt=""></p>
-
-<p>对此，有</p>
-
-<blockquote>
-<p>\[
-y = 
-\begin{cases}
-1, &amp; \text{x $\to$ +$\infty$} \\
-0, &amp; \text{x $\to$ -$\infty$}
-\end{cases}
-\]</p>
-
-<p>\[
-X = H(X) = \theta^{T}X
-\]</p>
-
-<p>\[
-g(z) = \frac{1}{1+e^{-z}} = \frac{1}{1+e^{-\theta^{T}X}}
-\]</p>
-</blockquote>
-
-<p>这样的逻辑函数在给定的X下，将会给出一个等于结果=1的概率(<em>probability</em>)。</p>
-
-<h4 id="toc_4">决定边界</h4>
-
-<p>The <strong>decision boundary</strong> is the line that separates the area where y = 0 and where y = 1. It is created by our hypothesis function.</p>
-
-<p>我的理解是，在<strong>任何</strong>的假设函数下，总有一条或者是一圈之类的线，能把数据分开、数学上表示是，在逻辑函数取值=0的时候，在图形上的表示。</p>
-
-<blockquote>
-<p>\[
-给定的一个函数：\theta = 
-\begin{bmatrix}
- \theta_1 \\
- \theta_2 \\
- \theta_3 \\
-\end{bmatrix}。
-令 \theta_1x_1+\theta_2x_2+\theta_3x_3 = 0
-\]</p>
-
-<p>关于上述方程的解的集合就是这个假设函数的决定边界，无所谓最终分类算法好不好。</p>
-</blockquote>
-
-<h3 id="toc_5">损失函数</h3>
-
-<p><em>Cost Function</em> :</p>
-
-<p>在之前的学习中损失函数是一个<em>bow-shaped function</em>，存在全局的最低点，但是对这个分类算法不太友好，。这里其实之前的</p>
-
-<blockquote>
-<p>\[ J(\theta) = \frac{1}{2m} \sum_{i=1}^{m}(\theta^{T}X_i - y_i)^2\]</p>
-</blockquote>
-
-<p>可以改写成</p>
-
-<blockquote>
-<p>\[ J(\theta) = \frac{1}{m} \sum_{i=1}^{m}Cost(h_\theta(x^{(i)},y^{i}) \]</p>
-</blockquote>
-
-<p>证明过程：</p>
-
-<blockquote>
-<p>这个\(Cost(H_\theta(x^{(i)}),y^i)\) 指的是一份数据的偏差，是假设函数的值减这份数据对应的真实值。</p>
-</blockquote>
-
-<p>结论：</p>
-
-<blockquote>
-<p>$$
-\begin{cases}
-Cost(h<em>\theta(x),y) = - \log(h</em>\theta(x)) , &amp;  \text{if y = 1}  \
-Cost(h<em>\theta(x),y) = - \log(1-h</em>\theta(x)),&amp; \text{if y = 0 }\</p>
-
-<p>\end{cases}
-$$</p>
-</blockquote>
-
-<p>简化损失函数：</p>
-
-<blockquote>
-<p>\(Cost(H_\theta(x^{(i)}),y^i) = -y^{i}\log(h_\theta(x)) + (1-y)(- \log(1-h_\theta(x)))， y \in (1|0) \) ;
-\[
-J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \log(1-h_\theta(x^{i})))]
-\]</p>
-</blockquote>
-
-<p>根据之前的多元线性回归分析的损失函数有：</p>
-
-<p>Repeat:</p>
-
-<blockquote>
-<p>\[
-\theta_j := \theta_j - \frac{\alpha\partial}{\partial\theta_j}J(\theta) , \text{同时更新所有的$\theta$}
-\]</p>
-</blockquote>
-
-<p>结果：</p>
-
-<blockquote>
-<p>\[
-\theta_j := \theta_j - \frac{\alpha}{m}\sum_{(i=1)}^{(m)}(h_\theta(x^{i})-y^{i})x_j^i
-\]</p>
-</blockquote>
-
-<p>这个和之前的线性回归里面的其实一样的，\(x_j^i\)表示的第i份数据，其中第j维的数据的列；</p>
-
-<h4 id="toc_6">进阶优化</h4>
-
-<p>有更多的其他算法，而不是梯度下降；相对而言是更快，也不需要学习速率；只是更加复杂。</p>
-
-<p>这些算法不需要自己实现。直接调用程序提供的库就行，后期去看看python的实现。</p>
-
-<p>octave的fminunc()</p>
-
-<h3 id="toc_7">y不是二分的情况</h3>
-
-<h4 id="toc_8">One-vs-all</h4>
-
-<p>思路就是先挑一种出来，对于一个分类器（假设函数）来说，如果有\(m\)种分类 \(y\in (1,2,3,4...)\) ,对于每一次输入\(\theta^{T}X\) 输出值有\(m\)种取值，分类器的做法是找出置信度最高的值。</p>
-
-<h3 id="toc_9">overfitting and underfit</h3>
-
-<p>Overfitting: If we have too many features, the learned hypothesis may fit the training set very well ( ), but fail to generalize to new examples (predict prices on new examples).</p>
-
-<p>如果说函数有太多的特征（加入了一些不必要的特征，这些特征可能是底作用的，也可能是完全无效的），所以说是这个分类器完美的适应了样本的数据，但是对于一般性的输入 有可能预测的一般。</p>
-
-<p>ps：联想泰勒展开的公式，模拟函数越多的多项式越能够模拟原函数的走向（图形表现）。</p>
-
-<p>解决：</p>
-
-<ul>
-<li>减少数据维度
-
-<ul>
-<li>可以手动</li>
-<li>Model selection algorithm</li>
-</ul></li>
-<li>Regularization 正则化
-
-<ul>
-<li>保持所有的维度。增加一个多项式，作为惩罚某些维度参数的手段，减少这个维度在函数中的权重。</li>
-<li>也有可能每一个维度都提供一定的预测权重，并且函数运转的很好。</li>
-</ul></li>
-</ul>
-
-<p>正则化：</p>
-
-<p>​   \(\theta_1,\theta_2,\theta_3,.....\)这些参数都很小，减少过拟合的倾向。</p>
-
-<p>在
-\[
-J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \log(1-h_\theta(x^{i}))) + \lambda\sum_{j=1}^{n}\theta_{j}^2 ] , \text{$\lambda$是正则化参数} \\
-\]
-后面这个是惩罚项。默认不会去优化\(\theta_0\)的。</p>
-
-<p>将上述的正则化方法带入到我们之前的梯度下降算法：
-\[
-\theta_{j} := \theta_{j}(1-\alpha\frac{\lambda}{m}) - \frac{\alpha}{m}\sum_{(i=1)}^{(m)}(h_\theta(x^{i})-y^{i})x_j^i
-\]
-只是去压缩了一下\(\theta_j\) </p>
-
-<p>Normal Equation:
-\[
-\theta = (X^{T}X)^{-1}X^{T}Y
-\]
-应用正则化：
-\[
-\theta = (X^{T}X+\lambda\begin{bmatrix}0&amp;0&amp;\cdots&amp;0\\0&amp;1&amp;\cdots&amp;0\\\vdots&amp;\vdots&amp;\ddots&amp;0\\0&amp;0&amp;\cdots&amp;1\end{bmatrix})^{-1}X^{T}Y
-\]
-matrix是 n+1*n+1；在\(\lambda \gt 0\) 的时候，括号里面这堆东西绝壁是可逆的。</p>
-
-<p>Regularized logistic regression:</p>
-
-<p>梯度下降：在写法上其实是和线性回归一样的，只是这里的假设函数不一样。</p>
-
-<p>advanced Optimize: 在调用这种高级库的时候，cost function \(J(\theta)\) 这个东西不一样。这个应该是个入参。</p>
-
-<p>总结：</p>
-
-<p>这里提出了新的代价函数；以及过拟合的解决方法、但是过犹不及，太多的正则项会导致underfitting</p>
-
-
-
-<script type="text/x-mathjax-config">
-(function () {
-
-MathJax.Hub.Config({
-	'showProcessingMessages': false,
-	'messageStyle': 'none'
-});
-
-if (typeof MathJaxListener !== 'undefined') {
-	MathJax.Hub.Register.StartupHook('End', function () {
-		MathJaxListener.invokeCallbackForKey_('End');
-	});
-}
-
-})();
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-
-</body>
-
-</html>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2018/11/18/机器学习第三课/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程道玄">
       <meta itemprop="description" content="a java developer's blog">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="LoveCheng">
     </span>
 
@@ -1853,7 +1361,7 @@ if (typeof MathJaxListener !== 'undefined') {
                 
               
 
-              <time title="Created: 2018-11-18 23:24:13" itemprop="dateCreated datePublished" datetime="2018-11-18T23:24:13+08:00">2018-11-18</time>
+              <time title="Created: 2018-11-18 23:24:12" itemprop="dateCreated datePublished" datetime="2018-11-18T23:24:12+08:00">2018-11-18</time>
             
 
             
@@ -1870,7 +1378,7 @@ if (typeof MathJaxListener !== 'undefined') {
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-20 01:06:21" itemprop="dateModified" datetime="2018-11-20T01:06:21+08:00">2018-11-20</time>
+                <time title="Modified: 2019-02-05 18:38:59" itemprop="dateModified" datetime="2019-02-05T18:38:59+08:00">2019-02-05</time>
               
             
           </span>
@@ -1908,62 +1416,68 @@ if (typeof MathJaxListener !== 'undefined') {
             <h2 id="机器学习第三课"><a href="#机器学习第三课" class="headerlink" title="机器学习第三课"></a>机器学习第三课</h2><h3 id="逻辑回归-logic-regression"><a href="#逻辑回归-logic-regression" class="headerlink" title="逻辑回归(logic regression)"></a>逻辑回归(logic regression)</h3><h4 id="分类"><a href="#分类" class="headerlink" title="分类:"></a>分类:</h4><p>对于给定一堆数据，比方说是tumor的图片，通过机器学习的方法训练，能够准确的识别是否是malignant（恶性的）还是良性的。这种训练，给出的结果是二分的，是或者不是，在之前学习的线性回归中，并不适用，即：对m个样本，$x^i,i\in(1….m),有x^i\in(0,1)$ 。</p>
 <h3 id="假设函数"><a href="#假设函数" class="headerlink" title="假设函数"></a>假设函数</h3><p>hypothesis function , $H_\theta(X)$，表示的是一个对于给定数据集的假设，或者是一个模型，在之前的学习中，假设函数也可以表示成：</p>
 <blockquote>
-<p>$$ H(X) = \theta^TX$$</p>
-</blockquote>
+<script type="math/tex; mode=display">H(X) = \theta^TX</script></blockquote>
 <p>在逻辑回归中，$H(X)$ 满足 条件 $0 \leq H(x) \leq 1$ ,以上的表达式不足以满足，所以将$\theta^TX$ 放入 <a href="https://en.wikipedia.org/wiki/Logistic_function" target="_blank" rel="noopener">Logistic Function</a> 中，即：</p>
 <blockquote>
-<p>$$H(X) = g(\theta^{T}X) $$ </p>
-<p>$$z = \theta^{T}x$$</p>
-<p>$$g(z) = \frac{1}{1+e^{-z}} $$   <em>逻辑函数</em></p>
+<script type="math/tex; mode=display">H(X) = g(\theta^{T}X)</script><script type="math/tex; mode=display">z = \theta^{T}x</script><p><script type="math/tex">g(z) = \frac{1}{1+e^{-z}}</script>   <em>逻辑函数</em></p>
 </blockquote>
 <p>整个函数在坐标系中展示如下：</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Logistic-curve.svg" alt=""></p>
 <p>对此，有</p>
 <blockquote>
-<p>$$<br>y =<br>\begin{cases}<br>1, &amp; \text{x $\to$ +$\infty$} \<br>0, &amp; \text{x $\to$ -$\infty$}<br>\end{cases}<br>$$</p>
-</blockquote>
-<blockquote>
-<p>$$<br>X = H(X) = \theta^{T}X<br>$$</p>
-<p>$$<br>g(z) = \frac{1}{1+e^{-z}} = \frac{1}{1+e^{-\theta^{T}X}}<br>$$</p>
-</blockquote>
+<script type="math/tex; mode=display">
+y = 
+\begin{cases}
+1, & \text{x $\to$ +$\infty$} \\
+0, & \text{x $\to$ -$\infty$}
+\end{cases}</script><script type="math/tex; mode=display">
+X = H(X) = \theta^{T}X</script><script type="math/tex; mode=display">
+g(z) = \frac{1}{1+e^{-z}} = \frac{1}{1+e^{-\theta^{T}X}}</script></blockquote>
 <p>这样的逻辑函数在给定的X下，将会给出一个等于结果=1的概率(<em>probability</em>)。</p>
 <h4 id="决定边界"><a href="#决定边界" class="headerlink" title="决定边界"></a>决定边界</h4><p>The <strong>decision boundary</strong> is the line that separates the area where y = 0 and where y = 1. It is created by our hypothesis function.</p>
 <p>我的理解是，在<strong>任何</strong>的假设函数下，总有一条或者是一圈之类的线，能把数据分开、数学上表示是，在逻辑函数取值=0的时候，在图形上的表示。</p>
 <blockquote>
-<p>$$<br>给定的一个函数：\theta =<br>\begin{bmatrix}<br> \theta_1 \<br> \theta_2 \<br> \theta_3 \<br>\end{bmatrix}。<br>令 \theta_1x_1+\theta_2x_2+\theta_3x_3 = 0<br>$$</p>
-<p>关于上述方程的解的集合就是这个假设函数的决定边界，无所谓最终分类算法好不好。</p>
+<script type="math/tex; mode=display">
+给定的一个函数：\theta = 
+\begin{bmatrix}
+ \theta_1 \\
+ \theta_2 \\
+ \theta_3 \\
+\end{bmatrix}。
+令 \theta_1x_1+\theta_2x_2+\theta_3x_3 = 0</script><p>关于上述方程的解的集合就是这个假设函数的决定边界，无所谓最终分类算法好不好。</p>
 </blockquote>
 <h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p><em>Cost Function</em> :</p>
 <p>在之前的学习中损失函数是一个<em>bow-shaped function</em>，存在全局的最低点，但是对这个分类算法不太友好，。这里其实之前的</p>
 <blockquote>
-<p>$$ J(\theta) = \frac{1}{2m} \sum_{i=1}^{m}(\theta^{T}X_i - y_i)^2$$</p>
-</blockquote>
+<script type="math/tex; mode=display">J(\theta) = \frac{1}{2m} \sum_{i=1}^{m}(\theta^{T}X_i - y_i)^2</script></blockquote>
 <p>可以改写成</p>
 <blockquote>
-<p>$$ J(\theta) = \frac{1}{m} \sum_{i=1}^{m}Cost(h_\theta(x^{(i)},y^{i}) $$</p>
-</blockquote>
+<script type="math/tex; mode=display">J(\theta) = \frac{1}{m} \sum_{i=1}^{m}Cost(h_\theta(x^{(i)},y^{i})</script></blockquote>
 <p>证明过程：</p>
 <blockquote>
 <p>这个$Cost(H_\theta(x^{(i)}),y^i)$ 指的是一份数据的偏差，是假设函数的值减这份数据对应的真实值。</p>
 </blockquote>
 <p>结论：</p>
 <blockquote>
-<p>$$<br>\begin{cases}<br>Cost(h_\theta(x),y) = - \log(h_\theta(x)) , &amp;  \text{if y = 1}  \<br>Cost(h_\theta(x),y) = - \log(1-h_\theta(x)),&amp; \text{if y = 0 }\</p>
-<p>\end{cases}<br>$$</p>
-</blockquote>
+<script type="math/tex; mode=display">
+\begin{cases}
+Cost(h_\theta(x),y) = - \log(h_\theta(x)) , &  \text{if y = 1}  \\
+Cost(h_\theta(x),y) = - \log(1-h_\theta(x)),& \text{if y = 0 }\\
+\end{cases}</script></blockquote>
 <p>简化损失函数：</p>
 <blockquote>
-<p>$Cost(H_\theta(x^{(i)}),y^i) = -y^{i}\log(h_\theta(x)) + (1-y)(- \log(1-h_\theta(x)))， y \in (1|0) $ ;<br>$$<br>J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \log(1-h_\theta(x^{i})))]<br>$$</p>
-</blockquote>
+<p>$Cost(H<em>\theta(x^{(i)}),y^i) = -y^{i}\log(h</em>\theta(x)) + (1-y)(- \log(1-h_\theta(x)))， y \in (1|0) $ ;</p>
+<script type="math/tex; mode=display">
+J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \log(1-h_\theta(x^{i})))]</script></blockquote>
 <p>根据之前的多元线性回归分析的损失函数有：</p>
 <p>Repeat:</p>
 <blockquote>
-<p>$$<br>\theta_j := \theta_j - \frac{\alpha\partial}{\partial\theta_j}J(\theta) , \text{同时更新所有的$\theta$}<br>$$</p>
-</blockquote>
+<script type="math/tex; mode=display">
+\theta_j := \theta_j - \frac{\alpha\partial}{\partial\theta_j}J(\theta) , \text{同时更新所有的$\theta$}</script></blockquote>
 <p>结果：</p>
 <blockquote>
-<p>$$<br>\theta_j := \theta_j - \frac{\alpha}{m}\sum_{(i=1)}^{(m)}(h_\theta(x^{i})-y^{i})x_j^i<br>$$</p>
-</blockquote>
+<script type="math/tex; mode=display">
+\theta_j := \theta_j - \frac{\alpha}{m}\sum_{(i=1)}^{(m)}(h_\theta(x^{i})-y^{i})x_j^i</script></blockquote>
 <p>这个和之前的线性回归里面的其实一样的，$x_j^i$表示的第i份数据，其中第j维的数据的列；</p>
 <h4 id="进阶优化"><a href="#进阶优化" class="headerlink" title="进阶优化"></a>进阶优化</h4><p>有更多的其他算法，而不是梯度下降；相对而言是更快，也不需要学习速率；只是更加复杂。</p>
 <p>这些算法不需要自己实现。直接调用程序提供的库就行，后期去看看python的实现。</p>
@@ -1987,9 +1501,17 @@ if (typeof MathJaxListener !== 'undefined') {
 </ul>
 <p>正则化：</p>
 <p>​    $\theta_1,\theta_2,\theta_3,…..$这些参数都很小，减少过拟合的倾向。</p>
-<p>在<br>$$<br>J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \log(1-h_\theta(x^{i}))) + \lambda\sum_{j=1}^{n}\theta_{j}^2 ] , \text{$\lambda$是正则化参数} \<br>$$<br>后面这个是惩罚项。默认不会去优化$\theta_0$的。</p>
-<p>将上述的正则化方法带入到我们之前的梯度下降算法：<br>$$<br>\theta_{j} := \theta_{j}(1-\alpha\frac{\lambda}{m}) - \frac{\alpha}{m}\sum_{(i=1)}^{(m)}(h_\theta(x^{i})-y^{i})x_j^i<br>$$<br>只是去压缩了一下$\theta_j$ </p>
-<p>Normal Equation:<br>$$<br>\theta = (X^{T}X)^{-1}X^{T}Y<br>$$<br>应用正则化：<br>$$<br>\theta = (X^{T}X+\lambda\begin{bmatrix}0&amp;0&amp;\cdots&amp;0\0&amp;1&amp;\cdots&amp;0\\vdots&amp;\vdots&amp;\ddots&amp;0\0&amp;0&amp;\cdots&amp;1\end{bmatrix})^{-1}X^{T}Y<br>$$<br>matrix是 n+1*n+1；在$\lambda \gt 0$ 的时候，括号里面这堆东西绝壁是可逆的。</p>
+<p>在</p>
+<script type="math/tex; mode=display">
+J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \log(1-h_\theta(x^{i}))) + \lambda\sum_{j=1}^{n}\theta_{j}^2 ] , \text{$\lambda$是正则化参数} \\</script><p>后面这个是惩罚项。默认不会去优化$\theta_0$的。</p>
+<p>将上述的正则化方法带入到我们之前的梯度下降算法：</p>
+<script type="math/tex; mode=display">
+\theta_{j} := \theta_{j}(1-\alpha\frac{\lambda}{m}) - \frac{\alpha}{m}\sum_{(i=1)}^{(m)}(h_\theta(x^{i})-y^{i})x_j^i</script><p>只是去压缩了一下$\theta_j$ </p>
+<p>Normal Equation:</p>
+<script type="math/tex; mode=display">
+\theta = (X^{T}X)^{-1}X^{T}Y</script><p>应用正则化：</p>
+<script type="math/tex; mode=display">
+\theta = (X^{T}X+\lambda\begin{bmatrix}0&0&\cdots&0\\0&1&\cdots&0\\\vdots&\vdots&\ddots&0\\0&0&\cdots&1\end{bmatrix})^{-1}X^{T}Y</script><p>matrix是 n+1*n+1；在$\lambda \gt 0$ 的时候，括号里面这堆东西绝壁是可逆的。</p>
 <p>Regularized logistic regression:</p>
 <p>梯度下降：在写法上其实是和线性回归一样的，只是这里的假设函数不一样。</p>
 <p>advanced Optimize: 在调用这种高级库的时候，cost function $J(\theta)$ 这个东西不一样。这个应该是个入参。</p>
@@ -2046,20 +1568,20 @@ if (typeof MathJaxListener !== 'undefined') {
 
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2018/11/15/machine_learning/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程道玄">
       <meta itemprop="description" content="a java developer's blog">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="LoveCheng">
     </span>
 
@@ -2113,7 +1635,7 @@ if (typeof MathJaxListener !== 'undefined') {
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-20 00:49:51" itemprop="dateModified" datetime="2018-11-20T00:49:51+08:00">2018-11-20</time>
+                <time title="Modified: 2019-02-05 15:03:19" itemprop="dateModified" datetime="2019-02-05T15:03:19+08:00">2019-02-05</time>
               
             
           </span>
@@ -2148,19 +1670,15 @@ if (typeof MathJaxListener !== 'undefined') {
       
         
           
-            <p>#机器学习第三周</p>
-<p>逻辑回归（logic regression）:</p>
+            <h1 id="机器学习第三周"><a href="#机器学习第三周" class="headerlink" title="机器学习第三周"></a>机器学习第三周</h1><p>逻辑回归（logic regression）:</p>
 <pre><code>分类问题，可能有好几个取值
-</code></pre><p>假设函数：<br>    $$ H(X) = H(\theta^{T}X) $$<br>针对之前的线性回归，逻辑回归的取值是y$\in${1|0}，取值是离散的；</p>
-<p>$$  g(z) = \frac{1}{1+e^{-z}} $$</p>
-<p>$$ g’(z) = \frac{e^{-x}}{(1+e^{-z})^2}  = g(z)(1-g(z))$$</p>
-<p>$$ z =  \theta^{T}X $$</p>
-<p>g(z) 的图形显示如下:</p>
+</code></pre><p>假设函数：</p>
+<pre><code>$$ H(X) = H(\theta^{T}X) $$
+</code></pre><p>针对之前的线性回归，逻辑回归的取值是y$\in${1|0}，取值是离散的；</p>
+<script type="math/tex; mode=display">g(z) = \frac{1}{1+e^{-z}}</script><script type="math/tex; mode=display">g'(z) = \frac{e^{-x}}{(1+e^{-z})^2}  = g(z)(1-g(z))</script><script type="math/tex; mode=display">z =  \theta^{T}X</script><p>g(z) 的图形显示如下:</p>
 <p><img src="https://baike.baidu.com/pic/Sigmoid%E5%87%BD%E6%95%B0/7981407/0/d009b3de9c82d158dfb4e7218a0a19d8bc3e426f?fr=lemma&amp;ct=single#aid=0&amp;pic=c9fcc3cec3fdfc03f23fbf16d73f8794a5c226dc" alt="图片"></p>
 <p>when z &gt; 0 , then g(z) 更接近1;</p>
-<p>$$ z =  \theta^{T}X $$</p>
-<p>$$ \theta^TX &gt; 0 $$</p>
-<p>决定边界（decision boundary）:</p>
+<script type="math/tex; mode=display">z =  \theta^{T}X</script><script type="math/tex; mode=display">\theta^TX > 0</script><p>决定边界（decision boundary）:</p>
 <p>给定的一个模型，或者说是给定的一个$\theta$向量，这个假设函数（模型）存在$ \theta^TX = 0 $的一种情况，一般能将Y=0 和Y=1分开，这种情况或者说一个关于X的函数表现在图像上是将离散的数据分开。潜台词应该是不一定分的很好。可能这个模型让所有数据点的计算都趋向于中间，每个人的取值的概率都差不多。</p>
 
           
@@ -2213,20 +1731,20 @@ if (typeof MathJaxListener !== 'undefined') {
 
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2018/11/08/userCenter-springbootilize/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程道玄">
       <meta itemprop="description" content="a java developer's blog">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="LoveCheng">
     </span>
 
@@ -2280,7 +1798,7 @@ if (typeof MathJaxListener !== 'undefined') {
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-20 00:40:08" itemprop="dateModified" datetime="2018-11-20T00:40:08+08:00">2018-11-20</time>
+                <time title="Modified: 2019-02-05 15:02:57" itemprop="dateModified" datetime="2019-02-05T15:02:57+08:00">2019-02-05</time>
               
             
           </span>
@@ -2315,7 +1833,7 @@ if (typeof MathJaxListener !== 'undefined') {
       
         
           
-            <p>###overview<br>稳定为主；核心是重构，保证对外的业务逻辑适不变的；在此前提下使用最新的框架。<br>为以后扩展奠定基础。jar包的方式也是期望已久。简化配置减少维护的难度。</p>
+            <h3 id="overview"><a href="#overview" class="headerlink" title="overview"></a>overview</h3><p>稳定为主；核心是重构，保证对外的业务逻辑适不变的；在此前提下使用最新的框架。<br>为以后扩展奠定基础。jar包的方式也是期望已久。简化配置减少维护的难度。</p>
 <ol>
 <li>基于jetty的;</li>
 <li>数据库有加解密；</li>
@@ -2325,29 +1843,29 @@ if (typeof MathJaxListener !== 'undefined') {
 <li>打包的问题；</li>
 <li>脚本</li>
 </ol>
-<p>###基于jetty容器的web项目<br>引入了springboot的依赖，1.5.1版本，再高就需要改代码了;除了核心的springboot以外，加入了如下依赖：</p>
+<h3 id="基于jetty容器的web项目"><a href="#基于jetty容器的web项目" class="headerlink" title="基于jetty容器的web项目"></a>基于jetty容器的web项目</h3><p>引入了springboot的依赖，1.5.1版本，再高就需要改代码了;除了核心的springboot以外，加入了如下依赖：</p>
 <blockquote>
-<pre><code>&lt;dependency&gt;
-      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;
-  &lt;/dependency&gt;
-  &lt;dependency&gt;
-      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
-  &lt;/dependency&gt;
-  &lt;dependency&gt;
-      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;
-  &lt;/dependency&gt;
-  &lt;dependency&gt;
-      &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-      &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
-  &lt;/dependency&gt;
+<pre><code>  &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+    &lt;/dependency&gt;
 </code></pre></blockquote>
 <p>启动类放在子模块web中，入口层次结构是com.datatrees.usercenter.UserCenterApplication.class。<br>之前基于servlet的一些东西（filter），需要重新被扫描进容器：<br>在filter上加上Annotation:@WebFilter,在启动类上加上了ServletComponentScan(“path”);<br>启动类如下：</p>
 <blockquote>
-</blockquote>
 <p>@SpringBootApplication(exclude = org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration.class)<br>@ServletComponentScan(“com.datatrees.usercenter”)<br>@ImportResource({“classpath:./spring/user-center-spring.xml”,”classpath:./user-center-mvc.xml”})<br>@PropertySources({<br>//        @PropertySource(“classpath:./spring/diamond.properties”),<br>        @PropertySource(“classpath:./config/local_config.properties”),<br>        @PropertySource(“classpath:./i18n/user-center-resource.properties”),<br>        @PropertySource(“classpath:./i18n/user-center-resource_zh_CN.properties”),<br>        @PropertySource(“classpath:./security.properties”),<br>})<br>public class UserCenterApplication {</p>
+</blockquote>
 <pre><code>private static final Logger logger = LoggerFactory.getLogger(UserCenterApplication.class);
 
 public static void main(String[] args) {
@@ -2359,7 +1877,7 @@ public static void main(String[] args) {
 }
 </code></pre><p>}</p>
 <p>首先是去除不需要自动配置的校验器，如果不去掉的话会需要加入额外的对hibernate的依赖<br>，然后上述的对filter的扫描，再是对spring的主要配置文件的引入，这里可以是完全没有配置文件的，但是这些改造需要写额外的代码，对datasource等bean进行配置，没有这么干。<br>再是引入了配置文件，这里也是可以完全没有配置文件的引入的，在resources文件夹下定义application.properties文件，或者引入对yml文件的解析库，使用yml文件也可以。</p>
-<p>###数据库加解密的问题<br>在springboot化改造完成之后，无法访问数据库，经过排查之后，revert到了之前的处理方式，我的想法是可以充分发挥配置中心的不同环境配置功能，但是super-diamond的缺点是需要spring生命周期是BFPP(BeanFactoryPostProcessor)的时候去统一替换${}，对于需要再项目启动时就初始化的bean，无法等到那个时候。在此处，有另外一个问题，在加解密工具EncryptUtil中初始化方法如下：</p>
+<h3 id="数据库加解密的问题"><a href="#数据库加解密的问题" class="headerlink" title="数据库加解密的问题"></a>数据库加解密的问题</h3><p>在springboot化改造完成之后，无法访问数据库，经过排查之后，revert到了之前的处理方式，我的想法是可以充分发挥配置中心的不同环境配置功能，但是super-diamond的缺点是需要spring生命周期是BFPP(BeanFactoryPostProcessor)的时候去统一替换${}，对于需要再项目启动时就初始化的bean，无法等到那个时候。在此处，有另外一个问题，在加解密工具EncryptUtil中初始化方法如下：</p>
 <pre><code>private static void initial(String path) {
 try {
   if (StringUtils.isEmpty(path)) {
@@ -2388,40 +1906,20 @@ try {
 <li>filter-test.properties</li>
 <li>filter-product.properties</li>
 </ul>
-<p>这里因为是<strong>直接读取文件</strong>，文件中内容是key-value的键值对，value是’${}’包裹的key，所以除非是手动的显式的替换./security.properties中的内容，是无法获取正确的配置的。 此处maven替换${}的数据，一般在使用<em>spring-boot-maven-plugin</em>打包时，需要一些额外的处理，但是此处：spring文件在bussiness模块，运行包在 web模块。<br>maven的动态替换：<br>在pom文件中，在根节点下加入：</p>
-<blockquote>
-</blockquote>
-<pre><code>&lt;profiles&gt;
-    &lt;profile&gt;
-        &lt;id&gt;dev&lt;/id&gt;
-        &lt;properties&gt;
-            &lt;manage.env&gt;dev&lt;/manage.env&gt;
-        &lt;/properties&gt;
-    &lt;/profile&gt;
-    &lt;profile&gt;
-        &lt;id&gt;test&lt;/id&gt;
-        &lt;properties&gt;
-            &lt;manage.env&gt;test&lt;/manage.env&gt;
-        &lt;/properties&gt;
-    &lt;/profile&gt;
-    &lt;profile&gt;
-        &lt;id&gt;product&lt;/id&gt;
-        &lt;properties&gt;
-            &lt;manage.env&gt;product&lt;/manage.env&gt;
-        &lt;/properties&gt;
-    &lt;/profile&gt;
-&lt;/profiles&gt;
-</code></pre><p>build节点下加入</p>
-<blockquote>
-</blockquote>
-<pre><code>&lt;filters&gt;   
-    &lt;filter&gt;src/main/filters/filter-{manage.env}.properties&lt;/filter&gt;
-   &lt;/filters&gt;
-</code></pre><p>###前端的加解密<br>前端通过content-type:application/x-www-form-urlencoded向后台传输数据，数据加密的，在后台需要对传输的数据解密，然后构造成普通的符合spring controller的规范的请求，一般是json的对象。<br>在user-center中是写在filter中，不过此处代码年代久远，不可妄动。</p>
+<p>这里因为是<strong>直接读取文件</strong>，文件中内容是key-value的键值对，value是’${}’包裹的key，所以除非是手动的显式的替换./security.properties中的内容，是无法获取正确的配置的。 此处maven替换${}的数据，一般在使用<em>spring-boot-maven-plugin</em>打包时，需要一些额外的处理，但是此处：spring文件在bussiness模块，运行包在 web模块。<br>maven的动态替换：<br>在pom文件中，在根节点下加入：<br>&gt;<br>    <profiles><br>        <profile><br>            <id>dev</id><br>            <properties><br>                <manage.env>dev&lt;/manage.env&gt;
+            </manage.env></properties>
+        </profile><br>        <profile><br>            <id>test</id><br>            <properties><br>                <manage.env>test&lt;/manage.env&gt;
+            </manage.env></properties>
+        </profile><br>        <profile><br>            <id>product</id><br>            <properties><br>                <manage.env>product&lt;/manage.env&gt;
+            </manage.env></properties>
+        </profile>
+    </profiles></p>
+<p>build节点下加入<br>&gt;<br>    <filters><br>        <filter>src/main/filters/filter-{manage.env}.properties</filter>
+       </filters></p>
+<h3 id="前端的加解密"><a href="#前端的加解密" class="headerlink" title="前端的加解密"></a>前端的加解密</h3><p>前端通过content-type:application/x-www-form-urlencoded向后台传输数据，数据加密的，在后台需要对传输的数据解密，然后构造成普通的符合spring controller的规范的请求，一般是json的对象。<br>在user-center中是写在filter中，不过此处代码年代久远，不可妄动。</p>
 <p>逻辑分析如下：</p>
 <p>实现一个<em>OncePerRequestFilter</em>，重写initFiltBean方法，在初始化方法中加载自己实现的一个请求解析器：通过配置在web.xml中的intParam，和servletContext获取到SDKLicenseManager对象，构造出解析器。在后续的filter的doFilterInternal中解析请求。具体解析逻辑是委托给了 <em>SDKLicenseServiceImpl</em>，包括从redis中获取非对称加密的私钥，解密等等，最后构造成一个<em>DTHttpServletRequest</em>，本质是一个HttpServletRequestWrapper包装类。</p>
-<p>###多环境的配置支持</p>
-<p>如果只是 ip、端口等等不同，解决方案还是很多的，但是这里有很多不同。。。</p>
+<h3 id="多环境的配置支持"><a href="#多环境的配置支持" class="headerlink" title="多环境的配置支持"></a>多环境的配置支持</h3><p>如果只是 ip、端口等等不同，解决方案还是很多的，但是这里有很多不同。。。</p>
 <p>目前 environment = [dev|test|product]。这个配置在pom文件中。这个项目中不同环境不同需求的配置有一下几个方面：</p>
 <ul>
 <li>数据库加解密的配置</li>
@@ -2433,13 +1931,10 @@ try {
 <pre><code>--spring.profiles.active=[env]
 </code></pre><p>日志最不同的还是在生产环境上有日志收集的一套东西。其他环境没有。</p>
 <p>对数据库加解密的实现方式的妥协，还是在打包命令中加入了 -P [environment] 。</p>
-<p>###dubbo</p>
-<p>这次改造加入了spring-boot-dubbo的依赖，升级了dubbo的版本，2.5.3–&gt;2.6.0,这个版本支持了REST，合并了dubbox。理论上是可以使用更优雅的方式(注解)来配置哪些服务是暴露的（@Service），使用了哪些服务（@Reference），这次没改这么多。</p>
-<p>###打包命令</p>
-<p>mvn clean package -Dmaven.test.skip=true -P test</p>
+<h3 id="dubbo"><a href="#dubbo" class="headerlink" title="dubbo"></a>dubbo</h3><p>这次改造加入了spring-boot-dubbo的依赖，升级了dubbo的版本，2.5.3—&gt;2.6.0,这个版本支持了REST，合并了dubbox。理论上是可以使用更优雅的方式(注解)来配置哪些服务是暴露的（@Service），使用了哪些服务（@Reference），这次没改这么多。</p>
+<h3 id="打包命令"><a href="#打包命令" class="headerlink" title="打包命令"></a>打包命令</h3><p>mvn clean package -Dmaven.test.skip=true -P test</p>
 <p>通过jenkins上传到测试服务器，<a href="http://192.168.5.104:8085/" target="_blank" rel="noopener">http://192.168.5.104:8085/</a> admin/123456</p>
-<p>###脚本</p>
-<p>172.16.1.41 /dashu/application/gfdusercenter/start.sh</p>
+<h3 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h3><p>172.16.1.41 /dashu/application/gfdusercenter/start.sh</p>
 <p>172.16.2.16 /dashu/application/jars/start.sh(暂不可用)</p>
 
           
@@ -2492,20 +1987,20 @@ try {
 
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2018/11/05/机器学习第一次编程作业/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程道玄">
       <meta itemprop="description" content="a java developer's blog">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="LoveCheng">
     </span>
 
@@ -2599,8 +2094,7 @@ try {
 <li>点击斯坦福的证书</li>
 <li>点击 ‘Access MATLAB Online’ 创建 在线matlab的账户</li>
 </ol>
-<p>###上传编程作业</p>
-<ol>
+<h3 id="上传编程作业"><a href="#上传编程作业" class="headerlink" title="上传编程作业"></a>上传编程作业</h3><ol>
 <li>下载作业</li>
 <li>登录matlab online</li>
 <li>输入如下命令，并运行：<ul>
@@ -2608,16 +2102,14 @@ try {
 </ul>
 </li>
 </ol>
-<p>###编程作业</p>
-<ol>
+<h3 id="编程作业"><a href="#编程作业" class="headerlink" title="编程作业"></a>编程作业</h3><ol>
 <li>ex1.m - Octave/MATLAB script that steps you through the exercise</li>
 <li>ex1 multi.m - Octave/MATLAB script for the later parts of the exercise</li>
 <li>ex1data1.txt - Dataset for linear regression with one variable</li>
 <li>ex1data2.txt - Dataset for linear regression with multiple variables</li>
 <li>submit.m - Submission script that sends your solutions to our servers</li>
 </ol>
-<p>###need to complete files:</p>
-<ul>
+<h3 id="need-to-complete-files"><a href="#need-to-complete-files" class="headerlink" title="need to complete files:"></a>need to complete files:</h3><ul>
 <li>[?] warmUpExercise.m - Simple example function in Octave/MATLAB</li>
 <li>[?] plotData.m - Function to display the dataset</li>
 <li>[?] computeCost.m - Function to compute the cost of linear regression</li>
@@ -2698,7 +2190,7 @@ try {
 
       <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">程道玄</p>
               <p class="site-description motion-element" itemprop="description">a java developer's blog</p>
@@ -2921,6 +2413,61 @@ try {
   
 
   
+  
+
+  
+  
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+  
+
 
   
   

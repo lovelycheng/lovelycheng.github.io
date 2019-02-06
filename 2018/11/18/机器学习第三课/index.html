@@ -16,7 +16,7 @@
 
 <html class="theme-next muse use-motion" lang="">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
@@ -117,7 +117,7 @@
 <meta property="og:description" content="机器学习第三课逻辑回归(logic regression)分类:对于给定一堆数据，比方说是tumor的图片，通过机器学习的方法训练，能够准确的识别是否是malignant（恶性的）还是良性的。这种训练，给出的结果是二分的，是或者不是，在之前学习的线性回归中，并不适用，即：对m个样本，$x^i,i\in(1….m),有x^i\in(0,1)$ 。 假设函数hypothesis function ,">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/8/88/Logistic-curve.svg">
-<meta property="og:updated_time" content="2018-11-19T17:06:21.003Z">
+<meta property="og:updated_time" content="2019-02-05T10:38:59.728Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习第三课">
 <meta name="twitter:description" content="机器学习第三课逻辑回归(logic regression)分类:对于给定一堆数据，比方说是tumor的图片，通过机器学习的方法训练，能够准确的识别是否是malignant（恶性的）还是良性的。这种训练，给出的结果是二分的，是或者不是，在之前学习的线性回归中，并不适用，即：对m个样本，$x^i,i\in(1….m),有x^i\in(0,1)$ 。 假设函数hypothesis function ,">
@@ -176,7 +176,7 @@
       .logo-line-after i { right: initial; }
     }
   </style>
-</noscript>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </head>
 
@@ -187,7 +187,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -349,7 +349,7 @@
                 
               
 
-              <time title="Created: 2018-11-18 23:24:13" itemprop="dateCreated datePublished" datetime="2018-11-18T23:24:13+08:00">2018-11-18</time>
+              <time title="Created: 2018-11-18 23:24:12" itemprop="dateCreated datePublished" datetime="2018-11-18T23:24:12+08:00">2018-11-18</time>
             
 
             
@@ -366,7 +366,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-20 01:06:21" itemprop="dateModified" datetime="2018-11-20T01:06:21+08:00">2018-11-20</time>
+                <time title="Modified: 2019-02-05 18:38:59" itemprop="dateModified" datetime="2019-02-05T18:38:59+08:00">2019-02-05</time>
               
             
           </span>
@@ -402,62 +402,68 @@
         <h2 id="机器学习第三课"><a href="#机器学习第三课" class="headerlink" title="机器学习第三课"></a>机器学习第三课</h2><h3 id="逻辑回归-logic-regression"><a href="#逻辑回归-logic-regression" class="headerlink" title="逻辑回归(logic regression)"></a>逻辑回归(logic regression)</h3><h4 id="分类"><a href="#分类" class="headerlink" title="分类:"></a>分类:</h4><p>对于给定一堆数据，比方说是tumor的图片，通过机器学习的方法训练，能够准确的识别是否是malignant（恶性的）还是良性的。这种训练，给出的结果是二分的，是或者不是，在之前学习的线性回归中，并不适用，即：对m个样本，$x^i,i\in(1….m),有x^i\in(0,1)$ 。</p>
 <h3 id="假设函数"><a href="#假设函数" class="headerlink" title="假设函数"></a>假设函数</h3><p>hypothesis function , $H_\theta(X)$，表示的是一个对于给定数据集的假设，或者是一个模型，在之前的学习中，假设函数也可以表示成：</p>
 <blockquote>
-<p>$$ H(X) = \theta^TX$$</p>
-</blockquote>
+<script type="math/tex; mode=display">H(X) = \theta^TX</script></blockquote>
 <p>在逻辑回归中，$H(X)$ 满足 条件 $0 \leq H(x) \leq 1$ ,以上的表达式不足以满足，所以将$\theta^TX$ 放入 <a href="https://en.wikipedia.org/wiki/Logistic_function" target="_blank" rel="noopener">Logistic Function</a> 中，即：</p>
 <blockquote>
-<p>$$H(X) = g(\theta^{T}X) $$ </p>
-<p>$$z = \theta^{T}x$$</p>
-<p>$$g(z) = \frac{1}{1+e^{-z}} $$   <em>逻辑函数</em></p>
+<script type="math/tex; mode=display">H(X) = g(\theta^{T}X)</script><script type="math/tex; mode=display">z = \theta^{T}x</script><p><script type="math/tex">g(z) = \frac{1}{1+e^{-z}}</script>   <em>逻辑函数</em></p>
 </blockquote>
 <p>整个函数在坐标系中展示如下：</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Logistic-curve.svg" alt=""></p>
 <p>对此，有</p>
 <blockquote>
-<p>$$<br>y =<br>\begin{cases}<br>1, &amp; \text{x $\to$ +$\infty$} \<br>0, &amp; \text{x $\to$ -$\infty$}<br>\end{cases}<br>$$</p>
-</blockquote>
-<blockquote>
-<p>$$<br>X = H(X) = \theta^{T}X<br>$$</p>
-<p>$$<br>g(z) = \frac{1}{1+e^{-z}} = \frac{1}{1+e^{-\theta^{T}X}}<br>$$</p>
-</blockquote>
+<script type="math/tex; mode=display">
+y = 
+\begin{cases}
+1, & \text{x $\to$ +$\infty$} \\
+0, & \text{x $\to$ -$\infty$}
+\end{cases}</script><script type="math/tex; mode=display">
+X = H(X) = \theta^{T}X</script><script type="math/tex; mode=display">
+g(z) = \frac{1}{1+e^{-z}} = \frac{1}{1+e^{-\theta^{T}X}}</script></blockquote>
 <p>这样的逻辑函数在给定的X下，将会给出一个等于结果=1的概率(<em>probability</em>)。</p>
 <h4 id="决定边界"><a href="#决定边界" class="headerlink" title="决定边界"></a>决定边界</h4><p>The <strong>decision boundary</strong> is the line that separates the area where y = 0 and where y = 1. It is created by our hypothesis function.</p>
 <p>我的理解是，在<strong>任何</strong>的假设函数下，总有一条或者是一圈之类的线，能把数据分开、数学上表示是，在逻辑函数取值=0的时候，在图形上的表示。</p>
 <blockquote>
-<p>$$<br>给定的一个函数：\theta =<br>\begin{bmatrix}<br> \theta_1 \<br> \theta_2 \<br> \theta_3 \<br>\end{bmatrix}。<br>令 \theta_1x_1+\theta_2x_2+\theta_3x_3 = 0<br>$$</p>
-<p>关于上述方程的解的集合就是这个假设函数的决定边界，无所谓最终分类算法好不好。</p>
+<script type="math/tex; mode=display">
+给定的一个函数：\theta = 
+\begin{bmatrix}
+ \theta_1 \\
+ \theta_2 \\
+ \theta_3 \\
+\end{bmatrix}。
+令 \theta_1x_1+\theta_2x_2+\theta_3x_3 = 0</script><p>关于上述方程的解的集合就是这个假设函数的决定边界，无所谓最终分类算法好不好。</p>
 </blockquote>
 <h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p><em>Cost Function</em> :</p>
 <p>在之前的学习中损失函数是一个<em>bow-shaped function</em>，存在全局的最低点，但是对这个分类算法不太友好，。这里其实之前的</p>
 <blockquote>
-<p>$$ J(\theta) = \frac{1}{2m} \sum_{i=1}^{m}(\theta^{T}X_i - y_i)^2$$</p>
-</blockquote>
+<script type="math/tex; mode=display">J(\theta) = \frac{1}{2m} \sum_{i=1}^{m}(\theta^{T}X_i - y_i)^2</script></blockquote>
 <p>可以改写成</p>
 <blockquote>
-<p>$$ J(\theta) = \frac{1}{m} \sum_{i=1}^{m}Cost(h_\theta(x^{(i)},y^{i}) $$</p>
-</blockquote>
+<script type="math/tex; mode=display">J(\theta) = \frac{1}{m} \sum_{i=1}^{m}Cost(h_\theta(x^{(i)},y^{i})</script></blockquote>
 <p>证明过程：</p>
 <blockquote>
 <p>这个$Cost(H_\theta(x^{(i)}),y^i)$ 指的是一份数据的偏差，是假设函数的值减这份数据对应的真实值。</p>
 </blockquote>
 <p>结论：</p>
 <blockquote>
-<p>$$<br>\begin{cases}<br>Cost(h_\theta(x),y) = - \log(h_\theta(x)) , &amp;  \text{if y = 1}  \<br>Cost(h_\theta(x),y) = - \log(1-h_\theta(x)),&amp; \text{if y = 0 }\</p>
-<p>\end{cases}<br>$$</p>
-</blockquote>
+<script type="math/tex; mode=display">
+\begin{cases}
+Cost(h_\theta(x),y) = - \log(h_\theta(x)) , &  \text{if y = 1}  \\
+Cost(h_\theta(x),y) = - \log(1-h_\theta(x)),& \text{if y = 0 }\\
+\end{cases}</script></blockquote>
 <p>简化损失函数：</p>
 <blockquote>
-<p>$Cost(H_\theta(x^{(i)}),y^i) = -y^{i}\log(h_\theta(x)) + (1-y)(- \log(1-h_\theta(x)))， y \in (1|0) $ ;<br>$$<br>J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \log(1-h_\theta(x^{i})))]<br>$$</p>
-</blockquote>
+<p>$Cost(H<em>\theta(x^{(i)}),y^i) = -y^{i}\log(h</em>\theta(x)) + (1-y)(- \log(1-h_\theta(x)))， y \in (1|0) $ ;</p>
+<script type="math/tex; mode=display">
+J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \log(1-h_\theta(x^{i})))]</script></blockquote>
 <p>根据之前的多元线性回归分析的损失函数有：</p>
 <p>Repeat:</p>
 <blockquote>
-<p>$$<br>\theta_j := \theta_j - \frac{\alpha\partial}{\partial\theta_j}J(\theta) , \text{同时更新所有的$\theta$}<br>$$</p>
-</blockquote>
+<script type="math/tex; mode=display">
+\theta_j := \theta_j - \frac{\alpha\partial}{\partial\theta_j}J(\theta) , \text{同时更新所有的$\theta$}</script></blockquote>
 <p>结果：</p>
 <blockquote>
-<p>$$<br>\theta_j := \theta_j - \frac{\alpha}{m}\sum_{(i=1)}^{(m)}(h_\theta(x^{i})-y^{i})x_j^i<br>$$</p>
-</blockquote>
+<script type="math/tex; mode=display">
+\theta_j := \theta_j - \frac{\alpha}{m}\sum_{(i=1)}^{(m)}(h_\theta(x^{i})-y^{i})x_j^i</script></blockquote>
 <p>这个和之前的线性回归里面的其实一样的，$x_j^i$表示的第i份数据，其中第j维的数据的列；</p>
 <h4 id="进阶优化"><a href="#进阶优化" class="headerlink" title="进阶优化"></a>进阶优化</h4><p>有更多的其他算法，而不是梯度下降；相对而言是更快，也不需要学习速率；只是更加复杂。</p>
 <p>这些算法不需要自己实现。直接调用程序提供的库就行，后期去看看python的实现。</p>
@@ -481,9 +487,17 @@
 </ul>
 <p>正则化：</p>
 <p>​    $\theta_1,\theta_2,\theta_3,…..$这些参数都很小，减少过拟合的倾向。</p>
-<p>在<br>$$<br>J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \log(1-h_\theta(x^{i}))) + \lambda\sum_{j=1}^{n}\theta_{j}^2 ] , \text{$\lambda$是正则化参数} \<br>$$<br>后面这个是惩罚项。默认不会去优化$\theta_0$的。</p>
-<p>将上述的正则化方法带入到我们之前的梯度下降算法：<br>$$<br>\theta_{j} := \theta_{j}(1-\alpha\frac{\lambda}{m}) - \frac{\alpha}{m}\sum_{(i=1)}^{(m)}(h_\theta(x^{i})-y^{i})x_j^i<br>$$<br>只是去压缩了一下$\theta_j$ </p>
-<p>Normal Equation:<br>$$<br>\theta = (X^{T}X)^{-1}X^{T}Y<br>$$<br>应用正则化：<br>$$<br>\theta = (X^{T}X+\lambda\begin{bmatrix}0&amp;0&amp;\cdots&amp;0\0&amp;1&amp;\cdots&amp;0\\vdots&amp;\vdots&amp;\ddots&amp;0\0&amp;0&amp;\cdots&amp;1\end{bmatrix})^{-1}X^{T}Y<br>$$<br>matrix是 n+1*n+1；在$\lambda \gt 0$ 的时候，括号里面这堆东西绝壁是可逆的。</p>
+<p>在</p>
+<script type="math/tex; mode=display">
+J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \log(1-h_\theta(x^{i}))) + \lambda\sum_{j=1}^{n}\theta_{j}^2 ] , \text{$\lambda$是正则化参数} \\</script><p>后面这个是惩罚项。默认不会去优化$\theta_0$的。</p>
+<p>将上述的正则化方法带入到我们之前的梯度下降算法：</p>
+<script type="math/tex; mode=display">
+\theta_{j} := \theta_{j}(1-\alpha\frac{\lambda}{m}) - \frac{\alpha}{m}\sum_{(i=1)}^{(m)}(h_\theta(x^{i})-y^{i})x_j^i</script><p>只是去压缩了一下$\theta_j$ </p>
+<p>Normal Equation:</p>
+<script type="math/tex; mode=display">
+\theta = (X^{T}X)^{-1}X^{T}Y</script><p>应用正则化：</p>
+<script type="math/tex; mode=display">
+\theta = (X^{T}X+\lambda\begin{bmatrix}0&0&\cdots&0\\0&1&\cdots&0\\\vdots&\vdots&\ddots&0\\0&0&\cdots&1\end{bmatrix})^{-1}X^{T}Y</script><p>matrix是 n+1*n+1；在$\lambda \gt 0$ 的时候，括号里面这堆东西绝壁是可逆的。</p>
 <p>Regularized logistic regression:</p>
 <p>梯度下降：在写法上其实是和线性回归一样的，只是这里的假设函数不一样。</p>
 <p>advanced Optimize: 在调用这种高级库的时候，cost function $J(\theta)$ 这个东西不一样。这个应该是个入参。</p>
@@ -535,7 +549,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/11/20/机器学习第三课/" rel="prev" title="">
+              <a href="/2018/11/27/mathinelearning4/" rel="prev" title="">
                  <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -837,6 +851,37 @@
   
 
   
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
+  
+
 
   
   

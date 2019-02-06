@@ -16,7 +16,7 @@
 
 <html class="theme-next muse use-motion" lang="">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="UTF-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
@@ -108,19 +108,19 @@
 
 
 
-  <meta name="description" content="#机器学习第三周 逻辑回归（logic regression）: 分类问题，可能有好几个取值 假设函数：    $$ H(X) = H(\theta^{T}X) $$针对之前的线性回归，逻辑回归的取值是y$\in${1|0}，取值是离散的； $$  g(z) = \frac{1}{1+e^{-z}} $$ $$ g’(z) = \frac{e^{-x}}{(1+e^{-z})^2}  = g(z)">
+  <meta name="description" content="机器学习第三周逻辑回归（logic regression）: 分类问题，可能有好几个取值 假设函数： $$ H(X) = H(\theta^{T}X) $$ 针对之前的线性回归，逻辑回归的取值是y$\in${1|0}，取值是离散的； g(z) = \frac{1}{1+e^{-z}}g&apos;(z) = \frac{e^{-x}}{(1+e^{-z})^2}  = g(z)(1-g(z))z =  \t">
 <meta name="keywords" content="machine leanring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习第三周">
 <meta property="og:url" content="http://lovelycheng.github.io/2018/11/15/machine_learning/index.html">
 <meta property="og:site_name" content="LoveCheng">
-<meta property="og:description" content="#机器学习第三周 逻辑回归（logic regression）: 分类问题，可能有好几个取值 假设函数：    $$ H(X) = H(\theta^{T}X) $$针对之前的线性回归，逻辑回归的取值是y$\in${1|0}，取值是离散的； $$  g(z) = \frac{1}{1+e^{-z}} $$ $$ g’(z) = \frac{e^{-x}}{(1+e^{-z})^2}  = g(z)">
+<meta property="og:description" content="机器学习第三周逻辑回归（logic regression）: 分类问题，可能有好几个取值 假设函数： $$ H(X) = H(\theta^{T}X) $$ 针对之前的线性回归，逻辑回归的取值是y$\in${1|0}，取值是离散的； g(z) = \frac{1}{1+e^{-z}}g&apos;(z) = \frac{e^{-x}}{(1+e^{-z})^2}  = g(z)(1-g(z))z =  \t">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://baike.baidu.com/pic/Sigmoid%E5%87%BD%E6%95%B0/7981407/0/d009b3de9c82d158dfb4e7218a0a19d8bc3e426f?fr=lemma&ct=single#aid=0&pic=c9fcc3cec3fdfc03f23fbf16d73f8794a5c226dc">
-<meta property="og:updated_time" content="2018-11-19T16:49:51.990Z">
+<meta property="og:updated_time" content="2019-02-05T07:03:19.964Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习第三周">
-<meta name="twitter:description" content="#机器学习第三周 逻辑回归（logic regression）: 分类问题，可能有好几个取值 假设函数：    $$ H(X) = H(\theta^{T}X) $$针对之前的线性回归，逻辑回归的取值是y$\in${1|0}，取值是离散的； $$  g(z) = \frac{1}{1+e^{-z}} $$ $$ g’(z) = \frac{e^{-x}}{(1+e^{-z})^2}  = g(z)">
+<meta name="twitter:description" content="机器学习第三周逻辑回归（logic regression）: 分类问题，可能有好几个取值 假设函数： $$ H(X) = H(\theta^{T}X) $$ 针对之前的线性回归，逻辑回归的取值是y$\in${1|0}，取值是离散的； g(z) = \frac{1}{1+e^{-z}}g&apos;(z) = \frac{e^{-x}}{(1+e^{-z})^2}  = g(z)(1-g(z))z =  \t">
 <meta name="twitter:image" content="https://baike.baidu.com/pic/Sigmoid%E5%87%BD%E6%95%B0/7981407/0/d009b3de9c82d158dfb4e7218a0a19d8bc3e426f?fr=lemma&ct=single#aid=0&pic=c9fcc3cec3fdfc03f23fbf16d73f8794a5c226dc">
 
 
@@ -176,7 +176,7 @@
       .logo-line-after i { right: initial; }
     }
   </style>
-</noscript>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </head>
 
@@ -187,7 +187,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -366,7 +366,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-20 00:49:51" itemprop="dateModified" datetime="2018-11-20T00:49:51+08:00">2018-11-20</time>
+                <time title="Modified: 2019-02-05 15:03:19" itemprop="dateModified" datetime="2019-02-05T15:03:19+08:00">2019-02-05</time>
               
             
           </span>
@@ -399,19 +399,15 @@
       
 
       
-        <p>#机器学习第三周</p>
-<p>逻辑回归（logic regression）:</p>
+        <h1 id="机器学习第三周"><a href="#机器学习第三周" class="headerlink" title="机器学习第三周"></a>机器学习第三周</h1><p>逻辑回归（logic regression）:</p>
 <pre><code>分类问题，可能有好几个取值
-</code></pre><p>假设函数：<br>    $$ H(X) = H(\theta^{T}X) $$<br>针对之前的线性回归，逻辑回归的取值是y$\in${1|0}，取值是离散的；</p>
-<p>$$  g(z) = \frac{1}{1+e^{-z}} $$</p>
-<p>$$ g’(z) = \frac{e^{-x}}{(1+e^{-z})^2}  = g(z)(1-g(z))$$</p>
-<p>$$ z =  \theta^{T}X $$</p>
-<p>g(z) 的图形显示如下:</p>
+</code></pre><p>假设函数：</p>
+<pre><code>$$ H(X) = H(\theta^{T}X) $$
+</code></pre><p>针对之前的线性回归，逻辑回归的取值是y$\in${1|0}，取值是离散的；</p>
+<script type="math/tex; mode=display">g(z) = \frac{1}{1+e^{-z}}</script><script type="math/tex; mode=display">g'(z) = \frac{e^{-x}}{(1+e^{-z})^2}  = g(z)(1-g(z))</script><script type="math/tex; mode=display">z =  \theta^{T}X</script><p>g(z) 的图形显示如下:</p>
 <p><img src="https://baike.baidu.com/pic/Sigmoid%E5%87%BD%E6%95%B0/7981407/0/d009b3de9c82d158dfb4e7218a0a19d8bc3e426f?fr=lemma&amp;ct=single#aid=0&amp;pic=c9fcc3cec3fdfc03f23fbf16d73f8794a5c226dc" alt="图片"></p>
 <p>when z &gt; 0 , then g(z) 更接近1;</p>
-<p>$$ z =  \theta^{T}X $$</p>
-<p>$$ \theta^TX &gt; 0 $$</p>
-<p>决定边界（decision boundary）:</p>
+<script type="math/tex; mode=display">z =  \theta^{T}X</script><script type="math/tex; mode=display">\theta^TX > 0</script><p>决定边界（decision boundary）:</p>
 <p>给定的一个模型，或者说是给定的一个$\theta$向量，这个假设函数（模型）存在$ \theta^TX = 0 $的一种情况，一般能将Y=0 和Y=1分开，这种情况或者说一个关于X的函数表现在图像上是将离散的数据分开。潜台词应该是不一定分的很好。可能这个模型让所有数据点的计算都趋向于中间，每个人的取值的概率都差不多。</p>
 
       
@@ -506,8 +502,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -566,6 +571,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#机器学习第三周"><span class="nav-number">1.</span> <span class="nav-text">机器学习第三周</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -702,7 +723,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 
@@ -736,6 +757,13 @@
   
 
   
+  
+
+  
+  
+
+  
+
 
   
   
