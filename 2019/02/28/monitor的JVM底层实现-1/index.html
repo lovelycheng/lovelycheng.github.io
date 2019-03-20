@@ -108,25 +108,25 @@
 
 
 
-  <meta name="description" content="节点心、线、词、图、色、结构。 化繁为简，以简驭繁 每个子主题：  提炼关键字：重复出现，时间、地点、任务；提炼信息； 在命名系统中是有共识的，或者特殊意义，有较多的信息量； 可以指定所有的思维导图的阅读顺序，以期达到分析记录的目的； 对应不同的目的要有不同的思维导图，理论上是分析的偏多； 思考的方式：垂直的，水平的；水平的意思是针对一个特定主题有不同的纬度；垂直是针对特定纬度有延伸； 曼陀罗思考">
-<meta name="keywords" content="AI,人工智能,java">
+  <meta name="description" content="来源openjdk 9   9dev/hotspot/src/share/vm/runtime/objectMonitor.cpp 134~245的注释；翻译如下 summary对于synchronized关键字，无论他锁的对象或者说对象锁是哪个，参与竞争的线程 都会进入 这个锁对象的cqx队列和entryList队列，进入park状态，直到 interrupt||waittimeout||not">
+<meta name="keywords" content="concurrent program, 翻译，java，jvm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="思维导图的设计">
-<meta property="og:url" content="http://lovelycheng.github.io/2019/01/12/思维导图的读书记录/index.html">
+<meta property="og:title" content="monitor的JVM底层实现-1">
+<meta property="og:url" content="http://lovelycheng.github.io/2019/02/28/monitor的JVM底层实现-1/index.html">
 <meta property="og:site_name" content="LoveCheng">
-<meta property="og:description" content="节点心、线、词、图、色、结构。 化繁为简，以简驭繁 每个子主题：  提炼关键字：重复出现，时间、地点、任务；提炼信息； 在命名系统中是有共识的，或者特殊意义，有较多的信息量； 可以指定所有的思维导图的阅读顺序，以期达到分析记录的目的； 对应不同的目的要有不同的思维导图，理论上是分析的偏多； 思考的方式：垂直的，水平的；水平的意思是针对一个特定主题有不同的纬度；垂直是针对特定纬度有延伸； 曼陀罗思考">
+<meta property="og:description" content="来源openjdk 9   9dev/hotspot/src/share/vm/runtime/objectMonitor.cpp 134~245的注释；翻译如下 summary对于synchronized关键字，无论他锁的对象或者说对象锁是哪个，参与竞争的线程 都会进入 这个锁对象的cqx队列和entryList队列，进入park状态，直到 interrupt||waittimeout||not">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-02-06T04:45:17.673Z">
+<meta property="og:updated_time" content="2019-03-03T04:17:10.774Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="思维导图的设计">
-<meta name="twitter:description" content="节点心、线、词、图、色、结构。 化繁为简，以简驭繁 每个子主题：  提炼关键字：重复出现，时间、地点、任务；提炼信息； 在命名系统中是有共识的，或者特殊意义，有较多的信息量； 可以指定所有的思维导图的阅读顺序，以期达到分析记录的目的； 对应不同的目的要有不同的思维导图，理论上是分析的偏多； 思考的方式：垂直的，水平的；水平的意思是针对一个特定主题有不同的纬度；垂直是针对特定纬度有延伸； 曼陀罗思考">
+<meta name="twitter:title" content="monitor的JVM底层实现-1">
+<meta name="twitter:description" content="来源openjdk 9   9dev/hotspot/src/share/vm/runtime/objectMonitor.cpp 134~245的注释；翻译如下 summary对于synchronized关键字，无论他锁的对象或者说对象锁是哪个，参与竞争的线程 都会进入 这个锁对象的cqx队列和entryList队列，进入park状态，直到 interrupt||waittimeout||not">
 
 
 
 
 
 
-  <link rel="canonical" href="http://lovelycheng.github.io/2019/01/12/思维导图的读书记录/">
+  <link rel="canonical" href="http://lovelycheng.github.io/2019/02/28/monitor的JVM底层实现-1/">
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>思维导图的设计 | LoveCheng</title>
+  <title>monitor的JVM底层实现-1 | LoveCheng</title>
   
 
 
@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2019/01/12/思维导图的读书记录/">
+    <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2019/02/28/monitor的JVM底层实现-1/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程道玄">
@@ -322,7 +322,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">思维导图的设计
+          <h1 class="post-title" itemprop="name headline">monitor的JVM底层实现-1
               
             
           </h1>
@@ -347,7 +347,7 @@
                 
               
 
-              <time title="Created: 2019-01-12 15:55:55" itemprop="dateCreated datePublished" datetime="2019-01-12T15:55:55+08:00">2019-01-12</time>
+              <time title="Created: 2019-02-28 20:27:46" itemprop="dateCreated datePublished" datetime="2019-02-28T20:27:46+08:00">2019-02-28</time>
             
 
             
@@ -364,7 +364,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-02-06 12:45:17" itemprop="dateModified" datetime="2019-02-06T12:45:17+08:00">2019-02-06</time>
+                <time title="Modified: 2019-03-03 12:17:10" itemprop="dateModified" datetime="2019-03-03T12:17:10+08:00">2019-03-03</time>
               
             
           </span>
@@ -397,21 +397,34 @@
       
 
       
-        <h5 id="节点"><a href="#节点" class="headerlink" title="节点"></a>节点</h5><p>心、线、词、图、色、结构。</p>
-<p>化繁为简，以简驭繁</p>
-<p>每个子主题：</p>
-<ol>
-<li>提炼关键字：重复出现，时间、地点、任务；提炼信息；</li>
-<li>在命名系统中是有共识的，或者特殊意义，有较多的信息量；</li>
-<li>可以指定所有的思维导图的阅读顺序，以期达到分析记录的目的；</li>
-<li>对应不同的目的要有不同的思维导图，理论上是分析的偏多；</li>
-<li>思考的方式：垂直的，水平的；水平的意思是针对一个特定主题有不同的纬度；垂直是针对特定纬度有延伸；</li>
-<li>曼陀罗思考法，一个事物的纬度不超过8个，一般7个最多，如果超过重新归纳。</li>
-<li>图是用于记忆抽象的不易记忆的部分；</li>
-<li>个人觉得是相当主观的图。联系个人的长期记忆，绑定短期记忆；</li>
-<li>联系之前做过的思维导图可以改进一些技巧。</li>
+        <h2 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h2><p>openjdk 9  </p>
+<p>9dev/hotspot/src/share/vm/runtime/objectMonitor.cpp 134~245的注释；<br>翻译如下</p>
+<h2 id="summary"><a href="#summary" class="headerlink" title="summary"></a>summary</h2><p>对于synchronized关键字，无论他锁的对象或者说对象锁是哪个，参与竞争的线程 都会进入 这个锁对象的cqx队列和entryList队列，进入park状态，直到 interrupt||waittimeout||notify()。还需要更多细节；<br>在interrupt waittimeout notify()有哪些异同：</p>
+<h2 id="questions"><a href="#questions" class="headerlink" title="questions"></a>questions</h2><p>为什么有两个队列：2q 算法；<br>2q算法 和 LRU算法；<br>redis；</p>
+<h2 id="理论上的操作"><a href="#理论上的操作" class="headerlink" title="理论上的操作"></a>理论上的操作</h2><ul>
+<li>一根线程可以通过成功的CAS操作，将_owner 的field 从none -&gt;non-none；</li>
+<li>不变的条件: 一根线程在任一时刻，最多出现在一个 监视器锁的 列表内：CXQ, EntryList, WaitSet</li>
+<li>竞争锁的线程，通过CAS将自身push到CXQ队列，然后自旋/park()；</li>
+<li>通过 竞争之后，线程最终获取锁，他必须从CXQ或者EntryList脱离队列；</li>
+<li>正在退出的线程（The exiting thread 正在退出锁的线程） 在 entryList 上找出并unparks 一个 暂定的继承者线程。并且，正在退出的线程 并没有和 entryList上的继承者线程脱离关系。在unpark之后，wakee(被唤醒者，这里应该指的是继承者线程)将会重新竞争锁，最终 这个继承者线程会或者线程或者重新park自己。（获取到锁或者没有只能重新等待）。</li>
+<li>继承性 是由 一个竞争性的交接策略提供的。正在推出的线程 并不保证或者直接传递锁的所有权给继承线程，代替的是 正在推出的线程交出锁的所有权，并唤醒一个继承线程，继承线程（重新）竞争锁的所有权。如果EntryList为空但填充了cxq，则退出线程将把cxq排入EntryList。 它通过分离cxq（用CAS安装null）并将线程从cxq折叠到EntryList中来实现。 EntryList是双重链接的，而cxq是单链接的，因为用于排队最近到达的线程（RAT）的基于CAS的“推送”。</li>
+<li>并发不变性：<ol>
+<li>只有对象锁的拥有者才能接触或者操作 这个对象的EntyList，这种自有的排他的性质保护了并发冲突</li>
+<li>只有对象锁的拥有者才能分离(detach) cxq</li>
 </ol>
-<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><p>回头看：已经做了的思维导图有哪些不足；</p>
+</li>
+<li>监视器锁的entryList 的操作避免了锁，但是严格来说，这并不是无锁编程(lock-free), 进入队列的操作是无锁的，但是出列 并不是。</li>
+<li>CQX 队列可以有多个并发的入队线程，但是只有一个分离线程，这个机制并不受ABA问题的影响，更确切的说，基于CAS的入队操作，并不关注ABA问题。</li>
+<li>总而言之，cxq和EntryList构成或形成了 由那些试图获取锁定的线程的单个逻辑队列。 我们使用两个不同的列表来提高 常数时间获取锁之后的出队操作 的几率（在:: enter（）结尾中）并减少列表末端的消耗。 （参见Michael Scott的“2Q”算法）。 一个关键的需求是 使保持监视器锁定时发生的队列和监视器元数据操作最少 - 也就是说，我们希望最小化监视器锁定保持时间。 请注意，即使少量的固定旋转也会大大减少EntryList | cxq上的 进出队列 操作的数量。 也就是说，旋转减轻了对“内部”锁的争用并监视元数据。</li>
+<li>CQX是那些 最近才进入，并试图进入同步区（获取锁）的线程的集合。因为我们使用CAS的操作将线程放入 CQX ，所以RATs(recently arrived threads) 采用的是FILO的形式。我们在锁即将被释放并且CQX不为空，但是entryList为空的时候 将CQX排入到entryList中;</li>
+<li>entryList 本身是很流行化的队列实现，问题是我们希望进出队列的动作可以能在固定时间常量时间内完成。如果我们需要一个优先级队列，那么类似于Solaris的sleepq就能很好地工作。 即，http：//agg.eng/ws/on10_nightly/source/usr/src/uts/common/os/sleepq.c。 队列规则在:: exit（）时强制执行，此时解锁线程将cxq排入EntryList，并相应地对EntryList上的线程进行排序或重新排序。</li>
+<li>除非  ‘直接获取了锁’（”lock barging”）, 这个机制能够提供公平的环形的排序队列。类似于 电梯扫描算法。<a href="#1">1</a></li>
+<li>监视器同步子系统 避免使用了 原生的系统的同步(Synchronization)(可能是一个lock指令的意思吧) 除了 狭义的平台指定的 park-unpark 抽象。在 os_solaris.cpp 中有提到park、unpark的语义。换句话说这个monitor的实现只用到了原子操作和线程的park、unpark。monitor子系统对线程的 RUNNING-&gt;BLOCKED和 BLOCKED-&gt;READY这些线程状态改变的管理通过底层 操作系统 READY&lt;—&gt;RUN 的转变。</li>
+<li>处于等待状态的线程在wait-set之中， wait()方法将方法的调用者放入wait-set中。</li>
+<li>notify() 或者 notifyall() 简单的将waitset中的线程放入 CXQ或者entryList中。随后，exit()操作将unpark() 被唤醒者。使用notify()唤醒线程unpark线程是一项没有效率的动作。很有可能被唤醒者将被钉在唤醒线程持有锁上。</li>
+</ul>
+<hr>
+<p><span id="1">[1]</span> <a href="https://www.ibm.com/developerworks/cn/java/j-jtp10264/index.html" target="_blank" rel="noopener">IBM developer：Java 理论与实践</a></p>
 
       
     </div>
@@ -433,6 +446,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/concurrent-program-翻译，java，jvm/" rel="tag"># concurrent program, 翻译，java，jvm</a>
+          
+        </div>
+      
 
       
       
@@ -442,8 +461,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/12/为什么精英都是时间控/" rel="next" title="为什么精英都是时间控">
-                <i class="fa fa-chevron-left"></i> 为什么精英都是时间控
+              <a href="/2019/02/28/理论上的操作/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
               </a>
             
           </div>
@@ -452,8 +471,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/01/19/叔本华暮年之思的读后感/" rel="prev" title="叔本华暮年之思">
-                叔本华暮年之思 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/01/monitor的JVM底层实现-什么是waitset/" rel="prev" title="monitor的JVM底层实现-什么是waitset">
+                monitor的JVM底层实现-什么是waitset <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -588,7 +607,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#节点"><span class="nav-number">1.</span> <span class="nav-text">节点</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#实践"><span class="nav-number"></span> <span class="nav-text">实践</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#来源"><span class="nav-number">1.</span> <span class="nav-text">来源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#summary"><span class="nav-number">2.</span> <span class="nav-text">summary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#questions"><span class="nav-number">3.</span> <span class="nav-text">questions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#理论上的操作"><span class="nav-number">4.</span> <span class="nav-text">理论上的操作</span></a></li></ol></div>
             
 
           </div>
