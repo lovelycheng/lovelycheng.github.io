@@ -305,194 +305,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2019/01/28/网信的数据问题/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="程道玄">
-      <meta itemprop="description" content="a java developer's blog">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LoveCheng">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/01/28/网信的数据问题/" class="post-title-link" itemprop="http://lovelycheng.github.io/page/2/index.html">网信的数据问题</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-01-28 11:33:28" itemprop="dateCreated datePublished" datetime="2019-01-28T11:33:28+08:00">2019-01-28</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-02-06 12:45:39" itemprop="dateModified" datetime="2019-02-06T12:45:39+08:00">2019-02-06</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/01/28/网信的数据问题/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2019/01/28/网信的数据问题/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="网信的数据问题"><a href="#网信的数据问题" class="headerlink" title="网信的数据问题"></a>网信的数据问题</h3><h5 id="网信、"><a href="#网信、" class="headerlink" title="网信、"></a>网信、</h5><p>一、部分数据是已经通过2019-01-21上线的 【实时结转逻辑处理】 修正了，所以数据中要剔除表qs_error_transfer_record 的数据;</p>
-<p>二、在网信的贷款数据中，有部分数据是被出售的，也需要剔除，找出被出售的还款计划数据sql如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">SELECT SUM(t1.`Amount`) as a,</span><br><span class="line"></span><br><span class="line">       t1.`schedule_id`,</span><br><span class="line"></span><br><span class="line">       SUM(t2.`capital`+ t2.`interest`) as sp</span><br><span class="line"></span><br><span class="line">  from `qs_capital_platform_credit` t1</span><br><span class="line"></span><br><span class="line">  LEFT JOIN `t_thirdparty_schedule` t2 on t1.`schedule_id`= t2.`ScheduleId`</span><br><span class="line"></span><br><span class="line"> WHERE `account_type`= 1</span><br><span class="line"></span><br><span class="line">   and `global_platform_id`= 15</span><br><span class="line"></span><br><span class="line">   and `debtor_platform_debit_id` in (</span><br><span class="line"></span><br><span class="line">SELECT id</span><br><span class="line"></span><br><span class="line">  from `qs_debtor_capital_platform_debit`</span><br><span class="line"></span><br><span class="line"> WHERE `schedule_id` in(</span><br><span class="line"></span><br><span class="line">SELECT id</span><br><span class="line"></span><br><span class="line">  from `t_repayment_schedule`</span><br><span class="line"></span><br><span class="line"> WHERE `LoanOrderId` IN(</span><br><span class="line"></span><br><span class="line">SELECT bpd.id</span><br><span class="line"></span><br><span class="line">  from `t_bad_property_dispose` bpd</span><br><span class="line"></span><br><span class="line">  LEFT JOIN `t_loan_order` lo on bpd.`id`= lo.`Id`</span><br><span class="line"></span><br><span class="line"> WHERE `totalCapital`&gt; `totalCapitalLeft`</span><br><span class="line"></span><br><span class="line">   and lo.`GlobalPlatformId`= 15)</span><br><span class="line"></span><br><span class="line">   and `GlobalPlatformId`= 15</span><br><span class="line"></span><br><span class="line">   and isClear= 1</span><br><span class="line"></span><br><span class="line">   and(RepaidAmount+ RepaidAmountCitic)&gt; 0))</span><br><span class="line"></span><br><span class="line"> GROUP BY schedule_Id</span><br><span class="line"></span><br><span class="line">HAVING a &gt; sp;</span><br></pre></td></tr></table></figure>
-<p>结果是有两条数据：2719201, 3828278</p>
-<blockquote>
-<p>由上述的理由，并且结清，最终还款在今天的还款计划sql如下：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">SELECT id</span><br><span class="line">  from `t_repayment_schedule`</span><br><span class="line"> WHERE `GlobalPlatformId`= 15</span><br><span class="line">   and `OverDue`&gt; 0</span><br><span class="line">   and `IsClear`= 1</span><br><span class="line">   and RepayAt&lt; curdate()</span><br><span class="line">   and RepaidAmount+ RepaidAmountCitic&gt; 0</span><br><span class="line">   and `Id` not IN(</span><br><span class="line">SELECT DISTINCT(`schedule_id`)</span><br><span class="line">  from `qs_error_transfer_record`</span><br><span class="line"> WHERE `global_platform_id`= 15)</span><br><span class="line">   and `Id` not in (2719201, 3828278);</span><br></pre></td></tr></table></figure>
-<hr>
-<blockquote>
-<p>关联的融资人出金表</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">SELECT schedule_id,id  from `qs_debtor_capital_platform_debit`</span><br><span class="line">where `schedule_id` in</span><br><span class="line">(</span><br><span class="line">     SELECT id</span><br><span class="line">  from `t_repayment_schedule`</span><br><span class="line"> WHERE `GlobalPlatformId`= 15</span><br><span class="line">   and `OverDue`&gt; 0</span><br><span class="line">   and `IsClear`= 1</span><br><span class="line">   and RepayAt&lt; curdate()</span><br><span class="line">   and RepaidAmount+ RepaidAmountCitic&gt; 0</span><br><span class="line">   and `Id` not IN(</span><br><span class="line">SELECT DISTINCT(`schedule_id`)</span><br><span class="line">  from `qs_error_transfer_record`</span><br><span class="line"> WHERE `global_platform_id`= 15)</span><br><span class="line">   and `Id` not in (2719201, 3828278)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>由出金表关联 平台入金表  获取每期的实际入账金额</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">SELECT COUNT(1) as c, SUM(`Amount`) as a,t1.`schedule_id`   from `qs_capital_platform_credit` t1  JOIN </span><br><span class="line">(</span><br><span class="line">SELECT  schedule_id,id  from `qs_debtor_capital_platform_debit`</span><br><span class="line">where `schedule_id` in</span><br><span class="line">(</span><br><span class="line">     SELECT id</span><br><span class="line">  from `t_repayment_schedule`</span><br><span class="line"> WHERE `GlobalPlatformId`= 15</span><br><span class="line">   and `OverDue`&gt; 0</span><br><span class="line">   and `IsClear`= 1</span><br><span class="line">   and RepayAt&lt; curdate()</span><br><span class="line">   and RepaidAmount+ RepaidAmountCitic&gt; 0</span><br><span class="line">   and `Id` not IN(</span><br><span class="line">SELECT DISTINCT(`schedule_id`)</span><br><span class="line">  from `qs_error_transfer_record`</span><br><span class="line"> WHERE `global_platform_id`= 15)</span><br><span class="line">   and `Id` not in (2719201, 3828278)</span><br><span class="line">)</span><br><span class="line">) as temp on t1.`debtor_platform_debit_id`  = temp.id</span><br><span class="line">WHERE  `account_type` = 1 and `schedule_type` = 1</span><br><span class="line">GROUP BY t1.`schedule_id` </span><br><span class="line">HAVING  c&gt;1</span><br></pre></td></tr></table></figure>
-<p>— 由上述的资金方入金表关联 兑付计划表 获取 应还款金额</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">SELECT SUM(`capital`+`interest`) as sp,temp.a as actul, `ScheduleId`   from `t_thirdparty_schedule`   t1 join </span><br><span class="line">(</span><br><span class="line">SELECT SUM(`Amount`) as a,t1.`schedule_id`   from `qs_capital_platform_credit` t1  JOIN </span><br><span class="line">(</span><br><span class="line">SELECT  schedule_id,id  from `qs_debtor_capital_platform_debit`</span><br><span class="line">where `schedule_id` in</span><br><span class="line">(</span><br><span class="line">     SELECT id</span><br><span class="line">  from `t_repayment_schedule`</span><br><span class="line"> WHERE `GlobalPlatformId`= 15</span><br><span class="line">   and `OverDue`&gt; 0</span><br><span class="line">   and `IsClear`= 1</span><br><span class="line">   and RepayAt&lt; curdate()</span><br><span class="line">   and RepaidAmount+ RepaidAmountCitic&gt; 0</span><br><span class="line">   and `Id` not IN(</span><br><span class="line">SELECT DISTINCT(`schedule_id`)</span><br><span class="line">  from `qs_error_transfer_record`</span><br><span class="line"> WHERE `global_platform_id`= 15)</span><br><span class="line">   and `Id` not in (2719201, 3828278)</span><br><span class="line">)</span><br><span class="line">) as temp on t1.`debtor_platform_debit_id`  = temp.id</span><br><span class="line">WHERE  `account_type` = 1 and `schedule_type` = 1</span><br><span class="line">GROUP BY t1.`schedule_id`</span><br><span class="line">) as temp  on  t1.`ScheduleId`  = temp.schedule_id</span><br><span class="line">WHERE `GlobalPlatformId` = 15</span><br><span class="line">GROUP BY `ScheduleId` </span><br><span class="line">HAVING actul &gt; sp;</span><br></pre></td></tr></table></figure>
-<hr>
-<blockquote>
-<p>总计金额</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">SELECT sum(actul - sp), COUNT(1) from</span><br><span class="line">(</span><br><span class="line">SELECT SUM(`capital`+`interest`) as sp,temp.a as actul, `ScheduleId`   from `t_thirdparty_schedule`   t1 right join </span><br><span class="line">(</span><br><span class="line">SELECT COUNT(1) as c, SUM(`Amount`) as a,t1.`schedule_id`   from `qs_capital_platform_credit` t1  JOIN </span><br><span class="line">(</span><br><span class="line">SELECT  schedule_id,id  from `qs_debtor_capital_platform_debit`</span><br><span class="line">where `schedule_id` in</span><br><span class="line">(</span><br><span class="line">     SELECT id</span><br><span class="line">  from `t_repayment_schedule`</span><br><span class="line"> WHERE `GlobalPlatformId`= 15</span><br><span class="line">   and `OverDue`&gt; 0</span><br><span class="line">   and `IsClear`= 1</span><br><span class="line">   and RepayAt&lt; curdate()</span><br><span class="line">   and RepaidAmount+ RepaidAmountCitic&gt; 0</span><br><span class="line">   and `Id` not IN(</span><br><span class="line">SELECT DISTINCT(`schedule_id`)</span><br><span class="line">  from `qs_error_transfer_record`</span><br><span class="line"> WHERE `global_platform_id`= 15)</span><br><span class="line">   and `Id` not in (2719201, 3828278)</span><br><span class="line">)</span><br><span class="line">) as temp on t1.`debtor_platform_debit_id`  = temp.id</span><br><span class="line">WHERE  `account_type` = 1 and `schedule_type` = 1</span><br><span class="line">GROUP BY t1.`schedule_id` </span><br><span class="line">HAVING  c&gt;1</span><br><span class="line">) as temp  on  t1.`ScheduleId`  = temp.schedule_id</span><br><span class="line">WHERE `GlobalPlatformId` = 15</span><br><span class="line">GROUP BY `ScheduleId` </span><br><span class="line">HAVING actul &gt; sp</span><br><span class="line">    ) as temp ;</span><br></pre></td></tr></table></figure>
-<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>网信此处累计 共200笔 每期还款 共64601.9400000元；</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2019/01/19/叔本华暮年之思的读后感/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2131,7 +1943,7 @@ try {
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2160,7 +1972,9 @@ try {
                     
                       
                     
-                    <span class="site-state-item-count">7</span>
+                      
+                    
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
@@ -2380,8 +2194,6 @@ try {
 
   
   
-    
-      
     
       
     

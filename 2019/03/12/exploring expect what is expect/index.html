@@ -109,16 +109,16 @@
 
 
   <meta name="description" content="第一章：  简介-什么是expectexpect是一种控制需要交互的应用的程序，这些程序交互式的给出提示框，并希望用户使用键盘输入作为回应。使用expect可以是这些人工操作自动化。使用自动化的交互程序，可以使你去解决以前没有考虑过的问题。 expect能够节省很多苦活的时间，这本书将会指引你开始学习expect之路，第一章节是一个全局概览。我将会提供一些简单的应用和简短的脚本，但是我不会完全的解">
-<meta name="keywords" content="expect，scripts">
+<meta name="keywords" content="expect，script">
 <meta property="og:type" content="article">
-<meta property="og:title" content="expect 探险">
-<meta property="og:url" content="http://lovelycheng.github.io/2019/03/12/expect-探险-1/index.html">
+<meta property="og:title" content="exploring expect what is expect">
+<meta property="og:url" content="http://lovelycheng.github.io/2019/03/12/exploring expect what is expect/index.html">
 <meta property="og:site_name" content="LoveCheng">
 <meta property="og:description" content="第一章：  简介-什么是expectexpect是一种控制需要交互的应用的程序，这些程序交互式的给出提示框，并希望用户使用键盘输入作为回应。使用expect可以是这些人工操作自动化。使用自动化的交互程序，可以使你去解决以前没有考虑过的问题。 expect能够节省很多苦活的时间，这本书将会指引你开始学习expect之路，第一章节是一个全局概览。我将会提供一些简单的应用和简短的脚本，但是我不会完全的解">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-20T11:19:22.403Z">
+<meta property="og:updated_time" content="2019-03-22T09:02:30.258Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="expect 探险">
+<meta name="twitter:title" content="exploring expect what is expect">
 <meta name="twitter:description" content="第一章：  简介-什么是expectexpect是一种控制需要交互的应用的程序，这些程序交互式的给出提示框，并希望用户使用键盘输入作为回应。使用expect可以是这些人工操作自动化。使用自动化的交互程序，可以使你去解决以前没有考虑过的问题。 expect能够节省很多苦活的时间，这本书将会指引你开始学习expect之路，第一章节是一个全局概览。我将会提供一些简单的应用和简短的脚本，但是我不会完全的解">
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <link rel="canonical" href="http://lovelycheng.github.io/2019/03/12/expect-探险-1/">
+  <link rel="canonical" href="http://lovelycheng.github.io/2019/03/12/exploring expect what is expect/">
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>expect 探险 | LoveCheng</title>
+  <title>exploring expect what is expect | LoveCheng</title>
   
 
 
@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2019/03/12/expect-探险-1/">
+    <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2019/03/12/exploring expect what is expect/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程道玄">
@@ -322,7 +322,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">expect 探险
+          <h1 class="post-title" itemprop="name headline">exploring expect what is expect
               
             
           </h1>
@@ -364,7 +364,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-03-20 19:19:22" itemprop="dateModified" datetime="2019-03-20T19:19:22+08:00">2019-03-20</time>
+                <time title="Modified: 2019-03-22 17:02:30" itemprop="dateModified" datetime="2019-03-22T17:02:30+08:00">2019-03-22</time>
               
             
           </span>
@@ -378,8 +378,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/03/12/expect-探险-1/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2019/03/12/expect-探险-1/" itemprop="commentCount"></span>
+                <a href="/2019/03/12/exploring expect what is expect/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2019/03/12/exploring expect what is expect/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -416,15 +416,15 @@
 <p><em>expect</em>是一种控制程序交互的工具，他解决了fsck的问题，通过非交互的方式提供了所有交互式的功能。<em>expect</em>并不是为了fsck设计的，但是他也能够解决ftp的错误。</p>
 <p><strong>ftp</strong>，<strong>fsck</strong>的例子例举了在shell的用户界面上运行脚本的主要限制。shell本身没有提供读程序的输出，写入程序的输入的方式。这意味着shell能够执行fsck但是同时必须失去程序的某一些重要的功能。而有一些程序压根就不无法被shell脚本直接执行，举例而言：<strong>passwd</strong>如果缺少用户交互式的的输入根本无法执行。相似的无法被自动化的程序还有<strong>telnet, crypt, su, rlogin, gdb</strong>。大量的程序都有这种依赖用户数据输入的毛病。</p>
 <p><em>Expect</em> 的设计的用途在于和需要用户交互的程序打交道。一个<em>expect</em>编程者能够写出描述对话框的脚本，然后<em>Expect</em>能够和需要交互的程序无交互的运行。控制命令可以通过脚本传给键盘，反之亦然。这些使<em>expect</em>能够去做那些重复性劳动的工作，而人类可以享受有趣的部分。</p>
-<h4 id="a-very-brief-Overview"><a href="#a-very-brief-Overview" class="headerlink" title="a very brief Overview."></a>a very brief Overview.</h4><p><em>expect</em> 大部分时间都是用tcl写的，tcl是一种被广泛使用解释性语言。我们会在第二章快速的过一遍tcl。</p>
+<h4 id="a-very-brief-Overview"><a href="#a-very-brief-Overview" class="headerlink" title="a very brief Overview."></a>a very brief Overview.</h4><p><em>expect</em> 大部分时间都是用<em>tcl</em>写的，<em>tcl</em>是一种被广泛使用解释性语言。我们会在第二章快速的过一遍<em>tcl</em>。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">expect &#123;</span><br><span class="line">    &quot;welcome&quot;            break</span><br><span class="line">    &quot;failed&quot;            abort</span><br><span class="line">    timeout            abort</span><br><span class="line">    &quot;busy&quot;        &#123;</span><br><span class="line">        puts &quot;busy&quot;</span><br><span class="line">        continue</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>当程序执行之后。<em>expect</em>等待三种返回值：welcome failed timeout ，并且解析返回值并做对应的动作。busy对应的动作是说明多个命令如何被解析的。至于timeout关键字是一种特殊的形式，他匹配的是一种保底情况，就是一段时间之后，没有其他返回值被匹配的情况下，匹配的动作。</p>
-<p>产生一些有用的东西，一些简短的脚本是非常必须的，接下来是一个回拨的脚本，它的用途是在长距离的拨号中将控制权交给计算机。调用需要电话号码作为传入参数。</p>
+<h3 id="the-first-script-——-dialback"><a href="#the-first-script-——-dialback" class="headerlink" title="the first script —— dialback"></a>the first script —— dialback</h3><p>在产出一些有意思的东西的时候，你会惊讶于一些简短的脚本发挥的作用。如下是一个回拨的脚本，它的用途是在长距离的拨号中将控制权交给计算机。在调用时需要电话号码作为传入参数。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">spawn tip modem</span><br><span class="line">expect &quot;connected&quot;</span><br><span class="line">send &quot;ATD$argv\r&quot;</span><br><span class="line"># modem takes a while to connect</span><br><span class="line">set timeout 60</span><br><span class="line">expect &quot;CONNECT</span><br></pre></td></tr></table></figure>
 <p>第一行 声明了一个名为<strong><em>tip</em></strong>的程序，保证接下来的返回值能够被<strong>expect</strong>语句读取，并且通<strong>written</strong>语句写入。一旦 tip返回了<em>connected</em>，调制解调器将被告知拨号，通过<strong>ATD</strong>和随后的 <em>argv</em> 参数——电话号码 ——argv是一个前置定义的数据，用于接受脚本在调用时传入的原始参数。</p>
 <p>第四行是注释，第五话set的参数控制 <em>expect</em>将会等待多久。此时，无论如何，<em>expect</em> 结束，如果拨打成功，会有login:的提示</p>
-<p>现实生活中的脚本会有更多的错误检查，比方说会有失败后的重试。但是重要的是，没有需要太多的代码去实现这个功能相较而言C 需要一个60KB的可执行文件。</p>
-<h3 id="Total-Automation"><a href="#Total-Automation" class="headerlink" title="Total Automation"></a>Total Automation</h3><p>之前我提到了很多程序在shell脚本中无法自动化的运行。很难想象为什么你会在shell中内置这些程序。最初的作者肯定没有想到这个需求。以<strong>passwd</strong>举例：</p>
+<p>现实生活中的脚本会有更多的错误检查，比方说会有失败后的重试。但是重要的是，没有需要太多的代码去实现这个功能，相较而言C 需要一个60KB的可执行文件。</p>
+<h3 id="Total-Automation"><a href="#Total-Automation" class="headerlink" title="Total Automation"></a>Total Automation</h3><p>之前我提到了很多程序在shell环境中无法自动化的运行。很难想象为什么会在shell中内置这些程序。最初的作者肯定没有想到这个需求。以<strong>passwd</strong>举例：</p>
 <p><strong>passwd</strong> 是一个修改用户密码 的命令，<strong>passwd</strong>不会从命令行中直接读取新的密码。它会交互式的给出提示，让你输入新的密码——两次！以下是由系统admin运行的脚本：（如果是一般用户运行会更复杂，并且也会要求老的密码）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># passwd libes</span><br><span class="line">Changing password for libes on thunder.</span><br><span class="line">New password:</span><br><span class="line">Retype new password:</span><br></pre></td></tr></table></figure>
 <p>其实这个对单个密码修改还好，但是假定有这样的需求：一堆电脑，希望使用相同的密码。或者说你是系统管理员，在学期初需要移植1000多个账户。这些需要使得自动化的<strong>passwd</strong>变的有意义。以下是一个<em>expect</em>脚本只有一个功能，使得<strong>passwd</strong>自动化。</p>
@@ -433,54 +433,57 @@
 <p>第三行，<em>expect</em>程序寻找password： <em>expect</em>一直等待直到这样类型的数据出现。</p>
 <p>在接收到提示之后，下一行发送保存的密码到当前程序。<strong>\r</strong>是一个回车，绝大多数数据的C的文本类型都能支持。此处有两个<em>expect-send</em> 语句，因为<strong>passwd</strong> 需要重新输入密码用于确认。一般来说如果不是一个无交互的<strong>passwd</strong>是很正常的，但是自动化的脚本需要这么做因为脚本模拟了人类使用<strong>passwd</strong>的情况。 </p>
 <p>最后一句命令 ”expect eof“ 表示<em>expect</em>在等待<strong>passwd</strong>输出的eof事件，类似于 timeout，eof是另一个关键字，最后的<em>expect</em> 等待<strong>passwd</strong>执行完成，然后将控制权交给脚本。</p>
-<p>我们在进一步继续学习旅程之前，先花点时间考虑这样的一个问题：我们上述的<strong>passwd</strong>的这个问题能否通过其他方式来解决？你可以直接编辑<strong>passwd</strong>程序的源码，让它的逻辑和<em>expect</em>做的一样，那么问题就解决了。如果你缺少源码，必须重新实现一遍这个功能，当然，你必须考虑加密、加锁、修改数据库、解锁等等操作。事实上，即使你有源码，你会发现这个源码令人惊讶的复杂难懂，<strong>passwd</strong>程序本身做了一些非常微妙的工作。如果你修改了源码，并且还成功了，那你还得祈祷每次系统升级都不会发生问题。如果供应商提供了新的功能：网络信息服务、安全信息系统、影子密码、或者其他不同的加密功能，那你不得不重新审视自己的代码。</p>
-<h3 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h3><p> 无论有多少理由反对，你还是决定修改<strong>passwd</strong>的源码，在重新编译之后，你会希望测试这个程序，以保证这个程序在交互式的使用中完全正确，但是你会发现，你不能使用老的交互式的方法去测试新的程序，因为这种无交互式的程序是你修改源码的初衷。</p>
-<p>测试交互式程序是否正确是expect另一个有用的地方。即使你从来没有想要自动化一个程序，但是你也会有测试的需求。passwd只是一个例子，另一个例子是你自己写的程序，可能你希望你的程序会对用户的键入产生相应。它可能会将先到的字母丢弃掉。或者在原始模式中需要一个终端，或者需要^C来激活信号又或者你需要去看排序的输出，去了解每一个接下来的命令。</p>
+<p>我们在进一步继续学习旅程之前，先花点时间考虑这样的一个问题：我们上述的<strong>passwd</strong>的这个问题能否通过其他方式来解决？你可以直接编辑<strong>passwd</strong>程序的源码，让它的逻辑和<em>expect</em>做的一样，那么问题就解决了。如果你缺少源码，必须重新实现一遍这个功能，当然，你必须考虑加密、加锁、修改数据库、解锁等等操作。事实上，即使你有源码，你会发现这个源码令人惊讶的复杂难懂，<strong>passwd</strong>程序本身做了一些非常微妙的工作。如果你修改了源码，并且还成功了，那你还得祈祷每次系统升级都不会发生问题。如果供应商提供了新的功能：网络信息服务、安全信息系统、影子密码、或者其他不同的加密功能，那你不得不重新review自己的代码。</p>
+<h3 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h3><p> 假如无论有多少理由反对，你还是决定修改<strong>passwd</strong>的源码，在重新编译之后，你会希望测试这个程序，以保证这个程序在交互式的使用中完全正确，但是你会发现，你不能使用老的交互式的方法去测试新的程序，因为这种无交互式的程序是你修改源码的初衷。</p>
+<p>测试交互式程序是否正确是<em>expect</em>另一个有用的地方。即使你从来没有想要自动化一个程序，但是你也会有测试的需求。passwd只是一个例子，另一个例子是你自己写的程序，可能你希望你的程序会对用户的键入产生响应。它可能会将先到的字母丢弃掉。或者在原始模式中需要一个终端，或者需要^C来激活信号又或者你需要去看排序的输出，去了解每一个接下来的命令。</p>
 <p>比方说你要写一个debugger，这个debugger在每次程序编译的时候在内存中以不同的方式安排程序，但是debugger应该以同样的方式进行。如果你想确认debugger正确的访问符号表，你可能去访问符号表中的所有的值，这些值必须是一样的，无论是从内存地址直接访问还是以变量名的key-value形式访问。</p>
 <p>你不可能将一段命令内置到脚本中，因为自身每次都会发生变化，因为数据在在内存中分配的地址每一次都不一样。举例：gdb，GNU的debugger，接受  ”print &amp;var“作为参数，功能是打印var在内存中的地址，交互逻辑类似：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(gdb) print &amp;var</span><br><span class="line">$1 = (int *) 0xe008</span><br></pre></td></tr></table></figure>
-<p>gdb将会标记数据，并在数据后添加 等号 以及后续的数据类型和值。对于expect来说可能的代码如下：</p>
+<p>gdb将会标记数据，并在数据后添加 等号 以及后续的数据类型和值。对于<em>expect</em>来说可能的代码如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">send &quot;print &amp;var\r&quot;</span><br><span class="line">expect &quot;0x*\r&quot; &#123;</span><br><span class="line">    send_user &quot;$expect_out(0,string)\n&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>0x*\r</strong> 的正则表达式将会匹配 <strong>0xe008</strong> 后面跟一个回车这样的值，* 号在表达式中意味着 任何值 ，这是一种非常方便的缩写。接下来我会示范如何使你想要的更加明确。</p>
-<p>接下来的表达式是一个动作，在匹配之后触发。这里的动作只有一个命令，但是可以多个，甚至可以是另一个expect命令。</p>
-<p>send_user 将会把引号内的字符串返回给用户而不是gdb，$符号意味着这个是一个参数引用，并且它的值在字符串中替换原来的字符。expect_out将会将上一个expect预期得到的值填入一个array中返回。在这个case中就是匹配 “0x*” 这个pattern的并且包含所有返回字符的值。</p>
-<p>expect 会比debugger更强大。他能自动的去测试所有相同的程序。举例：之前自动化passwd的脚本就能够被扩展成测试程序，检查passwd 程序不合适的密码，异常的慢反应，信号等等其他形式的有问题的行为。</p>
-<h3 id="程序在自动化之后逻辑会不同"><a href="#程序在自动化之后逻辑会不同" class="headerlink" title="程序在自动化之后逻辑会不同"></a>程序在自动化之后逻辑会不同</h3><p>有一些程序如何缓冲自己的输出取决于他们当前运行的方式。当程序在无交互的运行时，会自动的使用unix自带的I/O库中的缓冲他们的输出，因为理论上现在没人看输出结果，问题在于此时你如果想看程序的输出，但是又打算无交互的运行。Expect能解决这个问题，他能使程序人为自己在有交互的情况下运行。</p>
-<p>另一个例子，shell会强制用户输入控制字符（^Z^C）或者是关键字（fg,bg）等去切换当前执行的任务。但是这些并不能在shell脚本中使用。相似的，shell不能够在无交互的情况下直接运行那些单独为程序交互设计的功能比方说 history 等。就像之前passwd表现的那样。换句话说，你有可能构建一个shell脚本去测试特定的shell的功能，但是并不能严格的测试shell程序的方方面面。但是expect能够做到这一点，他能让shell程序使用交互功能赋予的程序控制特性，一个被expect触发的shell程序会认为自己以交互的方式运行，从而和往常一样控制任务切换等等。</p>
-<h3 id="部分自动化"><a href="#部分自动化" class="headerlink" title="部分自动化"></a>部分自动化</h3><p>Expect 中 interact 关键字将会把程序控制权交回给用户，你可以直接输入命令直达程序，不用通过send 命令。</p>
+<p>接下来的表达式是一个动作，在匹配之后触发。这里的动作只有一个命令，但是可以多个，甚至可以是另一个<em>expect</em>命令。</p>
+<p>send_user 将会把引号内的字符串返回给用户而不是gdb，$符号意味着这个是一个参数引用，并且它的值在字符串中替换原来的字符。expect_out将会将上一个<em>expect</em>预期得到的值填入一个array中返回。在这个case中就是匹配 “0x*” 这个pattern的并且包含所有返回字符的值。</p>
+<p><em>expect</em> 会比debugger更强大。他能自动的去测试所有相同的程序。举例：之前自动化passwd的脚本就能够被扩展成测试程序，检查passwd 程序不合适的密码，异常的慢反应，信号等等其他形式的错误。</p>
+<h3 id="程序在自动化之后逻辑会不同"><a href="#程序在自动化之后逻辑会不同" class="headerlink" title="程序在自动化之后逻辑会不同"></a>程序在自动化之后逻辑会不同</h3><p>有一些程序如何缓冲自己的输出取决于他们当前运行的方式。当程序在无交互的运行时，会自动的使用unix自带的I/O库中的缓冲他们的输出，因为理论上现在没人看输出结果，问题在于此时你如果想看程序的输出，但是又打算无交互的运行。<em>expect</em>能解决这个问题，他能使程序人为自己在有交互的情况下运行。</p>
+<p>另一个例子，shell会强制用户输入控制字符（^Z^C）或者是关键字（fg,bg）等去切换当前执行的任务。但是这些并不能在shell脚本中使用。相似的，shell不能够在无交互的情况下直接运行那些单独为程序交互设计的功能比方说 history 等。就像之前passwd表现的那样。换句话说，你有可能构建一个shell脚本去测试特定的shell的功能，但是并不能严格的测试shell程序的方方面面。但是<em>expect</em>能够做到这一点，他能让shell程序使用交互功能赋予的程序控制特性，一个被<em>expect</em>触发的shell程序会认为自己以交互的方式运行，从而和往常一样控制任务切换等等。</p>
+<h3 id="部分自动化"><a href="#部分自动化" class="headerlink" title="部分自动化"></a>部分自动化</h3><p><em>expect</em> 中 interact 关键字将会把程序控制权交回给用户，你可以直接输入命令直达程序，不用通过send 命令。</p>
 <p>想想之前的fsck命令，他差不多不能提前回答问题，你只能对所有的提示都回答yes或者是no。</p>
-<p>接下来的代码片段说明了expect脚本是如何自动回答不同的问题的，脚本程序在引发fsck后启动，然后在不断循环中区分不同的问题，分别回答yes和no。 \ 防止下一个字符被解释成通配符。在这个case中星号是通配符，但是？不是，他会匹配字面意义上的问号。</p>
+<p>接下来的代码片段说明了<em>expect</em>脚本是如何自动回答不同的问题的，脚本程序在引发fsck后启动，然后在不断循环中区分不同的问题，分别回答yes和no。 \ 防止下一个字符被解释成通配符。在这个case中星号是通配符，但是？不是，他会匹配字面意义上的问号。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">while 1 &#123;</span><br><span class="line">    expect &#123;</span><br><span class="line">        eof                     &#123;break&#125;</span><br><span class="line">        &quot;UNREF FILE*CLEAR\\?&quot;   &#123;send &quot;y\r&quot;&#125;</span><br><span class="line">        &quot;BAD INODE*FIX\\?&quot;      &#123;send &quot;n\r&quot;&#125;</span><br><span class="line">        &quot;\\? &quot;                  &#123;interact +&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最后一个问号是匹配所有，意思是程序给出的提示看上去是一个疑问，并且没有匹配上前面两个，那么会执行interact 命令，将控制权返回给执行者，而执行者的任何键入都会直接和fsck程序交互。当你输入完后你可以通过按下 + 键将控制权交还给脚本。而脚本会在中断的程序入口继续。</p>
-<p>没有expect参与的情况下，fsck能够以阉割版减少了许多功能的状态无交互的执行。fsck本身是几乎无法编程的，并且也是非常重要的系统管理工具。许多工具都有相似的这种缺陷的用户接口，事实上正是这些大量的程序启发了最初的expect开发人员。</p>
-<p>interact 命令能够被用作部分自动化程序，另一个流行用法是编写脚本使用 telnet 通过host或者前端的一个数字，自动的将协议视为已经遭遇过的。当你在某一个点你想接管的时候，这个就会很有用。比方说你可以在浏览远端的库目录。使用Expect，可以使你的系统将大量的不同库都视为是已经连接了。</p>
+<p>没有<em>expect</em>参与的情况下，fsck能够以阉割版减少了许多功能的状态无交互的执行。fsck本身是几乎无法编程的，并且也是非常重要的系统管理工具。许多工具都有相似的这种缺陷的用户接口，事实上正是这些大量的程序启发了最初的<em>expect</em>开发人员。</p>
+<p>interact 命令能够被用作部分自动化程序，另一个流行用法是编写脚本使用 telnet 通过host或者前端的一个数字，自动的将协议视为已经遭遇过的。当你在某一个点你想接管的时候，这个就会很有用。比方说你可以在浏览远端的库目录。使用<em>expect</em>，可以使你的系统将大量的不同库都视为是已经连接了。</p>
 <p>interact还能提供复杂的宏命令。如果你发现你重复的不断输入很长的名字，你可以创建一个段短小的字符串去代替他。简短的例子，你需要在interact之后去发送以下字符（无意义的但是很长）：</p>
 <pre><code>&quot;set def qwk/term=vt100 yhoriz=200&quot;
 </code></pre><p>你可以使用y2代替，这种缩写的功能在遇到那些需要你一遍又一遍的输入冗长的字符的时候非常有用。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">interact &#123;</span><br><span class="line">    &quot;y2&quot; &#123;send &quot;set def qwk/term=vt100 yhoriz=200&quot;&#125;</span><br><span class="line">    &quot;~~d&quot; &#123;send [exec date]&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个代码片段中，如果你发送了”~~d“，那么他会将当先时间发送过去。任意的动作都能调用，包括 expect 和 interact 命令。这个例子中使用 exec 命令去执行 Unix中的date命令。</p>
+<p>这个代码片段中，如果你发送了”~~d“，那么他会将当先时间发送过去。任意的动作都能调用，包括 <em>expect</em> 和 interact 命令。这个例子中使用 exec 命令去执行 Unix中的date命令。</p>
 <p>宏命令可以在其他方面使用。比方说你当前处理的程序会打印东西，但是你不想看或者以其他的方式查看，那么你可以完全的改变他的表现。</p>
-<h3 id="危险-不友好-或者是不讨喜的用户接口"><a href="#危险-不友好-或者是不讨喜的用户接口" class="headerlink" title="危险, 不友好, 或者是不讨喜的用户接口"></a>危险, 不友好, 或者是不讨喜的用户接口</h3><p>interact 命令只是一个过滤最常见的那些使用人工操作就能解决的问题的一种简单方法。使用Expect的工具能够构建任意复杂的机制。</p>
+<h3 id="危险-不友好-或者是不讨喜的用户接口"><a href="#危险-不友好-或者是不讨喜的用户接口" class="headerlink" title="危险, 不友好, 或者是不讨喜的用户接口"></a>危险, 不友好, 或者是不讨喜的用户接口</h3><p>interact 命令只是一个过滤最常见的那些使用人工操作就能解决的问题的一种简单方法。使用<em>expect</em>的工具能够构建任意复杂的机制。</p>
 <p>举例而言你可以找出那些非常危险的接口，阻止用户输入那些本不被期望输入的命令。程序能够被包装的更紧。abd程序在缺乏经验的人手中能够直接导致unix系统崩溃。你可以将abd程序包装在一个更安全的脚本中去避免此类事故发生。这也不仅仅只是加强了系统的安全性，这也使系统管理员不用再去关注这些复杂性。</p>
-<p>通常，Expect可以应用于您不喜欢的接口。 </p>
+<p>通常，<em>expect</em>可以应用于您不喜欢的接口。 </p>
 <p>可以精确定制底层程序的显示量。 您甚至可以使交互完全不可见，这样用户就不必被他们不感兴趣的底层程序所激怒。 他们的态度是“使用任何工具。 完成工作。“他们是对的。</p>
-<h3 id="Graphical-Applications"><a href="#Graphical-Applications" class="headerlink" title="Graphical Applications"></a>Graphical Applications</h3><p>Expect可以与Tk结合使用，Tk是X Window系统的工具包。 Expect和Tk的组合称为Expectk。[5] 使用Expectk，可以使用现有的交互式应用程序并为其提供类似Motif的X界面，而无需更改任何底层程序。 不需要重新编译，并且因为底层程序没有改变，所以不需要再次重新测试它们。 您的所有努力都可以集中在图形用户界面上。 让你看起来漂亮是你所要做的。</p>
-<p>虽然Expectk允许您构建X应用程序，但它可以自动化现有X应用程序的数量有限。 目前，Expect可以自动化xterm和其他专门提供自动化支持的应用程序，但Expect无法自动化任何任意X应用程序。</p>
-<p>期望在人物图形知识方面也受到限制，例如由Curses完成。 尽管如此，通过一些脚本编写，可以完成字符图形的测试和自动化，在第19章（第453页）中，我将描述一种方法。 最终，我相信Expect在内置这种功能时会做得最好而不是通过脚本提供。 但是，要求和界面并不明显，需要进一步的实验和设计。 ExpecTerm是基于早期版本的Expect的内置字符图形功能的示例实现。 ExpecTerm可从Tcl存档获得（参见第19页）。</p>
-<h3 id="little-more-about-Tcl"><a href="#little-more-about-Tcl" class="headerlink" title="little more about Tcl"></a>little more about Tcl</h3><p>Expect的语言设计适用性很广，他有控制结构也有数据结构，所以你能用他来做任何事。这可以弥补其他程序中缺乏的可编程性。 例如，大多数调试器不提供非常复杂的编程控制方法。 通常，您不能声明变量并且仅限于简单循环。</p>
-<p>Expect的核心功能是由TcL提供的，这是一种在其他工具中广泛使用的语言。TCL代表的是工具（Tool）命令（command）语言（language）的缩写。他作为一种库内置在应用中，同时提供了通用的语言特性。TCL解决了在程序语言设计中一个长久以来的问题。</p>
+<h3 id="Graphical-Applications"><a href="#Graphical-Applications" class="headerlink" title="Graphical Applications"></a>Graphical Applications</h3><p><em>expect</em>可以与Tk结合使用，Tk是X Window系统的工具包。 <em>expect</em>和Tk的组合称为Expectk。[5] 使用Expectk，可以使用现有的交互式应用程序并为其提供类似Motif的X界面，而无需更改任何底层程序。 不需要重新编译，并且因为底层程序没有改变，所以不需要再次重新测试它们。 您的所有努力都可以集中在图形用户界面上。 让你看起来漂亮是你所要做的。</p>
+<p>虽然Expectk允许您构建X应用程序，但它可以自动化现有X应用程序的数量有限。 目前，<em>expect</em>可以自动化xterm和其他专门提供自动化支持的应用程序，但<em>expect</em>无法自动化任何任意X应用程序。</p>
+<p>期望在人物图形知识方面也受到限制，例如由Curses完成。 尽管如此，通过一些脚本编写，可以完成字符图形的测试和自动化，在第19章（第453页）中，我将描述一种方法。 最终，我相信<em>expect</em>在内置这种功能时会做得最好而不是通过脚本提供。 但是，要求和界面并不明显，需要进一步的实验和设计。 ExpecTerm是基于早期版本的<em>expect</em>的内置字符图形功能的示例实现。 ExpecTerm可从<em>tcl</em>存档获得（参见第19页）。</p>
+<h3 id="little-more-about-tcl"><a href="#little-more-about-tcl" class="headerlink" title="little more about tcl"></a>little more about tcl</h3><p><em>expect</em>的语言设计适用性很广，他有控制结构也有数据结构，所以你能用他来做任何事。这可以弥补其他程序中缺乏的可编程性。 例如，大多数调试器不提供非常复杂的编程控制方法。 通常，您不能声明变量并且仅限于简单循环。</p>
+<p><em>expect</em>的核心功能是由<em>tcl</em>提供的，这是一种在其他工具中广泛使用的语言。<em>tcl</em>代表的是工具（Tool）命令（command）语言（language）的缩写。他作为一种库内置在应用中，同时提供了通用的语言特性。<em>tcl</em>解决了在程序语言设计中一个长久以来的问题。</p>
 <p>事实上，大多数的工具没有非常复杂的内置的控制语言。shell代表了这种极致案例——他拥有非常丰富的语言甚至能直接启动其他程序。像.cshrc和.profile这些启动脚本可能写的非常复杂。没有其他程序拥有这种伸缩性。这也是一样，这些程序都有自己的语言，每次去掌握一个新的程序都令人畏惧。</p>
 <p>在这两种极端中间的部分，诸如 ftp 这种受限制的特殊的语言，像在.netrc文件中被允许的不是很有灵活性但是好过于没有。很多类似的程序都和ftp设计的一样，受限，不能扩展，并且还不统一。</p>
 <p>像是telnet之类的远端通信程序都没有控制语言，大部分的交互程序都想ftp和telnet一样，缺乏编程性。</p>
 <p>这种程序编程性的缺乏可以理解。如果希望写一个控制打印器的程序，那么将扫描器、解析器、符号表等等都加入这个程序中并不划算。这整个程序不过才10kb。但是你无法预测未来这个程序将会被用在哪里。比方说你又有新的打印器。你的程序必须去理解这些。比方说你得将程序分享给其他人使用。正好他们有两种不同的打印器。可能他们又需要在某一天打印特殊的东西——在发薪日检查。这种需求是无穷无尽的。相比于每次都去定制化程序，还不如将原始的语言扩展。在最开始的时候使用通用的语言相当的有意义。</p>
-<p>那些已经使用Tcl的程序都设置好了。他们一开始就有很好的语言设定。但是很多我们被赋予的程序在Tcl存在之前就存在了，而且大部分都不会被重写。那些程序已经停止开发了很久。（虽然可能因为钱，你能买到新版本）。幸运的是，Expect允许你在交互程序上铺一层Tcl，而不用去对源程序有任何改动。事实上，expect让那些无法被重新编程的程序可编程。</p>
-<h3 id="job-control"><a href="#job-control" class="headerlink" title="job control"></a>job control</h3><p>正如你能同时和多个程序交互，expect也能在shell中通过fg和bg去切换当前处理的程序。expect也能改变shell的注意。当然也比你自己切换快很多。结果就是，expect可以成为不同程序之间的凝胶。使得那些本没有互相交互设计的程序协同工作。一个有意思的例子是由Ken Thompson 写的原始的国际象棋程序，设计成和一个用户交互，他提示移动棋子，并且以数据的代数变换回应用户输入。不幸的是他不允许自己的输出作为自己的输入。即便是他允许也没有一个管道同时处理同一个shell的输出和输入。</p>
-<p>通过几行expect代码，就能使一个象棋线程和另一根象棋线程下棋，包括通信和包装输出以便作为另个程序的输入。我们会在第十章展示这个，并且也会有对这种技术有更正式的使用。</p>
-<h3 id="Background-Process"><a href="#Background-Process" class="headerlink" title="Background Process"></a>Background Process</h3><p>expect 在自动化后台程序的时候能很有用，像是cron。通过cron不仅能自动化交互也能一开始的时候启动程序。如果你有一堆复杂需求，仅仅使用ftp是不够的。</p>
-<p>甚至可以让cron进程在后台交互式联系您。 例如，ftp脚本可能需要密码才能继续执行其操作。 它可以为您搜索网络，然后向您询问。 或者你可以让它寻找一组用户。 获取密码后，Expect将返回并使用它来完成任务。 通过让Expect查询密码，您不需要将它们嵌入脚本中。</p>
+<p>那些已经使用<em>tcl</em>的程序都设置好了。他们一开始就有很好的语言设定。但是很多我们被赋予的程序在<em>tcl</em>存在之前就存在了，而且大部分都不会被重写。那些程序已经停止开发了很久。（虽然可能因为钱，你能买到新版本）。幸运的是，<em>expect</em>允许你在交互程序上铺一层<em>tcl</em>，而不用去对源程序有任何改动。事实上，<em>expect</em>让那些无法被重新编程的程序可编程。</p>
+<h3 id="job-control"><a href="#job-control" class="headerlink" title="job control"></a>job control</h3><p>正如你能同时和多个程序交互，<em>expect</em>也能在shell中通过fg和bg去切换当前处理的程序。<em>expect</em>也能改变shell的注意。当然也比你自己切换快很多。结果就是，<em>expect</em>可以成为不同程序之间的凝胶。使得那些本没有互相交互设计的程序协同工作。一个有意思的例子是由Ken Thompson 写的原始的国际象棋程序，设计成和一个用户交互，他提示移动棋子，并且以数据的代数变换回应用户输入。不幸的是他不允许自己的输出作为自己的输入。即便是他允许也没有一个管道同时处理同一个shell的输出和输入。</p>
+<p>通过几行<em>expect</em>代码，就能使一个象棋线程和另一根象棋线程下棋，包括通信和包装输出以便作为另个程序的输入。我们会在第十章展示这个，并且也会有对这种技术有更正式的使用。</p>
+<h3 id="Background-Process"><a href="#Background-Process" class="headerlink" title="Background Process"></a>Background Process</h3><p><em>expect</em> 在自动化后台程序的时候能很有用，像是cron。通过cron不仅能自动化交互也能一开始的时候启动程序。如果你有一堆复杂需求，仅仅使用ftp是不够的。</p>
+<p>甚至可以让cron进程在后台交互式联系您。 例如，ftp脚本可能需要密码才能继续执行其操作。 它可以为您搜索网络，然后向您询问。 或者你可以让它寻找一组用户。 获取密码后，<em>expect</em>将返回并使用它来完成任务。 通过让<em>expect</em>查询密码，您不需要将它们嵌入脚本中。</p>
 <p>用cron的另一个常见的理由是做备份。</p>
-<h3 id="Using-Expect-On-UNIX"><a href="#Using-Expect-On-UNIX" class="headerlink" title="Using Expect On UNIX"></a>Using Expect On UNIX</h3><p>expect可以和任何的unix程序交互，理论上expect可以做任何事，但是这并不是expect的本质，expect能包装任何你想包装的那种有着极差行为的程序，而外在行为和源程序一模一样。</p>
-<h3 id="Using-Expect-On-Other-Operating-Systems"><a href="#Using-Expect-On-Other-Operating-Systems" class="headerlink" title="Using Expect On Other Operating Systems"></a>Using Expect On Other Operating Systems</h3><p>不翻译了  真的没意思。。大概意思就是expect特别好。。。</p>
+<h3 id="Using-Expect-On-UNIX"><a href="#Using-Expect-On-UNIX" class="headerlink" title="Using Expect On UNIX"></a>Using Expect On UNIX</h3><p><em>expect</em>可以和任何的unix程序交互，理论上<em>expect</em>可以做任何事，但是这并不是<em>expect</em>的本质，<em>expect</em>能包装任何你想包装的那种有着极差行为的程序，而外在行为和源程序一模一样。</p>
+<h3 id="feather-more"><a href="#feather-more" class="headerlink" title="feather more"></a>feather more</h3><ol>
+<li>余下的段落包括了在不同的系统中使用expect的方式。</li>
+<li>获取例子的方法，以及不同例子的功能。一般系统都是已经安装了expect了的，但是我没有找到 examples这个文件夹</li>
+</ol>
 
       
     </div>
@@ -504,7 +507,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/expect，scripts/" rel="tag"># expect，scripts</a>
+            <a href="/tags/expect，script/" rel="tag"># expect，script</a>
           
         </div>
       
@@ -526,10 +529,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/20/expect-探险-4/" rel="prev" title="">
-                 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -602,7 +601,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -631,7 +630,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">7</span>
+                      
+                    
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
@@ -666,7 +667,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一章：-简介-什么是expect"><span class="nav-number">1.</span> <span class="nav-text">第一章：  简介-什么是expect</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-very-brief-Overview"><span class="nav-number">1.1.</span> <span class="nav-text">a very brief Overview.</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Total-Automation"><span class="nav-number">2.</span> <span class="nav-text">Total Automation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Testing"><span class="nav-number">3.</span> <span class="nav-text">Testing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程序在自动化之后逻辑会不同"><span class="nav-number">4.</span> <span class="nav-text">程序在自动化之后逻辑会不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部分自动化"><span class="nav-number">5.</span> <span class="nav-text">部分自动化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#危险-不友好-或者是不讨喜的用户接口"><span class="nav-number">6.</span> <span class="nav-text">危险, 不友好, 或者是不讨喜的用户接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Graphical-Applications"><span class="nav-number">7.</span> <span class="nav-text">Graphical Applications</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#little-more-about-Tcl"><span class="nav-number">8.</span> <span class="nav-text">little more about Tcl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#job-control"><span class="nav-number">9.</span> <span class="nav-text">job control</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Background-Process"><span class="nav-number">10.</span> <span class="nav-text">Background Process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-Expect-On-UNIX"><span class="nav-number">11.</span> <span class="nav-text">Using Expect On UNIX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-Expect-On-Other-Operating-Systems"><span class="nav-number">12.</span> <span class="nav-text">Using Expect On Other Operating Systems</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一章：-简介-什么是expect"><span class="nav-number">1.</span> <span class="nav-text">第一章：  简介-什么是expect</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-very-brief-Overview"><span class="nav-number">1.1.</span> <span class="nav-text">a very brief Overview.</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-first-script-——-dialback"><span class="nav-number">2.</span> <span class="nav-text">the first script —— dialback</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Total-Automation"><span class="nav-number">3.</span> <span class="nav-text">Total Automation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Testing"><span class="nav-number">4.</span> <span class="nav-text">Testing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程序在自动化之后逻辑会不同"><span class="nav-number">5.</span> <span class="nav-text">程序在自动化之后逻辑会不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部分自动化"><span class="nav-number">6.</span> <span class="nav-text">部分自动化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#危险-不友好-或者是不讨喜的用户接口"><span class="nav-number">7.</span> <span class="nav-text">危险, 不友好, 或者是不讨喜的用户接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Graphical-Applications"><span class="nav-number">8.</span> <span class="nav-text">Graphical Applications</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#little-more-about-tcl"><span class="nav-number">9.</span> <span class="nav-text">little more about tcl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#job-control"><span class="nav-number">10.</span> <span class="nav-text">job control</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Background-Process"><span class="nav-number">11.</span> <span class="nav-text">Background Process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-Expect-On-UNIX"><span class="nav-number">12.</span> <span class="nav-text">Using Expect On UNIX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#feather-more"><span class="nav-number">13.</span> <span class="nav-text">feather more</span></a></li></ol></div>
             
 
           </div>
