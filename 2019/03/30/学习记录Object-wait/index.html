@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.5.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Object.wait() 是什么这个是所有java的对象的父类——Object自带的一个方法，这个方法无法被重写（final），这个方法的invoker是一个对象，但是作用的对象是当前使对象invoke wait方法的线程。 为什么要写这个在学习《Java并发编程的艺术》一书中，对于多线程编程的job controller很有兴趣，在java的更早版本之前，并没有java.util.concur">
+<meta name="keywords" content="jvm,ObjectMonitor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习记录Object.wait()">
+<meta property="og:url" content="http://lovelycheng.github.io/2019/03/30/学习记录Object-wait/index.html">
+<meta property="og:site_name" content="LoveCheng">
+<meta property="og:description" content="Object.wait() 是什么这个是所有java的对象的父类——Object自带的一个方法，这个方法无法被重写（final），这个方法的invoker是一个对象，但是作用的对象是当前使对象invoke wait方法的线程。 为什么要写这个在学习《Java并发编程的艺术》一书中，对于多线程编程的job controller很有兴趣，在java的更早版本之前，并没有java.util.concur">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-13T06:00:45.311Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习记录Object.wait()">
+<meta name="twitter:description" content="Object.wait() 是什么这个是所有java的对象的父类——Object自带的一个方法，这个方法无法被重写（final），这个方法的invoker是一个对象，但是作用的对象是当前使对象invoke wait方法的线程。 为什么要写这个在学习《Java并发编程的艺术》一书中，对于多线程编程的job controller很有兴趣，在java的更早版本之前，并没有java.util.concur">
+
+
+
+
+
+
+  <link rel="canonical" href="http://lovelycheng.github.io/2019/03/30/学习记录Object-wait/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>学习记录Object.wait() | LoveCheng</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LoveCheng</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">enjoy life</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2019/03/30/学习记录Object-wait/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程道玄">
+      <meta itemprop="description" content="a java developer's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LoveCheng">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">学习记录Object.wait()
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-30 14:55:12" itemprop="dateCreated datePublished" datetime="2019-03-30T14:55:12+08:00">2019-03-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-04-13 14:00:45" itemprop="dateModified" datetime="2019-04-13T14:00:45+08:00">2019-04-13</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/30/学习记录Object-wait/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2019/03/30/学习记录Object-wait/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Object-wait-是什么"><a href="#Object-wait-是什么" class="headerlink" title="Object.wait() 是什么"></a>Object.wait() 是什么</h3><p>这个是所有java的对象的父类——Object自带的一个方法，这个方法无法被重写（final），这个方法的invoker是一个对象，但是作用的对象是当前使对象invoke wait方法的线程。</p>
+<h3 id="为什么要写这个"><a href="#为什么要写这个" class="headerlink" title="为什么要写这个"></a>为什么要写这个</h3><p>在学习《Java并发编程的艺术》一书中，对于多线程编程的job controller很有兴趣，在java的更早版本之前，并没有java.util.concurrent包使用，那么早期的程序员是如何做多线程的协同的？或者说java提供了哪些东西来完成这件事。</p>
+<h3 id="底层的逻辑分析"><a href="#底层的逻辑分析" class="headerlink" title="底层的逻辑分析"></a>底层的逻辑分析</h3><h4 id="调用链"><a href="#调用链" class="headerlink" title="调用链"></a>调用链</h4><h5 id="1-java-language"><a href="#1-java-language" class="headerlink" title="1.java language"></a>1.java language</h5><p>所有的java对象，都能调用wait()方法，在jdk中最终调用的是一个native的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public final native void wait(long timeout) throws InterruptedException;</span><br></pre></td></tr></table></figure>
+<h5 id="2-java-native-interface"><a href="#2-java-native-interface" class="headerlink" title="2.java native interface"></a>2.java native interface</h5><p>在本地方法的调用中，首先会在对应的C文件中做好映射和注册工作，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static JNINativeMethod methods[] = &#123;</span><br><span class="line">    &#123;&quot;hashCode&quot;,    &quot;()I&quot;,                    (void *)&amp;JVM_IHashCode&#125;,</span><br><span class="line">    &#123;&quot;wait&quot;,        &quot;(J)V&quot;,                   (void *)&amp;JVM_MonitorWait&#125;,</span><br><span class="line">    &#123;&quot;notify&quot;,      &quot;()V&quot;,                    (void *)&amp;JVM_MonitorNotify&#125;,</span><br><span class="line">    &#123;&quot;notifyAll&quot;,   &quot;()V&quot;,                    (void *)&amp;JVM_MonitorNotifyAll&#125;,</span><br><span class="line">    &#123;&quot;clone&quot;,       &quot;()Ljava/lang/Object;&quot;,   (void *)&amp;JVM_Clone&#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>注册</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">JNIEXPORT void JNICALL</span><br><span class="line">Java_java_lang_Object_registerNatives(JNIEnv *env, jclass cls)</span><br><span class="line">&#123;</span><br><span class="line">    (*env)-&gt;RegisterNatives(env, cls,</span><br><span class="line">                            methods, sizeof(methods)/sizeof(methods[0]));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上所述，<strong>wait()</strong>方法会被注册成<strong>JVM_MonitorWait</strong>;<br>这个<strong>JVM_MonitorWait</strong>定义在<em>jvm.h</em>中。具体的实现在<em>jvm.cpp</em>中。</p>
+<h5 id="jvm-cpp"><a href="#jvm-cpp" class="headerlink" title="jvm.cpp"></a>jvm.cpp</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">JVM_ENTRY(void, JVM_MonitorWait(JNIEnv* env, jobject handle, jlong ms))</span><br><span class="line">  JVMWrapper(&quot;JVM_MonitorWait&quot;);</span><br><span class="line">  Handle obj(THREAD, JNIHandles::resolve_non_null(handle));</span><br><span class="line">  JavaThreadInObjectWaitState jtiows(thread, ms != 0);</span><br><span class="line">  if (JvmtiExport::should_post_monitor_wait()) &#123;</span><br><span class="line">    JvmtiExport::post_monitor_wait((JavaThread *)THREAD, (oop)obj(), ms);</span><br><span class="line"></span><br><span class="line">    // The current thread already owns the monitor and it has not yet</span><br><span class="line">    // been added to the wait queue so the current thread cannot be</span><br><span class="line">    // made the successor. This means that the JVMTI_EVENT_MONITOR_WAIT</span><br><span class="line">    // event handler cannot accidentally consume an unpark() meant for</span><br><span class="line">    // the ParkEvent associated with this ObjectMonitor.</span><br><span class="line">  &#125;</span><br><span class="line">  ObjectSynchronizer::wait(obj, ms, CHECK);</span><br><span class="line">JVM_END</span><br></pre></td></tr></table></figure>
+<p>ok，我们来仔细看看这里做了什么事情：</p>
+<h6 id="JVM-ENTRY-AND-JVM-END"><a href="#JVM-ENTRY-AND-JVM-END" class="headerlink" title="JVM_ENTRY AND JVM_END"></a>JVM_ENTRY AND JVM_END</h6><p><strong>JVM_ENTRY</strong>和<strong>JVM_END</strong> 是宏的引用或者说调用了一个宏。<em>JVM_ENTRY</em>本身是在<em>interfaceSupport.hpp</em>中，</p>
+<p><pre name="code" class="java"><br>#define JVM_ENTRY(result_type, header)<br>extern “C” {<br>  result_type JNICALL header {<br>    JavaThread* thread=JavaThread::thread_from_jni_environment(env);<br>    ThreadInVMfromNative __tiv(thread);<br>    debug_only(VMNativeEntryWrapper __vew;)<br>    VM_ENTRY_BASE(result_type, header, thread)</pre></p>
+<p>#define JVM_END } }<br>&lt;/pre&gt;<br>大概的意思是：所有使用<strong>JVM_ENTRY</strong> 开头和<strong>JVM_END</strong>结尾的地方，都用上面的代码做替换。</p>
+<h6 id="代码逻辑"><a href="#代码逻辑" class="headerlink" title="代码逻辑"></a>代码逻辑</h6><p>此处的代码逻辑是 ：</p>
+<pre><code> Handle obj(THREAD, JNIHandles::resolve_non_null(handle));
+</code></pre><p>在线程的本地内存（Thread-local storage）中保存jObject的oop，这个Handle是保护OOP使用的，也提供避免多余的类型转化等功能，详情见同目录下的<em>handles.hpp</em>。</p>
+<pre><code> JavaThreadInObjectWaitState jtiows(thread, ms != 0); 
+</code></pre><p>JavaThreadInObjectWaitState 这个东西其实是 ThreadService.hpp中定义的一个内部类。逻辑如下：</p>
+<p><pre name="code" class="java">
+// Change status to parked (timed or indefinite)
+class JavaThreadParkedState : public JavaThreadStatusChanger {
+ private:
+  ThreadStatistics* \_stat;
+  bool \_active;
+ public:
+  JavaThreadParkedState(JavaThread \*java\_thread, bool timed) :
+    JavaThreadStatusChanger(java\_thread,
+                            timed ? java\_lang\_Thread::PARKED\_TIMED : java\_lang\_Thread::PARKED) {
+    if (is\_alive()) {
+      \_stat = java\_thread->get\_thread\_stat();
+      \_active = ThreadService::is\_thread\_monitoring\_contention();
+      \_stat->monitor\_wait();
+      if (\_active) {
+        \_stat->monitor\_wait\_begin();
+      }
+    } else {
+      \_active = false;
+    }
+  }
+  ~JavaThreadParkedState() {
+    if (\_active) {
+      \_stat->monitor\_wait\_end();
+    }
+  }
+};
+</pre><br>可能有点复杂。。首先 这个<strong>JavaThreadInObjectWaitState</strong>类似是一个外观模式的开放出来的代理类，这里看上去是一个constructor，本质是委托给了<strong>JavaThreadStatusChanger</strong>的构造器，做了两件事 <em>save_old_state(java_thread)</em> 和 <em>set_thread_status(state);</em>这里会根据timeout != 0的值传入线程状态的枚举：IN_OBJECT_WAIT_TIMED和IN_OBJECT_WAIT。这是在javaClasses.hpp中定义的内部类java_lang_Thread中定义的枚举。这里问题在于 线程的状态已经变了。这部分逻辑在threadService.hpp中，有兴趣的小伙伴可以看看。</p>
+<p>if方法体中的注释 大概意思是</p>
+<pre><code>当前线程还没有被加入到waitSet中，并且已经持有了这个对象的锁，所以当前线程不能生成继任者（指下一个获取锁的线程），**JVMTI_EVENT_MONITOR_WAIT**这个事件的处理者不能随意的消费和这个对象的锁（ObjectMonitor）关联的ParkEvent 的unpark()方法。再通俗一点就是当前线程不能唤醒等在这个对象上的其他线程。
+</code></pre><p>在之后是JVMTI的知识，这里不做更详细的描述了。重要的是最后一句：</p>
+<pre><code>ObjectSynchronizer::wait()
+</code></pre><h5 id="ObjectSynchronizer-wait"><a href="#ObjectSynchronizer-wait" class="headerlink" title="ObjectSynchronizer::wait();"></a>ObjectSynchronizer::wait();</h5><p>ObjectSynchronizer 是定义在 Synchronizer.hpp中的内部类。类似于  同步器-对象同步器的类结构。<br>定位到Synchronizer.cpp中的ObjectSynchronizer::wait方法</p>
+<h6 id="是否使用偏向锁"><a href="#是否使用偏向锁" class="headerlink" title="是否使用偏向锁"></a>是否使用偏向锁</h6><p>在java1.6之后为了优化Synchronized关键字，引入的新的功能，但是如果要使用wait()|notify()|notifyall()|hashcode()，都会使这个对象的偏向锁失效。具体逻辑是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (UseBiasedLocking) &#123;</span><br><span class="line">    BiasedLocking::revoke_and_rebias(obj, false, THREAD);</span><br><span class="line">    assert(!obj-&gt;mark()-&gt;has_bias_pattern(), &quot;biases should be revoked by now&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此处不对偏向锁的知识展开，有兴趣的参看相关论文和文章。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> if (millis &lt; 0) &#123;</span><br><span class="line">    TEVENT(wait - throw IAX);</span><br><span class="line">    THROW_MSG_0(vmSymbols::java_lang_IllegalArgumentException(), &quot;timeout value is negative&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对等待参数校验是否&gt;0; IAX 是IllegalArgumentException的简写。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ObjectMonitor* monitor = ObjectSynchronizer::inflate(THREAD,</span><br><span class="line">                                                     obj(),</span><br><span class="line">                                                     inflate_cause_wait);</span><br><span class="line"></span><br><span class="line">DTRACE_MONITOR_WAIT_PROBE(monitor, obj(), THREAD, millis);</span><br><span class="line">monitor-&gt;wait(millis, true, THREAD);</span><br></pre></td></tr></table></figure>
+<p>这里是 获取了调用wait方法的对象的 <strong><em>监视器锁</em></strong>，这在jvm中就是重量级锁。inflate这个单词在偏向锁的相关论文中也频繁出现，指的就是锁的升级。inflate里面的逻辑涉及：对象头的重置，线程中锁记录的重置。这里不展开。</p>
+<h5 id="Monitor-gt-wait"><a href="#Monitor-gt-wait" class="headerlink" title="Monitor-&gt;wait()"></a>Monitor-&gt;wait()</h5><h4 id="程序逻辑"><a href="#程序逻辑" class="headerlink" title="程序逻辑"></a>程序逻辑</h4><ol>
+<li>初始化没有初始化的ObjectMonitor；</li>
+<li>检查owner</li>
+<li>创建一个waitObject，一种特有的数据结构，大体类似于线程信息。</li>
+<li>将此线程的当前等待锁指向给objectMonitor，Thread-&gt; current_waiting_monitor</li>
+<li>获取waitset的保护锁，将waitObject加入到waitSet，释放waitSet的保护锁</li>
+<li>当前线程退出临界区</li>
+<li>当前线程被挂起，等待被notify() || notifyAll() || timeout 唤醒。</li>
+<li>修改线程的状态，并调用unpark()方法</li>
+<li>重新进入临界区</li>
+<li>重置线程的等待锁记录和线程的owner</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jvm-ObjectMonitor/" rel="tag"># jvm,ObjectMonitor</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/12/exploring expect what is expect/" rel="next" title="exploring expect what is expect">
+                <i class="fa fa-chevron-left"></i> exploring expect what is expect
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">程道玄</p>
+              <p class="site-description motion-element" itemprop="description">a java developer's blog</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-wait-是什么"><span class="nav-number">1.</span> <span class="nav-text">Object.wait() 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要写这个"><span class="nav-number">2.</span> <span class="nav-text">为什么要写这个</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#底层的逻辑分析"><span class="nav-number">3.</span> <span class="nav-text">底层的逻辑分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#调用链"><span class="nav-number">3.1.</span> <span class="nav-text">调用链</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-java-language"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.java language</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-java-native-interface"><span class="nav-number">3.1.2.</span> <span class="nav-text">2.java native interface</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jvm-cpp"><span class="nav-number">3.1.3.</span> <span class="nav-text">jvm.cpp</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#JVM-ENTRY-AND-JVM-END"><span class="nav-number">3.1.3.1.</span> <span class="nav-text">JVM_ENTRY AND JVM_END</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#代码逻辑"><span class="nav-number">3.1.3.2.</span> <span class="nav-text">代码逻辑</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ObjectSynchronizer-wait"><span class="nav-number">3.1.4.</span> <span class="nav-text">ObjectSynchronizer::wait();</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#是否使用偏向锁"><span class="nav-number">3.1.4.1.</span> <span class="nav-text">是否使用偏向锁</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Monitor-gt-wait"><span class="nav-number">3.1.5.</span> <span class="nav-text">Monitor-&gt;wait()</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#程序逻辑"><span class="nav-number">3.2.</span> <span class="nav-text">程序逻辑</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程道玄</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.5.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'vR7pFVFgp5w0DYnhNU9o437g-gzGzoHsz',
+        appKey: 'cPDdsLTjsQulxK7id69pBBs6',
+        placeholder: 'Just go go',
+        avatar:'mm',
+        meta:guest,
+        pageSize:'10' || 10,
+        visitor: false
+    });
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

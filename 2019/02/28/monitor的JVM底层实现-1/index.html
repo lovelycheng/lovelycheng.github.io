@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="LoveCheng">
 <meta property="og:description" content="来源openjdk 9   9dev/hotspot/src/share/vm/runtime/objectMonitor.cpp 134~245的注释；翻译如下 summary对于synchronized关键字，无论他锁的对象或者说对象锁是哪个，参与竞争的线程 都会进入 这个锁对象的cqx队列和entryList队列，进入park状态，直到 interrupt||waittimeout||not">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-03T04:17:10.774Z">
+<meta property="og:updated_time" content="2019-03-30T09:44:25.531Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="monitor的JVM底层实现-1">
 <meta name="twitter:description" content="来源openjdk 9   9dev/hotspot/src/share/vm/runtime/objectMonitor.cpp 134~245的注释；翻译如下 summary对于synchronized关键字，无论他锁的对象或者说对象锁是哪个，参与竞争的线程 都会进入 这个锁对象的cqx队列和entryList队列，进入park状态，直到 interrupt||waittimeout||not">
@@ -364,7 +364,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-03-03 12:17:10" itemprop="dateModified" datetime="2019-03-03T12:17:10+08:00">2019-03-03</time>
+                <time title="Modified: 2019-03-30 17:44:25" itemprop="dateModified" datetime="2019-03-30T17:44:25+08:00">2019-03-30</time>
               
             
           </span>
@@ -409,7 +409,7 @@
       
         <h2 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h2><p>openjdk 9  </p>
 <p>9dev/hotspot/src/share/vm/runtime/objectMonitor.cpp 134~245的注释；<br>翻译如下</p>
-<h2 id="summary"><a href="#summary" class="headerlink" title="summary"></a>summary</h2><p>对于synchronized关键字，无论他锁的对象或者说对象锁是哪个，参与竞争的线程 都会进入 这个锁对象的cqx队列和entryList队列，进入park状态，直到 interrupt||waittimeout||notify()。还需要更多细节；<br>在interrupt waittimeout notify()有哪些异同：</p>
+<h2 id="summary"><a href="#summary" class="headerlink" title="summary"></a>summary</h2><p>对于synchronized关键字，无论他锁的对象或者说对象锁是哪个，参与竞争的线程 都会进入 这个锁对象的cqx队列和entryList队列，进入park状态，直到 interrupt||waittimeout||notify()。<br>还需要更多细节；<br>在interrupt waittimeout notify()有哪些异同：</p>
 <h2 id="questions"><a href="#questions" class="headerlink" title="questions"></a>questions</h2><p>为什么有两个队列：2q 算法；<br>2q算法 和 LRU算法；<br>redis；</p>
 <h2 id="理论上的操作"><a href="#理论上的操作" class="headerlink" title="理论上的操作"></a>理论上的操作</h2><ul>
 <li>一根线程可以通过成功的CAS操作，将_owner 的field 从none -&gt;non-none；</li>
@@ -556,7 +556,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -589,7 +589,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

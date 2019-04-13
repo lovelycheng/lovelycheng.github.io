@@ -305,6 +305,273 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2018/11/18/机器学习第三课/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程道玄">
+      <meta itemprop="description" content="a java developer's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LoveCheng">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/11/18/机器学习第三课/" class="post-title-link" itemprop="http://lovelycheng.github.io/page/2/index.html">机器学习第三课</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-11-18 23:24:13" itemprop="dateCreated datePublished" datetime="2018-11-18T23:24:13+08:00">2018-11-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-05 18:38:59" itemprop="dateModified" datetime="2019-02-05T18:38:59+08:00">2019-02-05</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/18/机器学习第三课/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2018/11/18/机器学习第三课/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="机器学习第三课"><a href="#机器学习第三课" class="headerlink" title="机器学习第三课"></a>机器学习第三课</h2><h3 id="逻辑回归-logic-regression"><a href="#逻辑回归-logic-regression" class="headerlink" title="逻辑回归(logic regression)"></a>逻辑回归(logic regression)</h3><h4 id="分类"><a href="#分类" class="headerlink" title="分类:"></a>分类:</h4><p>对于给定一堆数据，比方说是tumor的图片，通过机器学习的方法训练，能够准确的识别是否是malignant（恶性的）还是良性的。这种训练，给出的结果是二分的，是或者不是，在之前学习的线性回归中，并不适用，即：对m个样本，$x^i,i\in(1….m),有x^i\in(0,1)$ 。</p>
+<h3 id="假设函数"><a href="#假设函数" class="headerlink" title="假设函数"></a>假设函数</h3><p>hypothesis function , $H_\theta(X)$，表示的是一个对于给定数据集的假设，或者是一个模型，在之前的学习中，假设函数也可以表示成：</p>
+<blockquote>
+<script type="math/tex; mode=display">H(X) = \theta^TX</script></blockquote>
+<p>在逻辑回归中，$H(X)$ 满足 条件 $0 \leq H(x) \leq 1$ ,以上的表达式不足以满足，所以将$\theta^TX$ 放入 <a href="https://en.wikipedia.org/wiki/Logistic_function" target="_blank" rel="noopener">Logistic Function</a> 中，即：</p>
+<blockquote>
+<script type="math/tex; mode=display">H(X) = g(\theta^{T}X)</script><script type="math/tex; mode=display">z = \theta^{T}x</script><p><script type="math/tex">g(z) = \frac{1}{1+e^{-z}}</script>   <em>逻辑函数</em></p>
+</blockquote>
+<p>整个函数在坐标系中展示如下：</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Logistic-curve.svg" alt=""></p>
+<p>对此，有</p>
+<blockquote>
+<script type="math/tex; mode=display">
+y = 
+\begin{cases}
+1, & \text{x $\to$ +$\infty$} \\
+0, & \text{x $\to$ -$\infty$}
+\end{cases}</script><script type="math/tex; mode=display">
+X = H(X) = \theta^{T}X</script><script type="math/tex; mode=display">
+g(z) = \frac{1}{1+e^{-z}} = \frac{1}{1+e^{-\theta^{T}X}}</script></blockquote>
+<p>这样的逻辑函数在给定的X下，将会给出一个等于结果=1的概率(<em>probability</em>)。</p>
+<h4 id="决定边界"><a href="#决定边界" class="headerlink" title="决定边界"></a>决定边界</h4><p>The <strong>decision boundary</strong> is the line that separates the area where y = 0 and where y = 1. It is created by our hypothesis function.</p>
+<p>我的理解是，在<strong>任何</strong>的假设函数下，总有一条或者是一圈之类的线，能把数据分开、数学上表示是，在逻辑函数取值=0的时候，在图形上的表示。</p>
+<blockquote>
+<script type="math/tex; mode=display">
+给定的一个函数：\theta = 
+\begin{bmatrix}
+ \theta_1 \\
+ \theta_2 \\
+ \theta_3 \\
+\end{bmatrix}。
+令 \theta_1x_1+\theta_2x_2+\theta_3x_3 = 0</script><p>关于上述方程的解的集合就是这个假设函数的决定边界，无所谓最终分类算法好不好。</p>
+</blockquote>
+<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p><em>Cost Function</em> :</p>
+<p>在之前的学习中损失函数是一个<em>bow-shaped function</em>，存在全局的最低点，但是对这个分类算法不太友好，。这里其实之前的</p>
+<blockquote>
+<script type="math/tex; mode=display">J(\theta) = \frac{1}{2m} \sum_{i=1}^{m}(\theta^{T}X_i - y_i)^2</script></blockquote>
+<p>可以改写成</p>
+<blockquote>
+<script type="math/tex; mode=display">J(\theta) = \frac{1}{m} \sum_{i=1}^{m}Cost(h_\theta(x^{(i)},y^{i})</script></blockquote>
+<p>证明过程：</p>
+<blockquote>
+<p>这个$Cost(H_\theta(x^{(i)}),y^i)$ 指的是一份数据的偏差，是假设函数的值减这份数据对应的真实值。</p>
+</blockquote>
+<p>结论：</p>
+<blockquote>
+<script type="math/tex; mode=display">
+\begin{cases}
+Cost(h_\theta(x),y) = - \log(h_\theta(x)) , &  \text{if y = 1}  \\
+Cost(h_\theta(x),y) = - \log(1-h_\theta(x)),& \text{if y = 0 }\\
+\end{cases}</script></blockquote>
+<p>简化损失函数：</p>
+<blockquote>
+<p>$Cost(H<em>\theta(x^{(i)}),y^i) = -y^{i}\log(h</em>\theta(x)) + (1-y)(- \log(1-h_\theta(x)))， y \in (1|0) $ ;</p>
+<script type="math/tex; mode=display">
+J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \log(1-h_\theta(x^{i})))]</script></blockquote>
+<p>根据之前的多元线性回归分析的损失函数有：</p>
+<p>Repeat:</p>
+<blockquote>
+<script type="math/tex; mode=display">
+\theta_j := \theta_j - \frac{\alpha\partial}{\partial\theta_j}J(\theta) , \text{同时更新所有的$\theta$}</script></blockquote>
+<p>结果：</p>
+<blockquote>
+<script type="math/tex; mode=display">
+\theta_j := \theta_j - \frac{\alpha}{m}\sum_{(i=1)}^{(m)}(h_\theta(x^{i})-y^{i})x_j^i</script></blockquote>
+<p>这个和之前的线性回归里面的其实一样的，$x_j^i$表示的第i份数据，其中第j维的数据的列；</p>
+<h4 id="进阶优化"><a href="#进阶优化" class="headerlink" title="进阶优化"></a>进阶优化</h4><p>有更多的其他算法，而不是梯度下降；相对而言是更快，也不需要学习速率；只是更加复杂。</p>
+<p>这些算法不需要自己实现。直接调用程序提供的库就行，后期去看看python的实现。</p>
+<p>octave的fminunc()</p>
+<h3 id="y不是二分的情况"><a href="#y不是二分的情况" class="headerlink" title="y不是二分的情况"></a>y不是二分的情况</h3><h4 id="One-vs-all"><a href="#One-vs-all" class="headerlink" title="One-vs-all"></a>One-vs-all</h4><p>思路就是先挑一种出来，对于一个分类器（假设函数）来说，如果有$m$种分类 $y\in (1,2,3,4…)$ ,对于每一次输入$\theta^{T}X$ 输出值有$m$种取值，分类器的做法是找出置信度最高的值。</p>
+<h3 id="overfitting-and-underfit"><a href="#overfitting-and-underfit" class="headerlink" title="overfitting and underfit"></a>overfitting and underfit</h3><p>Overfitting: If we have too many features, the learned hypothesis may fit the training set very well ( ), but fail to generalize to new examples (predict prices on new examples).</p>
+<p>如果说函数有太多的特征（加入了一些不必要的特征，这些特征可能是底作用的，也可能是完全无效的），所以说是这个分类器完美的适应了样本的数据，但是对于一般性的输入 有可能预测的一般。</p>
+<p>ps：联想泰勒展开的公式，模拟函数越多的多项式越能够模拟原函数的走向（图形表现）。</p>
+<p>解决：</p>
+<ul>
+<li>减少数据维度<ul>
+<li>可以手动</li>
+<li>Model selection algorithm</li>
+</ul>
+</li>
+<li>Regularization 正则化<ul>
+<li>保持所有的维度。增加一个多项式，作为惩罚某些维度参数的手段，减少这个维度在函数中的权重。</li>
+<li>也有可能每一个维度都提供一定的预测权重，并且函数运转的很好。</li>
+</ul>
+</li>
+</ul>
+<p>正则化：</p>
+<p>​    $\theta_1,\theta_2,\theta_3,…..$这些参数都很小，减少过拟合的倾向。</p>
+<p>在</p>
+<script type="math/tex; mode=display">
+J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \log(1-h_\theta(x^{i}))) + \lambda\sum_{j=1}^{n}\theta_{j}^2 ] , \text{$\lambda$是正则化参数} \\</script><p>后面这个是惩罚项。默认不会去优化$\theta_0$的。</p>
+<p>将上述的正则化方法带入到我们之前的梯度下降算法：</p>
+<script type="math/tex; mode=display">
+\theta_{j} := \theta_{j}(1-\alpha\frac{\lambda}{m}) - \frac{\alpha}{m}\sum_{(i=1)}^{(m)}(h_\theta(x^{i})-y^{i})x_j^i</script><p>只是去压缩了一下$\theta_j$ </p>
+<p>Normal Equation:</p>
+<script type="math/tex; mode=display">
+\theta = (X^{T}X)^{-1}X^{T}Y</script><p>应用正则化：</p>
+<script type="math/tex; mode=display">
+\theta = (X^{T}X+\lambda\begin{bmatrix}0&0&\cdots&0\\0&1&\cdots&0\\\vdots&\vdots&\ddots&0\\0&0&\cdots&1\end{bmatrix})^{-1}X^{T}Y</script><p>matrix是 n+1*n+1；在$\lambda \gt 0$ 的时候，括号里面这堆东西绝壁是可逆的。</p>
+<p>Regularized logistic regression:</p>
+<p>梯度下降：在写法上其实是和线性回归一样的，只是这里的假设函数不一样。</p>
+<p>advanced Optimize: 在调用这种高级库的时候，cost function $J(\theta)$ 这个东西不一样。这个应该是个入参。</p>
+<p>总结：</p>
+<p>这里提出了新的代价函数；以及过拟合的解决方法、但是过犹不及，太多的正则项会导致underfitting</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2018/11/15/machine_learning/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -969,7 +1236,7 @@ try {
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1002,7 +1269,9 @@ try {
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
@@ -1199,7 +1468,7 @@ try {
         pageSize:'10' || 10,
         visitor: false
     });
-  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  </script>
 
 
 
@@ -1224,6 +1493,10 @@ try {
   
     
       
+        
+      
+    
+      
     
       
     
@@ -1231,6 +1504,30 @@ try {
     
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+    
   
 
 

@@ -305,6 +305,240 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2019/03/30/学习记录Object-wait/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程道玄">
+      <meta itemprop="description" content="a java developer's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LoveCheng">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/30/学习记录Object-wait/" class="post-title-link" itemprop="http://lovelycheng.github.io/index.html">学习记录Object.wait()</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-30 14:55:12" itemprop="dateCreated datePublished" datetime="2019-03-30T14:55:12+08:00">2019-03-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-04-13 14:00:45" itemprop="dateModified" datetime="2019-04-13T14:00:45+08:00">2019-04-13</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/30/学习记录Object-wait/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2019/03/30/学习记录Object-wait/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Object-wait-是什么"><a href="#Object-wait-是什么" class="headerlink" title="Object.wait() 是什么"></a>Object.wait() 是什么</h3><p>这个是所有java的对象的父类——Object自带的一个方法，这个方法无法被重写（final），这个方法的invoker是一个对象，但是作用的对象是当前使对象invoke wait方法的线程。</p>
+<h3 id="为什么要写这个"><a href="#为什么要写这个" class="headerlink" title="为什么要写这个"></a>为什么要写这个</h3><p>在学习《Java并发编程的艺术》一书中，对于多线程编程的job controller很有兴趣，在java的更早版本之前，并没有java.util.concurrent包使用，那么早期的程序员是如何做多线程的协同的？或者说java提供了哪些东西来完成这件事。</p>
+<h3 id="底层的逻辑分析"><a href="#底层的逻辑分析" class="headerlink" title="底层的逻辑分析"></a>底层的逻辑分析</h3><h4 id="调用链"><a href="#调用链" class="headerlink" title="调用链"></a>调用链</h4><h5 id="1-java-language"><a href="#1-java-language" class="headerlink" title="1.java language"></a>1.java language</h5><p>所有的java对象，都能调用wait()方法，在jdk中最终调用的是一个native的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public final native void wait(long timeout) throws InterruptedException;</span><br></pre></td></tr></table></figure>
+<h5 id="2-java-native-interface"><a href="#2-java-native-interface" class="headerlink" title="2.java native interface"></a>2.java native interface</h5><p>在本地方法的调用中，首先会在对应的C文件中做好映射和注册工作，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">static JNINativeMethod methods[] = &#123;</span><br><span class="line">    &#123;&quot;hashCode&quot;,    &quot;()I&quot;,                    (void *)&amp;JVM_IHashCode&#125;,</span><br><span class="line">    &#123;&quot;wait&quot;,        &quot;(J)V&quot;,                   (void *)&amp;JVM_MonitorWait&#125;,</span><br><span class="line">    &#123;&quot;notify&quot;,      &quot;()V&quot;,                    (void *)&amp;JVM_MonitorNotify&#125;,</span><br><span class="line">    &#123;&quot;notifyAll&quot;,   &quot;()V&quot;,                    (void *)&amp;JVM_MonitorNotifyAll&#125;,</span><br><span class="line">    &#123;&quot;clone&quot;,       &quot;()Ljava/lang/Object;&quot;,   (void *)&amp;JVM_Clone&#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>注册</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">JNIEXPORT void JNICALL</span><br><span class="line">Java_java_lang_Object_registerNatives(JNIEnv *env, jclass cls)</span><br><span class="line">&#123;</span><br><span class="line">    (*env)-&gt;RegisterNatives(env, cls,</span><br><span class="line">                            methods, sizeof(methods)/sizeof(methods[0]));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上所述，<strong>wait()</strong>方法会被注册成<strong>JVM_MonitorWait</strong>;<br>这个<strong>JVM_MonitorWait</strong>定义在<em>jvm.h</em>中。具体的实现在<em>jvm.cpp</em>中。</p>
+<h5 id="jvm-cpp"><a href="#jvm-cpp" class="headerlink" title="jvm.cpp"></a>jvm.cpp</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">JVM_ENTRY(void, JVM_MonitorWait(JNIEnv* env, jobject handle, jlong ms))</span><br><span class="line">  JVMWrapper(&quot;JVM_MonitorWait&quot;);</span><br><span class="line">  Handle obj(THREAD, JNIHandles::resolve_non_null(handle));</span><br><span class="line">  JavaThreadInObjectWaitState jtiows(thread, ms != 0);</span><br><span class="line">  if (JvmtiExport::should_post_monitor_wait()) &#123;</span><br><span class="line">    JvmtiExport::post_monitor_wait((JavaThread *)THREAD, (oop)obj(), ms);</span><br><span class="line"></span><br><span class="line">    // The current thread already owns the monitor and it has not yet</span><br><span class="line">    // been added to the wait queue so the current thread cannot be</span><br><span class="line">    // made the successor. This means that the JVMTI_EVENT_MONITOR_WAIT</span><br><span class="line">    // event handler cannot accidentally consume an unpark() meant for</span><br><span class="line">    // the ParkEvent associated with this ObjectMonitor.</span><br><span class="line">  &#125;</span><br><span class="line">  ObjectSynchronizer::wait(obj, ms, CHECK);</span><br><span class="line">JVM_END</span><br></pre></td></tr></table></figure>
+<p>ok，我们来仔细看看这里做了什么事情：</p>
+<h6 id="JVM-ENTRY-AND-JVM-END"><a href="#JVM-ENTRY-AND-JVM-END" class="headerlink" title="JVM_ENTRY AND JVM_END"></a>JVM_ENTRY AND JVM_END</h6><p><strong>JVM_ENTRY</strong>和<strong>JVM_END</strong> 是宏的引用或者说调用了一个宏。<em>JVM_ENTRY</em>本身是在<em>interfaceSupport.hpp</em>中，</p>
+<p><pre name="code" class="java"><br>#define JVM_ENTRY(result_type, header)<br>extern “C” {<br>  result_type JNICALL header {<br>    JavaThread* thread=JavaThread::thread_from_jni_environment(env);<br>    ThreadInVMfromNative __tiv(thread);<br>    debug_only(VMNativeEntryWrapper __vew;)<br>    VM_ENTRY_BASE(result_type, header, thread)</pre></p>
+<p>#define JVM_END } }<br>&lt;/pre&gt;<br>大概的意思是：所有使用<strong>JVM_ENTRY</strong> 开头和<strong>JVM_END</strong>结尾的地方，都用上面的代码做替换。</p>
+<h6 id="代码逻辑"><a href="#代码逻辑" class="headerlink" title="代码逻辑"></a>代码逻辑</h6><p>此处的代码逻辑是 ：</p>
+<pre><code> Handle obj(THREAD, JNIHandles::resolve_non_null(handle));
+</code></pre><p>在线程的本地内存（Thread-local storage）中保存jObject的oop，这个Handle是保护OOP使用的，也提供避免多余的类型转化等功能，详情见同目录下的<em>handles.hpp</em>。</p>
+<pre><code> JavaThreadInObjectWaitState jtiows(thread, ms != 0); 
+</code></pre><p>JavaThreadInObjectWaitState 这个东西其实是 ThreadService.hpp中定义的一个内部类。逻辑如下：</p>
+<p><pre name="code" class="java">
+// Change status to parked (timed or indefinite)
+class JavaThreadParkedState : public JavaThreadStatusChanger {
+ private:
+  ThreadStatistics* \_stat;
+  bool \_active;
+ public:
+  JavaThreadParkedState(JavaThread \*java\_thread, bool timed) :
+    JavaThreadStatusChanger(java\_thread,
+                            timed ? java\_lang\_Thread::PARKED\_TIMED : java\_lang\_Thread::PARKED) {
+    if (is\_alive()) {
+      \_stat = java\_thread->get\_thread\_stat();
+      \_active = ThreadService::is\_thread\_monitoring\_contention();
+      \_stat->monitor\_wait();
+      if (\_active) {
+        \_stat->monitor\_wait\_begin();
+      }
+    } else {
+      \_active = false;
+    }
+  }
+  ~JavaThreadParkedState() {
+    if (\_active) {
+      \_stat->monitor\_wait\_end();
+    }
+  }
+};
+</pre><br>可能有点复杂。。首先 这个<strong>JavaThreadInObjectWaitState</strong>类似是一个外观模式的开放出来的代理类，这里看上去是一个constructor，本质是委托给了<strong>JavaThreadStatusChanger</strong>的构造器，做了两件事 <em>save_old_state(java_thread)</em> 和 <em>set_thread_status(state);</em>这里会根据timeout != 0的值传入线程状态的枚举：IN_OBJECT_WAIT_TIMED和IN_OBJECT_WAIT。这是在javaClasses.hpp中定义的内部类java_lang_Thread中定义的枚举。这里问题在于 线程的状态已经变了。这部分逻辑在threadService.hpp中，有兴趣的小伙伴可以看看。</p>
+<p>if方法体中的注释 大概意思是</p>
+<pre><code>当前线程还没有被加入到waitSet中，并且已经持有了这个对象的锁，所以当前线程不能生成继任者（指下一个获取锁的线程），**JVMTI_EVENT_MONITOR_WAIT**这个事件的处理者不能随意的消费和这个对象的锁（ObjectMonitor）关联的ParkEvent 的unpark()方法。再通俗一点就是当前线程不能唤醒等在这个对象上的其他线程。
+</code></pre><p>在之后是JVMTI的知识，这里不做更详细的描述了。重要的是最后一句：</p>
+<pre><code>ObjectSynchronizer::wait()
+</code></pre><h5 id="ObjectSynchronizer-wait"><a href="#ObjectSynchronizer-wait" class="headerlink" title="ObjectSynchronizer::wait();"></a>ObjectSynchronizer::wait();</h5><p>ObjectSynchronizer 是定义在 Synchronizer.hpp中的内部类。类似于  同步器-对象同步器的类结构。<br>定位到Synchronizer.cpp中的ObjectSynchronizer::wait方法</p>
+<h6 id="是否使用偏向锁"><a href="#是否使用偏向锁" class="headerlink" title="是否使用偏向锁"></a>是否使用偏向锁</h6><p>在java1.6之后为了优化Synchronized关键字，引入的新的功能，但是如果要使用wait()|notify()|notifyall()|hashcode()，都会使这个对象的偏向锁失效。具体逻辑是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (UseBiasedLocking) &#123;</span><br><span class="line">    BiasedLocking::revoke_and_rebias(obj, false, THREAD);</span><br><span class="line">    assert(!obj-&gt;mark()-&gt;has_bias_pattern(), &quot;biases should be revoked by now&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此处不对偏向锁的知识展开，有兴趣的参看相关论文和文章。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> if (millis &lt; 0) &#123;</span><br><span class="line">    TEVENT(wait - throw IAX);</span><br><span class="line">    THROW_MSG_0(vmSymbols::java_lang_IllegalArgumentException(), &quot;timeout value is negative&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对等待参数校验是否&gt;0; IAX 是IllegalArgumentException的简写。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ObjectMonitor* monitor = ObjectSynchronizer::inflate(THREAD,</span><br><span class="line">                                                     obj(),</span><br><span class="line">                                                     inflate_cause_wait);</span><br><span class="line"></span><br><span class="line">DTRACE_MONITOR_WAIT_PROBE(monitor, obj(), THREAD, millis);</span><br><span class="line">monitor-&gt;wait(millis, true, THREAD);</span><br></pre></td></tr></table></figure>
+<p>这里是 获取了调用wait方法的对象的 <strong><em>监视器锁</em></strong>，这在jvm中就是重量级锁。inflate这个单词在偏向锁的相关论文中也频繁出现，指的就是锁的升级。inflate里面的逻辑涉及：对象头的重置，线程中锁记录的重置。这里不展开。</p>
+<h5 id="Monitor-gt-wait"><a href="#Monitor-gt-wait" class="headerlink" title="Monitor-&gt;wait()"></a>Monitor-&gt;wait()</h5><h4 id="程序逻辑"><a href="#程序逻辑" class="headerlink" title="程序逻辑"></a>程序逻辑</h4><ol>
+<li>初始化没有初始化的ObjectMonitor；</li>
+<li>检查owner</li>
+<li>创建一个waitObject，一种特有的数据结构，大体类似于线程信息。</li>
+<li>将此线程的当前等待锁指向给objectMonitor，Thread-&gt; current_waiting_monitor</li>
+<li>获取waitset的保护锁，将waitObject加入到waitSet，释放waitSet的保护锁</li>
+<li>当前线程退出临界区</li>
+<li>当前线程被挂起，等待被notify() || notifyAll() || timeout 唤醒。</li>
+<li>修改线程的状态，并调用unpark()方法</li>
+<li>重新进入临界区</li>
+<li>重置线程的等待锁记录和线程的owner</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2019/03/12/exploring expect what is expect/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -607,7 +841,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-03-03 14:16:55" itemprop="dateModified" datetime="2019-03-03T14:16:55+08:00">2019-03-03</time>
+                <time title="Modified: 2019-03-30 17:45:19" itemprop="dateModified" datetime="2019-03-30T17:45:19+08:00">2019-03-30</time>
               
             
           </span>
@@ -802,7 +1036,7 @@ do {
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-03-03 12:17:10" itemprop="dateModified" datetime="2019-03-03T12:17:10+08:00">2019-03-03</time>
+                <time title="Modified: 2019-03-30 17:44:25" itemprop="dateModified" datetime="2019-03-30T17:44:25+08:00">2019-03-30</time>
               
             
           </span>
@@ -849,7 +1083,7 @@ do {
           
             <h2 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h2><p>openjdk 9  </p>
 <p>9dev/hotspot/src/share/vm/runtime/objectMonitor.cpp 134~245的注释；<br>翻译如下</p>
-<h2 id="summary"><a href="#summary" class="headerlink" title="summary"></a>summary</h2><p>对于synchronized关键字，无论他锁的对象或者说对象锁是哪个，参与竞争的线程 都会进入 这个锁对象的cqx队列和entryList队列，进入park状态，直到 interrupt||waittimeout||notify()。还需要更多细节；<br>在interrupt waittimeout notify()有哪些异同：</p>
+<h2 id="summary"><a href="#summary" class="headerlink" title="summary"></a>summary</h2><p>对于synchronized关键字，无论他锁的对象或者说对象锁是哪个，参与竞争的线程 都会进入 这个锁对象的cqx队列和entryList队列，进入park状态，直到 interrupt||waittimeout||notify()。<br>还需要更多细节；<br>在interrupt waittimeout notify()有哪些异同：</p>
 <h2 id="questions"><a href="#questions" class="headerlink" title="questions"></a>questions</h2><p>为什么有两个队列：2q 算法；<br>2q算法 和 LRU算法；<br>redis；</p>
 <h2 id="理论上的操作"><a href="#理论上的操作" class="headerlink" title="理论上的操作"></a>理论上的操作</h2><ul>
 <li>一根线程可以通过成功的CAS操作，将_owner 的field 从none -&gt;non-none；</li>
@@ -1952,273 +2186,6 @@ do {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://lovelycheng.github.io/2018/11/18/机器学习第三课/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="程道玄">
-      <meta itemprop="description" content="a java developer's blog">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LoveCheng">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/11/18/机器学习第三课/" class="post-title-link" itemprop="http://lovelycheng.github.io/index.html">机器学习第三课</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-11-18 23:24:13" itemprop="dateCreated datePublished" datetime="2018-11-18T23:24:13+08:00">2018-11-18</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-02-05 18:38:59" itemprop="dateModified" datetime="2019-02-05T18:38:59+08:00">2019-02-05</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/11/18/机器学习第三课/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count valine-comment-count" data-xid="/2018/11/18/机器学习第三课/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="机器学习第三课"><a href="#机器学习第三课" class="headerlink" title="机器学习第三课"></a>机器学习第三课</h2><h3 id="逻辑回归-logic-regression"><a href="#逻辑回归-logic-regression" class="headerlink" title="逻辑回归(logic regression)"></a>逻辑回归(logic regression)</h3><h4 id="分类"><a href="#分类" class="headerlink" title="分类:"></a>分类:</h4><p>对于给定一堆数据，比方说是tumor的图片，通过机器学习的方法训练，能够准确的识别是否是malignant（恶性的）还是良性的。这种训练，给出的结果是二分的，是或者不是，在之前学习的线性回归中，并不适用，即：对m个样本，$x^i,i\in(1….m),有x^i\in(0,1)$ 。</p>
-<h3 id="假设函数"><a href="#假设函数" class="headerlink" title="假设函数"></a>假设函数</h3><p>hypothesis function , $H_\theta(X)$，表示的是一个对于给定数据集的假设，或者是一个模型，在之前的学习中，假设函数也可以表示成：</p>
-<blockquote>
-<script type="math/tex; mode=display">H(X) = \theta^TX</script></blockquote>
-<p>在逻辑回归中，$H(X)$ 满足 条件 $0 \leq H(x) \leq 1$ ,以上的表达式不足以满足，所以将$\theta^TX$ 放入 <a href="https://en.wikipedia.org/wiki/Logistic_function" target="_blank" rel="noopener">Logistic Function</a> 中，即：</p>
-<blockquote>
-<script type="math/tex; mode=display">H(X) = g(\theta^{T}X)</script><script type="math/tex; mode=display">z = \theta^{T}x</script><p><script type="math/tex">g(z) = \frac{1}{1+e^{-z}}</script>   <em>逻辑函数</em></p>
-</blockquote>
-<p>整个函数在坐标系中展示如下：</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Logistic-curve.svg" alt=""></p>
-<p>对此，有</p>
-<blockquote>
-<script type="math/tex; mode=display">
-y = 
-\begin{cases}
-1, & \text{x $\to$ +$\infty$} \\
-0, & \text{x $\to$ -$\infty$}
-\end{cases}</script><script type="math/tex; mode=display">
-X = H(X) = \theta^{T}X</script><script type="math/tex; mode=display">
-g(z) = \frac{1}{1+e^{-z}} = \frac{1}{1+e^{-\theta^{T}X}}</script></blockquote>
-<p>这样的逻辑函数在给定的X下，将会给出一个等于结果=1的概率(<em>probability</em>)。</p>
-<h4 id="决定边界"><a href="#决定边界" class="headerlink" title="决定边界"></a>决定边界</h4><p>The <strong>decision boundary</strong> is the line that separates the area where y = 0 and where y = 1. It is created by our hypothesis function.</p>
-<p>我的理解是，在<strong>任何</strong>的假设函数下，总有一条或者是一圈之类的线，能把数据分开、数学上表示是，在逻辑函数取值=0的时候，在图形上的表示。</p>
-<blockquote>
-<script type="math/tex; mode=display">
-给定的一个函数：\theta = 
-\begin{bmatrix}
- \theta_1 \\
- \theta_2 \\
- \theta_3 \\
-\end{bmatrix}。
-令 \theta_1x_1+\theta_2x_2+\theta_3x_3 = 0</script><p>关于上述方程的解的集合就是这个假设函数的决定边界，无所谓最终分类算法好不好。</p>
-</blockquote>
-<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p><em>Cost Function</em> :</p>
-<p>在之前的学习中损失函数是一个<em>bow-shaped function</em>，存在全局的最低点，但是对这个分类算法不太友好，。这里其实之前的</p>
-<blockquote>
-<script type="math/tex; mode=display">J(\theta) = \frac{1}{2m} \sum_{i=1}^{m}(\theta^{T}X_i - y_i)^2</script></blockquote>
-<p>可以改写成</p>
-<blockquote>
-<script type="math/tex; mode=display">J(\theta) = \frac{1}{m} \sum_{i=1}^{m}Cost(h_\theta(x^{(i)},y^{i})</script></blockquote>
-<p>证明过程：</p>
-<blockquote>
-<p>这个$Cost(H_\theta(x^{(i)}),y^i)$ 指的是一份数据的偏差，是假设函数的值减这份数据对应的真实值。</p>
-</blockquote>
-<p>结论：</p>
-<blockquote>
-<script type="math/tex; mode=display">
-\begin{cases}
-Cost(h_\theta(x),y) = - \log(h_\theta(x)) , &  \text{if y = 1}  \\
-Cost(h_\theta(x),y) = - \log(1-h_\theta(x)),& \text{if y = 0 }\\
-\end{cases}</script></blockquote>
-<p>简化损失函数：</p>
-<blockquote>
-<p>$Cost(H<em>\theta(x^{(i)}),y^i) = -y^{i}\log(h</em>\theta(x)) + (1-y)(- \log(1-h_\theta(x)))， y \in (1|0) $ ;</p>
-<script type="math/tex; mode=display">
-J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \log(1-h_\theta(x^{i})))]</script></blockquote>
-<p>根据之前的多元线性回归分析的损失函数有：</p>
-<p>Repeat:</p>
-<blockquote>
-<script type="math/tex; mode=display">
-\theta_j := \theta_j - \frac{\alpha\partial}{\partial\theta_j}J(\theta) , \text{同时更新所有的$\theta$}</script></blockquote>
-<p>结果：</p>
-<blockquote>
-<script type="math/tex; mode=display">
-\theta_j := \theta_j - \frac{\alpha}{m}\sum_{(i=1)}^{(m)}(h_\theta(x^{i})-y^{i})x_j^i</script></blockquote>
-<p>这个和之前的线性回归里面的其实一样的，$x_j^i$表示的第i份数据，其中第j维的数据的列；</p>
-<h4 id="进阶优化"><a href="#进阶优化" class="headerlink" title="进阶优化"></a>进阶优化</h4><p>有更多的其他算法，而不是梯度下降；相对而言是更快，也不需要学习速率；只是更加复杂。</p>
-<p>这些算法不需要自己实现。直接调用程序提供的库就行，后期去看看python的实现。</p>
-<p>octave的fminunc()</p>
-<h3 id="y不是二分的情况"><a href="#y不是二分的情况" class="headerlink" title="y不是二分的情况"></a>y不是二分的情况</h3><h4 id="One-vs-all"><a href="#One-vs-all" class="headerlink" title="One-vs-all"></a>One-vs-all</h4><p>思路就是先挑一种出来，对于一个分类器（假设函数）来说，如果有$m$种分类 $y\in (1,2,3,4…)$ ,对于每一次输入$\theta^{T}X$ 输出值有$m$种取值，分类器的做法是找出置信度最高的值。</p>
-<h3 id="overfitting-and-underfit"><a href="#overfitting-and-underfit" class="headerlink" title="overfitting and underfit"></a>overfitting and underfit</h3><p>Overfitting: If we have too many features, the learned hypothesis may fit the training set very well ( ), but fail to generalize to new examples (predict prices on new examples).</p>
-<p>如果说函数有太多的特征（加入了一些不必要的特征，这些特征可能是底作用的，也可能是完全无效的），所以说是这个分类器完美的适应了样本的数据，但是对于一般性的输入 有可能预测的一般。</p>
-<p>ps：联想泰勒展开的公式，模拟函数越多的多项式越能够模拟原函数的走向（图形表现）。</p>
-<p>解决：</p>
-<ul>
-<li>减少数据维度<ul>
-<li>可以手动</li>
-<li>Model selection algorithm</li>
-</ul>
-</li>
-<li>Regularization 正则化<ul>
-<li>保持所有的维度。增加一个多项式，作为惩罚某些维度参数的手段，减少这个维度在函数中的权重。</li>
-<li>也有可能每一个维度都提供一定的预测权重，并且函数运转的很好。</li>
-</ul>
-</li>
-</ul>
-<p>正则化：</p>
-<p>​    $\theta_1,\theta_2,\theta_3,…..$这些参数都很小，减少过拟合的倾向。</p>
-<p>在</p>
-<script type="math/tex; mode=display">
-J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \log(1-h_\theta(x^{i}))) + \lambda\sum_{j=1}^{n}\theta_{j}^2 ] , \text{$\lambda$是正则化参数} \\</script><p>后面这个是惩罚项。默认不会去优化$\theta_0$的。</p>
-<p>将上述的正则化方法带入到我们之前的梯度下降算法：</p>
-<script type="math/tex; mode=display">
-\theta_{j} := \theta_{j}(1-\alpha\frac{\lambda}{m}) - \frac{\alpha}{m}\sum_{(i=1)}^{(m)}(h_\theta(x^{i})-y^{i})x_j^i</script><p>只是去压缩了一下$\theta_j$ </p>
-<p>Normal Equation:</p>
-<script type="math/tex; mode=display">
-\theta = (X^{T}X)^{-1}X^{T}Y</script><p>应用正则化：</p>
-<script type="math/tex; mode=display">
-\theta = (X^{T}X+\lambda\begin{bmatrix}0&0&\cdots&0\\0&1&\cdots&0\\\vdots&\vdots&\ddots&0\\0&0&\cdots&1\end{bmatrix})^{-1}X^{T}Y</script><p>matrix是 n+1*n+1；在$\lambda \gt 0$ 的时候，括号里面这堆东西绝壁是可逆的。</p>
-<p>Regularized logistic regression:</p>
-<p>梯度下降：在写法上其实是和线性回归一样的，只是这里的假设函数不一样。</p>
-<p>advanced Optimize: 在调用这种高级库的时候，cost function $J(\theta)$ 这个东西不一样。这个应该是个入参。</p>
-<p>总结：</p>
-<p>这里提出了新的代价函数；以及过拟合的解决方法、但是过犹不及，太多的正则项会导致underfitting</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2266,7 +2233,7 @@ J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2299,7 +2266,9 @@ J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
@@ -2529,9 +2498,9 @@ J(\theta) = -\frac{1}{m}[\sum_{i=1}^m(y^{i}\log(h_\theta(x^{i})) + (1-y^{i})(- \
       
     
       
-        
-      
     
+      
+        
       
     
       
